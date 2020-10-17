@@ -22,6 +22,8 @@ environment:
 
 dependencies:
   openapi_generator_annotations: ^1.1.3
+  tinkoff_api:
+    path: ./tinkoff_api
   flutter:
     sdk: flutter
 
