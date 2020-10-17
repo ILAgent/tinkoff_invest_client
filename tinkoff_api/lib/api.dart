@@ -1,4 +1,4 @@
-library petstore_api.api;
+library tinkoff_api.api;
 
 /// OpenAPI API client
 

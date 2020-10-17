@@ -1,4 +1,4 @@
-part of petstore_api.api;
+part of tinkoff_api.api;
 
 
 enum BrokerAccountType {

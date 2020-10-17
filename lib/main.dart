@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';
-
-import '../tinkoff_api/lib/api.dart';
 
 void main() {
   runApp(MyApp());
@@ -57,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
+      MarketApi( )
       _counter++;
     });
   }
