@@ -54,7 +54,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      MarketApi( )
       _counter++;
     });
   }
