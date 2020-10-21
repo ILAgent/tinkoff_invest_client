@@ -1,90 +1,22 @@
-part of tinkoff_api.api;
+            import 'package:built_collection/built_collection.dart';
+            import 'package:tinkoff_api/model/portfolio_position.dart';
+        import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-// Portfolio
-class Portfolio {
-    
-      List<PortfolioPosition> positions = [];
-Portfolio();
+part 'portfolio.g.dart';
 
-  @override
-  String toString() {
-    return 'Portfolio[positions=$positions, ]';
-  }
-
-  fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-  
-    {
-      final _jsonData = json[r'positions'];
-      positions = (_jsonData == null) ? null :
-            PortfolioPosition.listFromJson(_jsonData);
-    } // _jsonFieldName
-
-  }
-
-  Portfolio.fromJson(Map<String, dynamic> json) {
-    fromJson(json); // allows child classes to call
-  }
-
-  Map<String, dynamic> toJson() {
-
-    final json = <String, dynamic>{};
-    if (positions != null) {
-          json[r'positions'] = LocalApiClient.serialize(positions);
-    }
-    return json;
-  }
-  static List<Portfolio> listFromJson(List<dynamic> json) {
-    return json == null ? <Portfolio>[] : json.map((value) => Portfolio.fromJson(value)).toList();
-  }
-
-  static Map<String, Portfolio> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, Portfolio>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = Portfolio.fromJson(value));
-    }
-    return map;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-
-    if (other is Portfolio && runtimeType == other.runtimeType) {
-    return 
-        const ListEquality().equals(positions, other.positions)    
-    ;
-    }
-
-    return false;
-  }
-
-  @override
-  int get hashCode {
-    var hashCode = runtimeType.hashCode;
+abstract class Portfolio implements Built<Portfolio, PortfolioBuilder> {
 
     
-        hashCode = hashCode ^ const ListEquality().hash(positions);
-    
+        @nullable
+    @BuiltValueField(wireName: r'positions')
+    BuiltList<PortfolioPosition> get positions;
 
-    return hashCode;
-  }
+    // Boilerplate code needed to wire-up generated code
+    Portfolio._();
 
-  Portfolio copyWith({
-           List<PortfolioPosition> positions,
-    }) {
-    Portfolio copy = Portfolio();
-        {
-        var newVal;
-        final v = positions ?? this.positions;
-          newVal = <PortfolioPosition>        []..addAll((v ?? []).map((y) => y.copyWith()).toList())
-;
-        copy.positions = newVal;
-        }
-    return copy;
-  }
+    factory Portfolio([updates(PortfolioBuilder b)]) = _$Portfolio;
+    static Serializer<Portfolio> get serializer => _$portfolioSerializer;
+
 }
-
 

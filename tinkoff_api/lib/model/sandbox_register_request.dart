@@ -1,87 +1,22 @@
-part of tinkoff_api.api;
+            import 'package:tinkoff_api/model/broker_account_type.dart';
+        import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-// SandboxRegisterRequest
-class SandboxRegisterRequest {
-    
-        BrokerAccountType brokerAccountType;
-SandboxRegisterRequest();
+part 'sandbox_register_request.g.dart';
 
-  @override
-  String toString() {
-    return 'SandboxRegisterRequest[brokerAccountType=$brokerAccountType, ]';
-  }
-
-  fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-  
-    {
-      final _jsonData = json[r'brokerAccountType'];
-      brokerAccountType = (_jsonData == null) ? null :
-        BrokerAccountTypeTypeTransformer.fromJson(_jsonData);
-
-    } // _jsonFieldName
-
-  }
-
-  SandboxRegisterRequest.fromJson(Map<String, dynamic> json) {
-    fromJson(json); // allows child classes to call
-  }
-
-  Map<String, dynamic> toJson() {
-
-    final json = <String, dynamic>{};
-    if (brokerAccountType != null) {
-          json[r'brokerAccountType'] = LocalApiClient.serialize(brokerAccountType);
-    }
-    return json;
-  }
-  static List<SandboxRegisterRequest> listFromJson(List<dynamic> json) {
-    return json == null ? <SandboxRegisterRequest>[] : json.map((value) => SandboxRegisterRequest.fromJson(value)).toList();
-  }
-
-  static Map<String, SandboxRegisterRequest> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, SandboxRegisterRequest>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = SandboxRegisterRequest.fromJson(value));
-    }
-    return map;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-
-    if (other is SandboxRegisterRequest && runtimeType == other.runtimeType) {
-    return 
-          brokerAccountType == other.brokerAccountType    
-    ;
-    }
-
-    return false;
-  }
-
-  @override
-  int get hashCode {
-    var hashCode = runtimeType.hashCode;
+abstract class SandboxRegisterRequest implements Built<SandboxRegisterRequest, SandboxRegisterRequestBuilder> {
 
     
-            if (brokerAccountType != null) {
-              hashCode = hashCode ^ brokerAccountType.hashCode;
-            }
-    
+        @nullable
+    @BuiltValueField(wireName: r'brokerAccountType')
+    BrokerAccountType get brokerAccountType;
+        //enum brokerAccountTypeEnum {  Tinkoff,  TinkoffIis,  };
 
-    return hashCode;
-  }
+    // Boilerplate code needed to wire-up generated code
+    SandboxRegisterRequest._();
 
-  SandboxRegisterRequest copyWith({
-           BrokerAccountType brokerAccountType,
-    }) {
-    SandboxRegisterRequest copy = SandboxRegisterRequest();
-        copy.brokerAccountType = brokerAccountType ?? this.brokerAccountType;
-    return copy;
-  }
+    factory SandboxRegisterRequest([updates(SandboxRegisterRequestBuilder b)]) = _$SandboxRegisterRequest;
+    static Serializer<SandboxRegisterRequest> get serializer => _$sandboxRegisterRequestSerializer;
+
 }
-
 

@@ -1,107 +1,26 @@
-part of tinkoff_api.api;
+            import 'package:tinkoff_api/model/sandbox_currency.dart';
+        import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-// SandboxSetCurrencyBalanceRequest
-class SandboxSetCurrencyBalanceRequest {
-    
-        SandboxCurrency currency;
-    
-      double balance;
-SandboxSetCurrencyBalanceRequest();
+part 'sandbox_set_currency_balance_request.g.dart';
 
-  @override
-  String toString() {
-    return 'SandboxSetCurrencyBalanceRequest[currency=$currency, balance=$balance, ]';
-  }
-
-  fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-  
-    {
-      final _jsonData = json[r'currency'];
-      currency = (_jsonData == null) ? null :
-        SandboxCurrencyTypeTransformer.fromJson(_jsonData);
-
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'balance'];
-      balance = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-
-  }
-
-  SandboxSetCurrencyBalanceRequest.fromJson(Map<String, dynamic> json) {
-    fromJson(json); // allows child classes to call
-  }
-
-  Map<String, dynamic> toJson() {
-
-    final json = <String, dynamic>{};
-    if (currency != null) {
-          json[r'currency'] = LocalApiClient.serialize(currency);
-    }
-    if (balance != null) {
-            json[r'balance'] = LocalApiClient.serialize(balance);
-    }
-    return json;
-  }
-  static List<SandboxSetCurrencyBalanceRequest> listFromJson(List<dynamic> json) {
-    return json == null ? <SandboxSetCurrencyBalanceRequest>[] : json.map((value) => SandboxSetCurrencyBalanceRequest.fromJson(value)).toList();
-  }
-
-  static Map<String, SandboxSetCurrencyBalanceRequest> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, SandboxSetCurrencyBalanceRequest>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = SandboxSetCurrencyBalanceRequest.fromJson(value));
-    }
-    return map;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-
-    if (other is SandboxSetCurrencyBalanceRequest && runtimeType == other.runtimeType) {
-    return 
-          currency == other.currency && // other
-    
-
-     balance == other.balance  
-    ;
-    }
-
-    return false;
-  }
-
-  @override
-  int get hashCode {
-    var hashCode = runtimeType.hashCode;
+abstract class SandboxSetCurrencyBalanceRequest implements Built<SandboxSetCurrencyBalanceRequest, SandboxSetCurrencyBalanceRequestBuilder> {
 
     
-            if (currency != null) {
-              hashCode = hashCode ^ currency.hashCode;
-            }
+        @nullable
+    @BuiltValueField(wireName: r'currency')
+    SandboxCurrency get currency;
+        //enum currencyEnum {  RUB,  USD,  EUR,  GBP,  HKD,  CHF,  JPY,  CNY,  TRY,  };
     
+        @nullable
+    @BuiltValueField(wireName: r'balance')
+    double get balance;
 
-    if (balance != null) {
-      hashCode = hashCode ^ balance.hashCode;
-    }
+    // Boilerplate code needed to wire-up generated code
+    SandboxSetCurrencyBalanceRequest._();
 
+    factory SandboxSetCurrencyBalanceRequest([updates(SandboxSetCurrencyBalanceRequestBuilder b)]) = _$SandboxSetCurrencyBalanceRequest;
+    static Serializer<SandboxSetCurrencyBalanceRequest> get serializer => _$sandboxSetCurrencyBalanceRequestSerializer;
 
-    return hashCode;
-  }
-
-  SandboxSetCurrencyBalanceRequest copyWith({
-           SandboxCurrency currency,
-             double balance,
-    }) {
-    SandboxSetCurrencyBalanceRequest copy = SandboxSetCurrencyBalanceRequest();
-        copy.currency = currency ?? this.currency;
-        copy.balance = balance ?? this.balance;
-    return copy;
-  }
 }
-
 

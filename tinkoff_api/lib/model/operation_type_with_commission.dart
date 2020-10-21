@@ -1,45 +1,67 @@
-part of tinkoff_api.api;
+        import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
+part 'operation_type_with_commission.g.dart';
 
-enum OperationTypeWithCommission {
-    buy, buyCard, sell, brokerCommission, exchangeCommission, serviceCommission, marginCommission, otherCommission, payIn, payOut, tax, taxLucre, taxDividend, taxCoupon, taxBack, repayment, partRepayment, coupon, dividend, securityIn, securityOut
+class OperationTypeWithCommission extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: "Buy")
+  static const OperationTypeWithCommission buy = _$buy;
+  @BuiltValueEnumConst(wireName: "BuyCard")
+  static const OperationTypeWithCommission buyCard = _$buyCard;
+  @BuiltValueEnumConst(wireName: "Sell")
+  static const OperationTypeWithCommission sell = _$sell;
+  @BuiltValueEnumConst(wireName: "BrokerCommission")
+  static const OperationTypeWithCommission brokerCommission = _$brokerCommission;
+  @BuiltValueEnumConst(wireName: "ExchangeCommission")
+  static const OperationTypeWithCommission exchangeCommission = _$exchangeCommission;
+  @BuiltValueEnumConst(wireName: "ServiceCommission")
+  static const OperationTypeWithCommission serviceCommission = _$serviceCommission;
+  @BuiltValueEnumConst(wireName: "MarginCommission")
+  static const OperationTypeWithCommission marginCommission = _$marginCommission;
+  @BuiltValueEnumConst(wireName: "OtherCommission")
+  static const OperationTypeWithCommission otherCommission = _$otherCommission;
+  @BuiltValueEnumConst(wireName: "PayIn")
+  static const OperationTypeWithCommission payIn = _$payIn;
+  @BuiltValueEnumConst(wireName: "PayOut")
+  static const OperationTypeWithCommission payOut = _$payOut;
+  @BuiltValueEnumConst(wireName: "Tax")
+  static const OperationTypeWithCommission tax = _$tax;
+  @BuiltValueEnumConst(wireName: "TaxLucre")
+  static const OperationTypeWithCommission taxLucre = _$taxLucre;
+  @BuiltValueEnumConst(wireName: "TaxDividend")
+  static const OperationTypeWithCommission taxDividend = _$taxDividend;
+  @BuiltValueEnumConst(wireName: "TaxCoupon")
+  static const OperationTypeWithCommission taxCoupon = _$taxCoupon;
+  @BuiltValueEnumConst(wireName: "TaxBack")
+  static const OperationTypeWithCommission taxBack = _$taxBack;
+  @BuiltValueEnumConst(wireName: "Repayment")
+  static const OperationTypeWithCommission repayment = _$repayment;
+  @BuiltValueEnumConst(wireName: "PartRepayment")
+  static const OperationTypeWithCommission partRepayment = _$partRepayment;
+  @BuiltValueEnumConst(wireName: "Coupon")
+  static const OperationTypeWithCommission coupon = _$coupon;
+  @BuiltValueEnumConst(wireName: "Dividend")
+  static const OperationTypeWithCommission dividend = _$dividend;
+  @BuiltValueEnumConst(wireName: "SecurityIn")
+  static const OperationTypeWithCommission securityIn = _$securityIn;
+  @BuiltValueEnumConst(wireName: "SecurityOut")
+  static const OperationTypeWithCommission securityOut = _$securityOut;
+
+  static Serializer<OperationTypeWithCommission> get serializer => _$operationTypeWithCommissionSerializer;
+
+  const OperationTypeWithCommission._(String name): super(name);
+
+  static BuiltSet<OperationTypeWithCommission> get values => _$values;
+  static OperationTypeWithCommission valueOf(String name) => _$valueOf(name);
 }
 
-class OperationTypeWithCommissionTypeTransformer {
-  static Map<String, OperationTypeWithCommission> fromJsonMap = {  
-  "Buy":OperationTypeWithCommission.buy, "BuyCard":OperationTypeWithCommission.buyCard, "Sell":OperationTypeWithCommission.sell, "BrokerCommission":OperationTypeWithCommission.brokerCommission, "ExchangeCommission":OperationTypeWithCommission.exchangeCommission, "ServiceCommission":OperationTypeWithCommission.serviceCommission, "MarginCommission":OperationTypeWithCommission.marginCommission, "OtherCommission":OperationTypeWithCommission.otherCommission, "PayIn":OperationTypeWithCommission.payIn, "PayOut":OperationTypeWithCommission.payOut, "Tax":OperationTypeWithCommission.tax, "TaxLucre":OperationTypeWithCommission.taxLucre, "TaxDividend":OperationTypeWithCommission.taxDividend, "TaxCoupon":OperationTypeWithCommission.taxCoupon, "TaxBack":OperationTypeWithCommission.taxBack, "Repayment":OperationTypeWithCommission.repayment, "PartRepayment":OperationTypeWithCommission.partRepayment, "Coupon":OperationTypeWithCommission.coupon, "Dividend":OperationTypeWithCommission.dividend, "SecurityIn":OperationTypeWithCommission.securityIn, "SecurityOut":OperationTypeWithCommission.securityOut
- };
-  static Map<OperationTypeWithCommission, String> toJsonMap = {  
-  OperationTypeWithCommission.buy:"Buy", OperationTypeWithCommission.buyCard:"BuyCard", OperationTypeWithCommission.sell:"Sell", OperationTypeWithCommission.brokerCommission:"BrokerCommission", OperationTypeWithCommission.exchangeCommission:"ExchangeCommission", OperationTypeWithCommission.serviceCommission:"ServiceCommission", OperationTypeWithCommission.marginCommission:"MarginCommission", OperationTypeWithCommission.otherCommission:"OtherCommission", OperationTypeWithCommission.payIn:"PayIn", OperationTypeWithCommission.payOut:"PayOut", OperationTypeWithCommission.tax:"Tax", OperationTypeWithCommission.taxLucre:"TaxLucre", OperationTypeWithCommission.taxDividend:"TaxDividend", OperationTypeWithCommission.taxCoupon:"TaxCoupon", OperationTypeWithCommission.taxBack:"TaxBack", OperationTypeWithCommission.repayment:"Repayment", OperationTypeWithCommission.partRepayment:"PartRepayment", OperationTypeWithCommission.coupon:"Coupon", OperationTypeWithCommission.dividend:"Dividend", OperationTypeWithCommission.securityIn:"SecurityIn", OperationTypeWithCommission.securityOut:"SecurityOut"
- };
-
-  static OperationTypeWithCommission fromJson(dynamic data) {
-    var found = fromJsonMap[data];
-    if (found == null) {
-      throw('Unknown enum value to decode: $data');
-    }
-    return found;
-  }
-
-  static dynamic toJson(OperationTypeWithCommission data) {
-    return toJsonMap[data];
-  }
-
-  static List<OperationTypeWithCommission> listFromJson(List<dynamic> json) {
-    return json == null ? <OperationTypeWithCommission>[] : json.map((value) => fromJson(value)).toList();
-  }
-
-  static OperationTypeWithCommission copyWith(OperationTypeWithCommission instance) {
-    return instance;
-  }
-
-  static Map<String, OperationTypeWithCommission> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, OperationTypeWithCommission>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = fromJson(value));
-    }
-    return map;
-  }
-}
-
+/// Optionally, enum_class can generate a mixin to go with your enum for use
+/// with Angular. It exposes your enum constants as getters. So, if you mix it
+/// in to your Dart component class, the values become available to the
+/// corresponding Angular template.
+///
+/// Trigger mixin generation by writing a line like this one next to your enum.
+abstract class OperationTypeWithCommissionMixin = Object with _$OperationTypeWithCommissionMixin;
 

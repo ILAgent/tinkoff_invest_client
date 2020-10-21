@@ -1,45 +1,29 @@
-part of tinkoff_api.api;
+        import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
+part 'broker_account_type.g.dart';
 
-enum BrokerAccountType {
-    tinkoff, tinkoffIis
+class BrokerAccountType extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: "Tinkoff")
+  static const BrokerAccountType tinkoff = _$tinkoff;
+  @BuiltValueEnumConst(wireName: "TinkoffIis")
+  static const BrokerAccountType tinkoffIis = _$tinkoffIis;
+
+  static Serializer<BrokerAccountType> get serializer => _$brokerAccountTypeSerializer;
+
+  const BrokerAccountType._(String name): super(name);
+
+  static BuiltSet<BrokerAccountType> get values => _$values;
+  static BrokerAccountType valueOf(String name) => _$valueOf(name);
 }
 
-class BrokerAccountTypeTypeTransformer {
-  static Map<String, BrokerAccountType> fromJsonMap = {  
-  "Tinkoff":BrokerAccountType.tinkoff, "TinkoffIis":BrokerAccountType.tinkoffIis
- };
-  static Map<BrokerAccountType, String> toJsonMap = {  
-  BrokerAccountType.tinkoff:"Tinkoff", BrokerAccountType.tinkoffIis:"TinkoffIis"
- };
-
-  static BrokerAccountType fromJson(dynamic data) {
-    var found = fromJsonMap[data];
-    if (found == null) {
-      throw('Unknown enum value to decode: $data');
-    }
-    return found;
-  }
-
-  static dynamic toJson(BrokerAccountType data) {
-    return toJsonMap[data];
-  }
-
-  static List<BrokerAccountType> listFromJson(List<dynamic> json) {
-    return json == null ? <BrokerAccountType>[] : json.map((value) => fromJson(value)).toList();
-  }
-
-  static BrokerAccountType copyWith(BrokerAccountType instance) {
-    return instance;
-  }
-
-  static Map<String, BrokerAccountType> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, BrokerAccountType>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = fromJson(value));
-    }
-    return map;
-  }
-}
-
+/// Optionally, enum_class can generate a mixin to go with your enum for use
+/// with Angular. It exposes your enum constants as getters. So, if you mix it
+/// in to your Dart component class, the values become available to the
+/// corresponding Angular template.
+///
+/// Trigger mixin generation by writing a line like this one next to your enum.
+abstract class BrokerAccountTypeMixin = Object with _$BrokerAccountTypeMixin;
 

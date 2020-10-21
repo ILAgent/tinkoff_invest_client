@@ -1,81 +1,64 @@
-part of tinkoff_api.api;
+import 'dart:async';
+import 'dart:io';
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/serializer.dart';
 
+import 'package:tinkoff_api/model/user_accounts_response.dart';
+import 'package:tinkoff_api/model/error.dart';
 
 class UserApi {
-  final UserApiDelegate apiDelegate;
-  UserApi(ApiClient apiClient) : assert(apiClient != null), apiDelegate = UserApiDelegate(apiClient);
+    final Dio _dio;
+    Serializers _serializers;
+
+    UserApi(this._dio, this._serializers);
+
+        /// Получение брокерских счетов клиента
+        ///
+        /// 
+        Future<Response<UserAccountsResponse>>userAccountsGet({ CancelToken cancelToken, Map<String, String> headers,}) async {
+
+        String _path = "/user/accounts";
+
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
+
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
+
+        List<String> contentTypes = [];
 
 
-  /// Получение брокерских счетов клиента
-  ///
-  /// 
-    Future<UserAccountsResponse> 
-  userAccountsGet({Options options}) async {
 
-    final response = await apiDelegate.userAccountsGet( options: options, );
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'get'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
 
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.userAccountsGet_decode(response);
-    }
-  }
+        var serializer = _serializers.serializerForType(UserAccountsResponse);
+        var data = _serializers.deserializeWith<UserAccountsResponse>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-  /// Получение брокерских счетов клиента
-  ///
-  /// 
-}
-
-
-  class UserApiDelegate {
-  final ApiClient apiClient;
-
-UserApiDelegate(this.apiClient) : assert(apiClient != null);
-
-    Future<ApiResponse>
-  userAccountsGet({Options options}) async {
-    Object postBody;
-
-    // verify required params are set
-
-    // create path and map variables
-    final __path = '/user/accounts';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = [];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'GET';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<UserAccountsResponse> 
-  userAccountsGet_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'UserAccountsResponse') as UserAccountsResponse;
-    }
-
-    return null;
-    }
-  }
-
-
+            return Response<UserAccountsResponse>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        }

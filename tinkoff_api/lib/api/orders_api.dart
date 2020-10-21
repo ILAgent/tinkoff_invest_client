@@ -1,297 +1,223 @@
-part of tinkoff_api.api;
+import 'dart:async';
+import 'dart:io';
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/serializer.dart';
 
+import 'package:tinkoff_api/model/limit_order_request.dart';
+import 'package:tinkoff_api/model/orders_response.dart';
+import 'package:tinkoff_api/model/error.dart';
+import 'package:tinkoff_api/model/market_order_request.dart';
+import 'package:tinkoff_api/model/market_order_response.dart';
+import 'package:tinkoff_api/model/empty.dart';
+import 'package:tinkoff_api/model/limit_order_response.dart';
 
 class OrdersApi {
-  final OrdersApiDelegate apiDelegate;
-  OrdersApi(ApiClient apiClient) : assert(apiClient != null), apiDelegate = OrdersApiDelegate(apiClient);
+    final Dio _dio;
+    Serializers _serializers;
+
+    OrdersApi(this._dio, this._serializers);
+
+        /// Отмена заявки
+        ///
+        /// 
+        Future<Response<Empty>>ordersCancelPost(String orderId,{ String brokerAccountId,CancelToken cancelToken, Map<String, String> headers,}) async {
+
+        String _path = "/orders/cancel";
+
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
+
+                queryParams[r'orderId'] = orderId;
+                queryParams[r'brokerAccountId'] = brokerAccountId;
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
+
+        List<String> contentTypes = [];
 
 
-  /// Отмена заявки
-  ///
-  /// 
-    Future<Empty> 
-  ordersCancelPost(String orderId, {Options options, String brokerAccountId }) async {
 
-    final response = await apiDelegate.ordersCancelPost(orderId,  options: options, brokerAccountId: brokerAccountId);
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'post'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
 
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.ordersCancelPost_decode(response);
-    }
-  }
+        var serializer = _serializers.serializerForType(Empty);
+        var data = _serializers.deserializeWith<Empty>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-  /// Отмена заявки
-  ///
-  /// 
-  /// Получение списка активных заявок
-  ///
-  /// 
-    Future<OrdersResponse> 
-  ordersGet({Options options, String brokerAccountId }) async {
+            return Response<Empty>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        /// Получение списка активных заявок
+        ///
+        /// 
+        Future<Response<OrdersResponse>>ordersGet({ String brokerAccountId,CancelToken cancelToken, Map<String, String> headers,}) async {
 
-    final response = await apiDelegate.ordersGet( options: options, brokerAccountId: brokerAccountId);
+        String _path = "/orders";
 
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.ordersGet_decode(response);
-    }
-  }
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
 
-  /// Получение списка активных заявок
-  ///
-  /// 
-  /// Создание лимитной заявки
-  ///
-  /// 
-    Future<LimitOrderResponse> 
-  ordersLimitOrderPost(String figi, LimitOrderRequest limitOrderRequest, {Options options, String brokerAccountId }) async {
+                queryParams[r'brokerAccountId'] = brokerAccountId;
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
 
-    final response = await apiDelegate.ordersLimitOrderPost(figi, limitOrderRequest,  options: options, brokerAccountId: brokerAccountId);
-
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.ordersLimitOrderPost_decode(response);
-    }
-  }
-
-  /// Создание лимитной заявки
-  ///
-  /// 
-  /// Создание рыночной заявки
-  ///
-  /// 
-    Future<MarketOrderResponse> 
-  ordersMarketOrderPost(String figi, MarketOrderRequest marketOrderRequest, {Options options, String brokerAccountId }) async {
-
-    final response = await apiDelegate.ordersMarketOrderPost(figi, marketOrderRequest,  options: options, brokerAccountId: brokerAccountId);
-
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.ordersMarketOrderPost_decode(response);
-    }
-  }
-
-  /// Создание рыночной заявки
-  ///
-  /// 
-}
+        List<String> contentTypes = [];
 
 
-  class OrdersApiDelegate {
-  final ApiClient apiClient;
 
-OrdersApiDelegate(this.apiClient) : assert(apiClient != null);
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'get'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
 
-    Future<ApiResponse>
-  ordersCancelPost(String orderId, {Options options, String brokerAccountId }) async {
-    Object postBody;
+        var serializer = _serializers.serializerForType(OrdersResponse);
+        var data = _serializers.deserializeWith<OrdersResponse>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-    // verify required params are set
-        if(orderId == null) {
-        throw ApiException(400, 'Missing required param: orderId');
+            return Response<OrdersResponse>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        /// Создание лимитной заявки
+        ///
+        /// 
+        Future<Response<LimitOrderResponse>>ordersLimitOrderPost(String figi,LimitOrderRequest limitOrderRequest,{ String brokerAccountId,CancelToken cancelToken, Map<String, String> headers,}) async {
+
+        String _path = "/orders/limit-order";
+
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
+
+                queryParams[r'figi'] = figi;
+                queryParams[r'brokerAccountId'] = brokerAccountId;
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
+
+        List<String> contentTypes = ["application/json"];
+
+
+            var serializedBody = _serializers.serialize(limitOrderRequest);
+            var jsonlimitOrderRequest = json.encode(serializedBody);
+            bodyData = jsonlimitOrderRequest;
+
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'post'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
+
+        var serializer = _serializers.serializerForType(LimitOrderResponse);
+        var data = _serializers.deserializeWith<LimitOrderResponse>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
+
+            return Response<LimitOrderResponse>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        /// Создание рыночной заявки
+        ///
+        /// 
+        Future<Response<MarketOrderResponse>>ordersMarketOrderPost(String figi,MarketOrderRequest marketOrderRequest,{ String brokerAccountId,CancelToken cancelToken, Map<String, String> headers,}) async {
+
+        String _path = "/orders/market-order";
+
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
+
+                queryParams[r'figi'] = figi;
+                queryParams[r'brokerAccountId'] = brokerAccountId;
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
+
+        List<String> contentTypes = ["application/json"];
+
+
+            var serializedBody = _serializers.serialize(marketOrderRequest);
+            var jsonmarketOrderRequest = json.encode(serializedBody);
+            bodyData = jsonmarketOrderRequest;
+
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'post'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
+
+        var serializer = _serializers.serializerForType(MarketOrderResponse);
+        var data = _serializers.deserializeWith<MarketOrderResponse>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
+
+            return Response<MarketOrderResponse>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
         }
-
-    // create path and map variables
-    final __path = '/orders/cancel';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'orderId', orderId));
-        if(brokerAccountId != null) {
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'brokerAccountId', brokerAccountId));
-        }
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = [];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'POST';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<Empty> 
-  ordersCancelPost_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'Empty') as Empty;
-    }
-
-    return null;
-    }
-    Future<ApiResponse>
-  ordersGet({Options options, String brokerAccountId }) async {
-    Object postBody;
-
-    // verify required params are set
-
-    // create path and map variables
-    final __path = '/orders';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-        if(brokerAccountId != null) {
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'brokerAccountId', brokerAccountId));
-        }
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = [];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'GET';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<OrdersResponse> 
-  ordersGet_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'OrdersResponse') as OrdersResponse;
-    }
-
-    return null;
-    }
-    Future<ApiResponse>
-  ordersLimitOrderPost(String figi, LimitOrderRequest limitOrderRequest, {Options options, String brokerAccountId }) async {
-    Object postBody = limitOrderRequest;
-
-    // verify required params are set
-        if(figi == null) {
-        throw ApiException(400, 'Missing required param: figi');
-        }
-        if(limitOrderRequest == null) {
-        throw ApiException(400, 'Missing required param: limitOrderRequest');
-        }
-
-    // create path and map variables
-    final __path = '/orders/limit-order';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'figi', figi));
-        if(brokerAccountId != null) {
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'brokerAccountId', brokerAccountId));
-        }
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = ['application/json'];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'POST';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<LimitOrderResponse> 
-  ordersLimitOrderPost_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'LimitOrderResponse') as LimitOrderResponse;
-    }
-
-    return null;
-    }
-    Future<ApiResponse>
-  ordersMarketOrderPost(String figi, MarketOrderRequest marketOrderRequest, {Options options, String brokerAccountId }) async {
-    Object postBody = marketOrderRequest;
-
-    // verify required params are set
-        if(figi == null) {
-        throw ApiException(400, 'Missing required param: figi');
-        }
-        if(marketOrderRequest == null) {
-        throw ApiException(400, 'Missing required param: marketOrderRequest');
-        }
-
-    // create path and map variables
-    final __path = '/orders/market-order';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'figi', figi));
-        if(brokerAccountId != null) {
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'brokerAccountId', brokerAccountId));
-        }
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = ['application/json'];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'POST';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<MarketOrderResponse> 
-  ordersMarketOrderPost_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'MarketOrderResponse') as MarketOrderResponse;
-    }
-
-    return null;
-    }
-  }
-
-

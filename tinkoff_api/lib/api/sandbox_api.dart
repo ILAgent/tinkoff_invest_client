@@ -1,347 +1,269 @@
-part of tinkoff_api.api;
+import 'dart:async';
+import 'dart:io';
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/serializer.dart';
 
+import 'package:tinkoff_api/model/sandbox_set_currency_balance_request.dart';
+import 'package:tinkoff_api/model/sandbox_register_request.dart';
+import 'package:tinkoff_api/model/error.dart';
+import 'package:tinkoff_api/model/sandbox_set_position_balance_request.dart';
+import 'package:tinkoff_api/model/sandbox_register_response.dart';
+import 'package:tinkoff_api/model/empty.dart';
 
 class SandboxApi {
-  final SandboxApiDelegate apiDelegate;
-  SandboxApi(ApiClient apiClient) : assert(apiClient != null), apiDelegate = SandboxApiDelegate(apiClient);
+    final Dio _dio;
+    Serializers _serializers;
+
+    SandboxApi(this._dio, this._serializers);
+
+        /// Удаление всех позиций
+        ///
+        /// Удаление всех позиций клиента
+        Future<Response<Empty>>sandboxClearPost({ String brokerAccountId,CancelToken cancelToken, Map<String, String> headers,}) async {
+
+        String _path = "/sandbox/clear";
+
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
+
+                queryParams[r'brokerAccountId'] = brokerAccountId;
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
+
+        List<String> contentTypes = [];
 
 
-  /// Удаление всех позиций
-  ///
-  /// Удаление всех позиций клиента
-    Future<Empty> 
-  sandboxClearPost({Options options, String brokerAccountId }) async {
 
-    final response = await apiDelegate.sandboxClearPost( options: options, brokerAccountId: brokerAccountId);
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'post'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
 
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.sandboxClearPost_decode(response);
-    }
-  }
+        var serializer = _serializers.serializerForType(Empty);
+        var data = _serializers.deserializeWith<Empty>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-  /// Удаление всех позиций
-  ///
-  /// Удаление всех позиций клиента
-  /// Выставление баланса по валютным позициям
-  ///
-  /// 
-    Future<Empty> 
-  sandboxCurrenciesBalancePost(SandboxSetCurrencyBalanceRequest sandboxSetCurrencyBalanceRequest, {Options options, String brokerAccountId }) async {
+            return Response<Empty>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        /// Выставление баланса по валютным позициям
+        ///
+        /// 
+        Future<Response<Empty>>sandboxCurrenciesBalancePost(SandboxSetCurrencyBalanceRequest sandboxSetCurrencyBalanceRequest,{ String brokerAccountId,CancelToken cancelToken, Map<String, String> headers,}) async {
 
-    final response = await apiDelegate.sandboxCurrenciesBalancePost(sandboxSetCurrencyBalanceRequest,  options: options, brokerAccountId: brokerAccountId);
+        String _path = "/sandbox/currencies/balance";
 
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.sandboxCurrenciesBalancePost_decode(response);
-    }
-  }
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
 
-  /// Выставление баланса по валютным позициям
-  ///
-  /// 
-  /// Выставление баланса по инструментным позициям
-  ///
-  /// 
-    Future<Empty> 
-  sandboxPositionsBalancePost(SandboxSetPositionBalanceRequest sandboxSetPositionBalanceRequest, {Options options, String brokerAccountId }) async {
+                queryParams[r'brokerAccountId'] = brokerAccountId;
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
 
-    final response = await apiDelegate.sandboxPositionsBalancePost(sandboxSetPositionBalanceRequest,  options: options, brokerAccountId: brokerAccountId);
-
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.sandboxPositionsBalancePost_decode(response);
-    }
-  }
-
-  /// Выставление баланса по инструментным позициям
-  ///
-  /// 
-  /// Регистрация клиента в sandbox
-  ///
-  /// Создание счета и валютных позиций для клиента
-    Future<SandboxRegisterResponse> 
-  sandboxRegisterPost({Options options, SandboxRegisterRequest sandboxRegisterRequest }) async {
-
-    final response = await apiDelegate.sandboxRegisterPost( options: options, sandboxRegisterRequest: sandboxRegisterRequest);
-
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.sandboxRegisterPost_decode(response);
-    }
-  }
-
-  /// Регистрация клиента в sandbox
-  ///
-  /// Создание счета и валютных позиций для клиента
-  /// Удаление счета
-  ///
-  /// Удаление счета клиента
-    Future<Empty> 
-  sandboxRemovePost({Options options, String brokerAccountId }) async {
-
-    final response = await apiDelegate.sandboxRemovePost( options: options, brokerAccountId: brokerAccountId);
-
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.sandboxRemovePost_decode(response);
-    }
-  }
-
-  /// Удаление счета
-  ///
-  /// Удаление счета клиента
-}
+        List<String> contentTypes = ["application/json"];
 
 
-  class SandboxApiDelegate {
-  final ApiClient apiClient;
+            var serializedBody = _serializers.serialize(sandboxSetCurrencyBalanceRequest);
+            var jsonsandboxSetCurrencyBalanceRequest = json.encode(serializedBody);
+            bodyData = jsonsandboxSetCurrencyBalanceRequest;
 
-SandboxApiDelegate(this.apiClient) : assert(apiClient != null);
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'post'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
 
-    Future<ApiResponse>
-  sandboxClearPost({Options options, String brokerAccountId }) async {
-    Object postBody;
+        var serializer = _serializers.serializerForType(Empty);
+        var data = _serializers.deserializeWith<Empty>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-    // verify required params are set
+            return Response<Empty>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        /// Выставление баланса по инструментным позициям
+        ///
+        /// 
+        Future<Response<Empty>>sandboxPositionsBalancePost(SandboxSetPositionBalanceRequest sandboxSetPositionBalanceRequest,{ String brokerAccountId,CancelToken cancelToken, Map<String, String> headers,}) async {
 
-    // create path and map variables
-    final __path = '/sandbox/clear';
+        String _path = "/sandbox/positions/balance";
 
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
 
-        if(brokerAccountId != null) {
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'brokerAccountId', brokerAccountId));
+                queryParams[r'brokerAccountId'] = brokerAccountId;
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
+
+        List<String> contentTypes = ["application/json"];
+
+
+            var serializedBody = _serializers.serialize(sandboxSetPositionBalanceRequest);
+            var jsonsandboxSetPositionBalanceRequest = json.encode(serializedBody);
+            bodyData = jsonsandboxSetPositionBalanceRequest;
+
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'post'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
+
+        var serializer = _serializers.serializerForType(Empty);
+        var data = _serializers.deserializeWith<Empty>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
+
+            return Response<Empty>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        /// Регистрация клиента в sandbox
+        ///
+        /// Создание счета и валютных позиций для клиента
+        Future<Response<SandboxRegisterResponse>>sandboxRegisterPost({ SandboxRegisterRequest sandboxRegisterRequest,CancelToken cancelToken, Map<String, String> headers,}) async {
+
+        String _path = "/sandbox/register";
+
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
+
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
+
+        List<String> contentTypes = ["application/json"];
+
+
+            var serializedBody = _serializers.serialize(sandboxRegisterRequest);
+            var jsonsandboxRegisterRequest = json.encode(serializedBody);
+            bodyData = jsonsandboxRegisterRequest;
+
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'post'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
+
+        var serializer = _serializers.serializerForType(SandboxRegisterResponse);
+        var data = _serializers.deserializeWith<SandboxRegisterResponse>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
+
+            return Response<SandboxRegisterResponse>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        /// Удаление счета
+        ///
+        /// Удаление счета клиента
+        Future<Response<Empty>>sandboxRemovePost({ String brokerAccountId,CancelToken cancelToken, Map<String, String> headers,}) async {
+
+        String _path = "/sandbox/remove";
+
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
+
+                queryParams[r'brokerAccountId'] = brokerAccountId;
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
+
+        List<String> contentTypes = [];
+
+
+
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'post'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
+
+        var serializer = _serializers.serializerForType(Empty);
+        var data = _serializers.deserializeWith<Empty>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
+
+            return Response<Empty>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
         }
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = [];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'POST';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<Empty> 
-  sandboxClearPost_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'Empty') as Empty;
-    }
-
-    return null;
-    }
-    Future<ApiResponse>
-  sandboxCurrenciesBalancePost(SandboxSetCurrencyBalanceRequest sandboxSetCurrencyBalanceRequest, {Options options, String brokerAccountId }) async {
-    Object postBody = sandboxSetCurrencyBalanceRequest;
-
-    // verify required params are set
-        if(sandboxSetCurrencyBalanceRequest == null) {
-        throw ApiException(400, 'Missing required param: sandboxSetCurrencyBalanceRequest');
-        }
-
-    // create path and map variables
-    final __path = '/sandbox/currencies/balance';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-        if(brokerAccountId != null) {
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'brokerAccountId', brokerAccountId));
-        }
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = ['application/json'];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'POST';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<Empty> 
-  sandboxCurrenciesBalancePost_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'Empty') as Empty;
-    }
-
-    return null;
-    }
-    Future<ApiResponse>
-  sandboxPositionsBalancePost(SandboxSetPositionBalanceRequest sandboxSetPositionBalanceRequest, {Options options, String brokerAccountId }) async {
-    Object postBody = sandboxSetPositionBalanceRequest;
-
-    // verify required params are set
-        if(sandboxSetPositionBalanceRequest == null) {
-        throw ApiException(400, 'Missing required param: sandboxSetPositionBalanceRequest');
-        }
-
-    // create path and map variables
-    final __path = '/sandbox/positions/balance';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-        if(brokerAccountId != null) {
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'brokerAccountId', brokerAccountId));
-        }
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = ['application/json'];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'POST';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<Empty> 
-  sandboxPositionsBalancePost_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'Empty') as Empty;
-    }
-
-    return null;
-    }
-    Future<ApiResponse>
-  sandboxRegisterPost({Options options, SandboxRegisterRequest sandboxRegisterRequest }) async {
-    Object postBody = sandboxRegisterRequest;
-
-    // verify required params are set
-
-    // create path and map variables
-    final __path = '/sandbox/register';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = ['application/json'];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'POST';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<SandboxRegisterResponse> 
-  sandboxRegisterPost_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'SandboxRegisterResponse') as SandboxRegisterResponse;
-    }
-
-    return null;
-    }
-    Future<ApiResponse>
-  sandboxRemovePost({Options options, String brokerAccountId }) async {
-    Object postBody;
-
-    // verify required params are set
-
-    // create path and map variables
-    final __path = '/sandbox/remove';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-        if(brokerAccountId != null) {
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'brokerAccountId', brokerAccountId));
-        }
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = [];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'POST';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<Empty> 
-  sandboxRemovePost_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'Empty') as Empty;
-    }
-
-    return null;
-    }
-  }
-
-

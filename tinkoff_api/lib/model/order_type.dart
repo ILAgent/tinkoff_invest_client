@@ -1,45 +1,31 @@
-part of tinkoff_api.api;
+        import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
+part 'order_type.g.dart';
 
-enum OrderType {
-    limit, market
+class OrderType extends EnumClass {
+
+  /// Тип заявки
+  @BuiltValueEnumConst(wireName: "Limit")
+  static const OrderType limit = _$limit;
+  /// Тип заявки
+  @BuiltValueEnumConst(wireName: "Market")
+  static const OrderType market = _$market;
+
+  static Serializer<OrderType> get serializer => _$orderTypeSerializer;
+
+  const OrderType._(String name): super(name);
+
+  static BuiltSet<OrderType> get values => _$values;
+  static OrderType valueOf(String name) => _$valueOf(name);
 }
 
-class OrderTypeTypeTransformer {
-  static Map<String, OrderType> fromJsonMap = {  
-  "Limit":OrderType.limit, "Market":OrderType.market
- };
-  static Map<OrderType, String> toJsonMap = {  
-  OrderType.limit:"Limit", OrderType.market:"Market"
- };
-
-  static OrderType fromJson(dynamic data) {
-    var found = fromJsonMap[data];
-    if (found == null) {
-      throw('Unknown enum value to decode: $data');
-    }
-    return found;
-  }
-
-  static dynamic toJson(OrderType data) {
-    return toJsonMap[data];
-  }
-
-  static List<OrderType> listFromJson(List<dynamic> json) {
-    return json == null ? <OrderType>[] : json.map((value) => fromJson(value)).toList();
-  }
-
-  static OrderType copyWith(OrderType instance) {
-    return instance;
-  }
-
-  static Map<String, OrderType> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, OrderType>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = fromJson(value));
-    }
-    return map;
-  }
-}
-
+/// Optionally, enum_class can generate a mixin to go with your enum for use
+/// with Angular. It exposes your enum constants as getters. So, if you mix it
+/// in to your Dart component class, the values become available to the
+/// corresponding Angular template.
+///
+/// Trigger mixin generation by writing a line like this one next to your enum.
+abstract class OrderTypeMixin = Object with _$OrderTypeMixin;
 

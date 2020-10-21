@@ -1,45 +1,58 @@
-part of tinkoff_api.api;
+        import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
+part 'candle_resolution.g.dart';
 
-enum CandleResolution {
-    n1min, n2min, n3min, n5min, n10min, n15min, n30min, hour, day, week, month
+class CandleResolution extends EnumClass {
+
+  /// Интервал свечи и допустимый промежуток запроса: - 1min [1 minute, 1 day] - 2min [2 minutes, 1 day] - 3min [3 minutes, 1 day] - 5min [5 minutes, 1 day] - 10min [10 minutes, 1 day] - 15min [15 minutes, 1 day] - 30min [30 minutes, 1 day] - hour [1 hour, 7 days] - day [1 day, 1 year] - week [7 days, 2 years] - month [1 month, 10 years]
+  @BuiltValueEnumConst(wireName: "1min")
+  static const CandleResolution _1min_ = _$_1min_;
+  /// Интервал свечи и допустимый промежуток запроса: - 1min [1 minute, 1 day] - 2min [2 minutes, 1 day] - 3min [3 minutes, 1 day] - 5min [5 minutes, 1 day] - 10min [10 minutes, 1 day] - 15min [15 minutes, 1 day] - 30min [30 minutes, 1 day] - hour [1 hour, 7 days] - day [1 day, 1 year] - week [7 days, 2 years] - month [1 month, 10 years]
+  @BuiltValueEnumConst(wireName: "2min")
+  static const CandleResolution _2min_ = _$_2min_;
+  /// Интервал свечи и допустимый промежуток запроса: - 1min [1 minute, 1 day] - 2min [2 minutes, 1 day] - 3min [3 minutes, 1 day] - 5min [5 minutes, 1 day] - 10min [10 minutes, 1 day] - 15min [15 minutes, 1 day] - 30min [30 minutes, 1 day] - hour [1 hour, 7 days] - day [1 day, 1 year] - week [7 days, 2 years] - month [1 month, 10 years]
+  @BuiltValueEnumConst(wireName: "3min")
+  static const CandleResolution _3min_ = _$_3min_;
+  /// Интервал свечи и допустимый промежуток запроса: - 1min [1 minute, 1 day] - 2min [2 minutes, 1 day] - 3min [3 minutes, 1 day] - 5min [5 minutes, 1 day] - 10min [10 minutes, 1 day] - 15min [15 minutes, 1 day] - 30min [30 minutes, 1 day] - hour [1 hour, 7 days] - day [1 day, 1 year] - week [7 days, 2 years] - month [1 month, 10 years]
+  @BuiltValueEnumConst(wireName: "5min")
+  static const CandleResolution _5min_ = _$_5min_;
+  /// Интервал свечи и допустимый промежуток запроса: - 1min [1 minute, 1 day] - 2min [2 minutes, 1 day] - 3min [3 minutes, 1 day] - 5min [5 minutes, 1 day] - 10min [10 minutes, 1 day] - 15min [15 minutes, 1 day] - 30min [30 minutes, 1 day] - hour [1 hour, 7 days] - day [1 day, 1 year] - week [7 days, 2 years] - month [1 month, 10 years]
+  @BuiltValueEnumConst(wireName: "10min")
+  static const CandleResolution _10min_ = _$_10min_;
+  /// Интервал свечи и допустимый промежуток запроса: - 1min [1 minute, 1 day] - 2min [2 minutes, 1 day] - 3min [3 minutes, 1 day] - 5min [5 minutes, 1 day] - 10min [10 minutes, 1 day] - 15min [15 minutes, 1 day] - 30min [30 minutes, 1 day] - hour [1 hour, 7 days] - day [1 day, 1 year] - week [7 days, 2 years] - month [1 month, 10 years]
+  @BuiltValueEnumConst(wireName: "15min")
+  static const CandleResolution _15min_ = _$_15min_;
+  /// Интервал свечи и допустимый промежуток запроса: - 1min [1 minute, 1 day] - 2min [2 minutes, 1 day] - 3min [3 minutes, 1 day] - 5min [5 minutes, 1 day] - 10min [10 minutes, 1 day] - 15min [15 minutes, 1 day] - 30min [30 minutes, 1 day] - hour [1 hour, 7 days] - day [1 day, 1 year] - week [7 days, 2 years] - month [1 month, 10 years]
+  @BuiltValueEnumConst(wireName: "30min")
+  static const CandleResolution _30min_ = _$_30min_;
+  /// Интервал свечи и допустимый промежуток запроса: - 1min [1 minute, 1 day] - 2min [2 minutes, 1 day] - 3min [3 minutes, 1 day] - 5min [5 minutes, 1 day] - 10min [10 minutes, 1 day] - 15min [15 minutes, 1 day] - 30min [30 minutes, 1 day] - hour [1 hour, 7 days] - day [1 day, 1 year] - week [7 days, 2 years] - month [1 month, 10 years]
+  @BuiltValueEnumConst(wireName: "hour")
+  static const CandleResolution hour = _$hour;
+  /// Интервал свечи и допустимый промежуток запроса: - 1min [1 minute, 1 day] - 2min [2 minutes, 1 day] - 3min [3 minutes, 1 day] - 5min [5 minutes, 1 day] - 10min [10 minutes, 1 day] - 15min [15 minutes, 1 day] - 30min [30 minutes, 1 day] - hour [1 hour, 7 days] - day [1 day, 1 year] - week [7 days, 2 years] - month [1 month, 10 years]
+  @BuiltValueEnumConst(wireName: "day")
+  static const CandleResolution day = _$day;
+  /// Интервал свечи и допустимый промежуток запроса: - 1min [1 minute, 1 day] - 2min [2 minutes, 1 day] - 3min [3 minutes, 1 day] - 5min [5 minutes, 1 day] - 10min [10 minutes, 1 day] - 15min [15 minutes, 1 day] - 30min [30 minutes, 1 day] - hour [1 hour, 7 days] - day [1 day, 1 year] - week [7 days, 2 years] - month [1 month, 10 years]
+  @BuiltValueEnumConst(wireName: "week")
+  static const CandleResolution week = _$week;
+  /// Интервал свечи и допустимый промежуток запроса: - 1min [1 minute, 1 day] - 2min [2 minutes, 1 day] - 3min [3 minutes, 1 day] - 5min [5 minutes, 1 day] - 10min [10 minutes, 1 day] - 15min [15 minutes, 1 day] - 30min [30 minutes, 1 day] - hour [1 hour, 7 days] - day [1 day, 1 year] - week [7 days, 2 years] - month [1 month, 10 years]
+  @BuiltValueEnumConst(wireName: "month")
+  static const CandleResolution month = _$month;
+
+  static Serializer<CandleResolution> get serializer => _$candleResolutionSerializer;
+
+  const CandleResolution._(String name): super(name);
+
+  static BuiltSet<CandleResolution> get values => _$values;
+  static CandleResolution valueOf(String name) => _$valueOf(name);
 }
 
-class CandleResolutionTypeTransformer {
-  static Map<String, CandleResolution> fromJsonMap = {  
-  "1min":CandleResolution.n1min, "2min":CandleResolution.n2min, "3min":CandleResolution.n3min, "5min":CandleResolution.n5min, "10min":CandleResolution.n10min, "15min":CandleResolution.n15min, "30min":CandleResolution.n30min, "hour":CandleResolution.hour, "day":CandleResolution.day, "week":CandleResolution.week, "month":CandleResolution.month
- };
-  static Map<CandleResolution, String> toJsonMap = {  
-  CandleResolution.n1min:"1min", CandleResolution.n2min:"2min", CandleResolution.n3min:"3min", CandleResolution.n5min:"5min", CandleResolution.n10min:"10min", CandleResolution.n15min:"15min", CandleResolution.n30min:"30min", CandleResolution.hour:"hour", CandleResolution.day:"day", CandleResolution.week:"week", CandleResolution.month:"month"
- };
-
-  static CandleResolution fromJson(dynamic data) {
-    var found = fromJsonMap[data];
-    if (found == null) {
-      throw('Unknown enum value to decode: $data');
-    }
-    return found;
-  }
-
-  static dynamic toJson(CandleResolution data) {
-    return toJsonMap[data];
-  }
-
-  static List<CandleResolution> listFromJson(List<dynamic> json) {
-    return json == null ? <CandleResolution>[] : json.map((value) => fromJson(value)).toList();
-  }
-
-  static CandleResolution copyWith(CandleResolution instance) {
-    return instance;
-  }
-
-  static Map<String, CandleResolution> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, CandleResolution>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = fromJson(value));
-    }
-    return map;
-  }
-}
-
+/// Optionally, enum_class can generate a mixin to go with your enum for use
+/// with Angular. It exposes your enum constants as getters. So, if you mix it
+/// in to your Dart component class, the values become available to the
+/// corresponding Angular template.
+///
+/// Trigger mixin generation by writing a line like this one next to your enum.
+abstract class CandleResolutionMixin = Object with _$CandleResolutionMixin;
 

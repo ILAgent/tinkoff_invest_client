@@ -1,107 +1,26 @@
-part of tinkoff_api.api;
+            import 'package:tinkoff_api/model/broker_account_type.dart';
+        import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-// SandboxAccount
-class SandboxAccount {
-    
-        BrokerAccountType brokerAccountType;
-    
-      String brokerAccountId;
-SandboxAccount();
+part 'sandbox_account.g.dart';
 
-  @override
-  String toString() {
-    return 'SandboxAccount[brokerAccountType=$brokerAccountType, brokerAccountId=$brokerAccountId, ]';
-  }
-
-  fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-  
-    {
-      final _jsonData = json[r'brokerAccountType'];
-      brokerAccountType = (_jsonData == null) ? null :
-        BrokerAccountTypeTypeTransformer.fromJson(_jsonData);
-
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'brokerAccountId'];
-      brokerAccountId = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-
-  }
-
-  SandboxAccount.fromJson(Map<String, dynamic> json) {
-    fromJson(json); // allows child classes to call
-  }
-
-  Map<String, dynamic> toJson() {
-
-    final json = <String, dynamic>{};
-    if (brokerAccountType != null) {
-          json[r'brokerAccountType'] = LocalApiClient.serialize(brokerAccountType);
-    }
-    if (brokerAccountId != null) {
-            json[r'brokerAccountId'] = LocalApiClient.serialize(brokerAccountId);
-    }
-    return json;
-  }
-  static List<SandboxAccount> listFromJson(List<dynamic> json) {
-    return json == null ? <SandboxAccount>[] : json.map((value) => SandboxAccount.fromJson(value)).toList();
-  }
-
-  static Map<String, SandboxAccount> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, SandboxAccount>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = SandboxAccount.fromJson(value));
-    }
-    return map;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-
-    if (other is SandboxAccount && runtimeType == other.runtimeType) {
-    return 
-          brokerAccountType == other.brokerAccountType && // other
-    
-
-     brokerAccountId == other.brokerAccountId  
-    ;
-    }
-
-    return false;
-  }
-
-  @override
-  int get hashCode {
-    var hashCode = runtimeType.hashCode;
+abstract class SandboxAccount implements Built<SandboxAccount, SandboxAccountBuilder> {
 
     
-            if (brokerAccountType != null) {
-              hashCode = hashCode ^ brokerAccountType.hashCode;
-            }
+        @nullable
+    @BuiltValueField(wireName: r'brokerAccountType')
+    BrokerAccountType get brokerAccountType;
+        //enum brokerAccountTypeEnum {  Tinkoff,  TinkoffIis,  };
     
+        @nullable
+    @BuiltValueField(wireName: r'brokerAccountId')
+    String get brokerAccountId;
 
-    if (brokerAccountId != null) {
-      hashCode = hashCode ^ brokerAccountId.hashCode;
-    }
+    // Boilerplate code needed to wire-up generated code
+    SandboxAccount._();
 
+    factory SandboxAccount([updates(SandboxAccountBuilder b)]) = _$SandboxAccount;
+    static Serializer<SandboxAccount> get serializer => _$sandboxAccountSerializer;
 
-    return hashCode;
-  }
-
-  SandboxAccount copyWith({
-           BrokerAccountType brokerAccountType,
-             String brokerAccountId,
-    }) {
-    SandboxAccount copy = SandboxAccount();
-        copy.brokerAccountType = brokerAccountType ?? this.brokerAccountType;
-        copy.brokerAccountId = brokerAccountId ?? this.brokerAccountId;
-    return copy;
-  }
 }
-
 

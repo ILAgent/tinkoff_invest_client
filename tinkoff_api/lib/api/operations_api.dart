@@ -1,95 +1,68 @@
-part of tinkoff_api.api;
+import 'dart:async';
+import 'dart:io';
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/serializer.dart';
 
+import 'package:tinkoff_api/model/operations_response.dart';
+import 'package:tinkoff_api/model/error.dart';
 
 class OperationsApi {
-  final OperationsApiDelegate apiDelegate;
-  OperationsApi(ApiClient apiClient) : assert(apiClient != null), apiDelegate = OperationsApiDelegate(apiClient);
+    final Dio _dio;
+    Serializers _serializers;
+
+    OperationsApi(this._dio, this._serializers);
+
+        /// Получение списка операций
+        ///
+        /// 
+        Future<Response<OperationsResponse>>operationsGet(DateTime from,DateTime to,{ String figi,String brokerAccountId,CancelToken cancelToken, Map<String, String> headers,}) async {
+
+        String _path = "/operations";
+
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
+
+                queryParams[r'from'] = from;
+                queryParams[r'to'] = to;
+                queryParams[r'figi'] = figi;
+                queryParams[r'brokerAccountId'] = brokerAccountId;
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
+
+        List<String> contentTypes = [];
 
 
-  /// Получение списка операций
-  ///
-  /// 
-    Future<OperationsResponse> 
-  operationsGet(DateTime from, DateTime to, {Options options, String figi, String brokerAccountId }) async {
 
-    final response = await apiDelegate.operationsGet(from, to,  options: options, figi: figi, brokerAccountId: brokerAccountId);
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'get'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
 
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.operationsGet_decode(response);
-    }
-  }
+        var serializer = _serializers.serializerForType(OperationsResponse);
+        var data = _serializers.deserializeWith<OperationsResponse>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-  /// Получение списка операций
-  ///
-  /// 
-}
-
-
-  class OperationsApiDelegate {
-  final ApiClient apiClient;
-
-OperationsApiDelegate(this.apiClient) : assert(apiClient != null);
-
-    Future<ApiResponse>
-  operationsGet(DateTime from, DateTime to, {Options options, String figi, String brokerAccountId }) async {
-    Object postBody;
-
-    // verify required params are set
-        if(from == null) {
-        throw ApiException(400, 'Missing required param: from');
+            return Response<OperationsResponse>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
         }
-        if(to == null) {
-        throw ApiException(400, 'Missing required param: to');
-        }
-
-    // create path and map variables
-    final __path = '/operations';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'from', from));
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'to', to));
-        if(figi != null) {
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'figi', figi));
-        }
-        if(brokerAccountId != null) {
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'brokerAccountId', brokerAccountId));
-        }
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = [];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'GET';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<OperationsResponse> 
-  operationsGet_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'OperationsResponse') as OperationsResponse;
-    }
-
-    return null;
-    }
-  }
-
-

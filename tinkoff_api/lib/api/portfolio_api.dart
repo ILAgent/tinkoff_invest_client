@@ -1,149 +1,114 @@
-part of tinkoff_api.api;
+import 'dart:async';
+import 'dart:io';
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/serializer.dart';
 
+import 'package:tinkoff_api/model/portfolio_response.dart';
+import 'package:tinkoff_api/model/portfolio_currencies_response.dart';
+import 'package:tinkoff_api/model/error.dart';
 
 class PortfolioApi {
-  final PortfolioApiDelegate apiDelegate;
-  PortfolioApi(ApiClient apiClient) : assert(apiClient != null), apiDelegate = PortfolioApiDelegate(apiClient);
+    final Dio _dio;
+    Serializers _serializers;
+
+    PortfolioApi(this._dio, this._serializers);
+
+        /// Получение валютных активов клиента
+        ///
+        /// 
+        Future<Response<PortfolioCurrenciesResponse>>portfolioCurrenciesGet({ String brokerAccountId,CancelToken cancelToken, Map<String, String> headers,}) async {
+
+        String _path = "/portfolio/currencies";
+
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
+
+                queryParams[r'brokerAccountId'] = brokerAccountId;
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
+
+        List<String> contentTypes = [];
 
 
-  /// Получение валютных активов клиента
-  ///
-  /// 
-    Future<PortfolioCurrenciesResponse> 
-  portfolioCurrenciesGet({Options options, String brokerAccountId }) async {
 
-    final response = await apiDelegate.portfolioCurrenciesGet( options: options, brokerAccountId: brokerAccountId);
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'get'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
 
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.portfolioCurrenciesGet_decode(response);
-    }
-  }
+        var serializer = _serializers.serializerForType(PortfolioCurrenciesResponse);
+        var data = _serializers.deserializeWith<PortfolioCurrenciesResponse>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-  /// Получение валютных активов клиента
-  ///
-  /// 
-  /// Получение портфеля клиента
-  ///
-  /// 
-    Future<PortfolioResponse> 
-  portfolioGet({Options options, String brokerAccountId }) async {
+            return Response<PortfolioCurrenciesResponse>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
+        /// Получение портфеля клиента
+        ///
+        /// 
+        Future<Response<PortfolioResponse>>portfolioGet({ String brokerAccountId,CancelToken cancelToken, Map<String, String> headers,}) async {
 
-    final response = await apiDelegate.portfolioGet( options: options, brokerAccountId: brokerAccountId);
+        String _path = "/portfolio";
 
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.portfolioGet_decode(response);
-    }
-  }
+        Map<String, dynamic> queryParams = {};
+        Map<String, String> headerParams = Map.from(headers ?? {});
+        dynamic bodyData;
 
-  /// Получение портфеля клиента
-  ///
-  /// 
-}
+                queryParams[r'brokerAccountId'] = brokerAccountId;
+        queryParams.removeWhere((key, value) => value == null);
+        headerParams.removeWhere((key, value) => value == null);
+
+        List<String> contentTypes = [];
 
 
-  class PortfolioApiDelegate {
-  final ApiClient apiClient;
 
-PortfolioApiDelegate(this.apiClient) : assert(apiClient != null);
+            return _dio.request(
+            _path,
+            queryParameters: queryParams,
+            data: bodyData,
+            options: Options(
+            method: 'get'.toUpperCase(),
+            headers: headerParams,
+            extra: {
+                'secure': [ {"type": "http", "name": "sso_auth" }],
+            },
+            contentType: contentTypes.isNotEmpty ? contentTypes[0] : "application/json",
+            ),
+            cancelToken: cancelToken,
+            ).then((response) {
 
-    Future<ApiResponse>
-  portfolioCurrenciesGet({Options options, String brokerAccountId }) async {
-    Object postBody;
+        var serializer = _serializers.serializerForType(PortfolioResponse);
+        var data = _serializers.deserializeWith<PortfolioResponse>(serializer, response.data is String ? jsonDecode(response.data) : response.data);
 
-    // verify required params are set
-
-    // create path and map variables
-    final __path = '/portfolio/currencies';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-        if(brokerAccountId != null) {
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'brokerAccountId', brokerAccountId));
+            return Response<PortfolioResponse>(
+                data: data,
+                headers: response.headers,
+                request: response.request,
+                redirects: response.redirects,
+                statusCode: response.statusCode,
+                statusMessage: response.statusMessage,
+                extra: response.extra,
+            );
+            });
+            }
         }
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = [];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'GET';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<PortfolioCurrenciesResponse> 
-  portfolioCurrenciesGet_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'PortfolioCurrenciesResponse') as PortfolioCurrenciesResponse;
-    }
-
-    return null;
-    }
-    Future<ApiResponse>
-  portfolioGet({Options options, String brokerAccountId }) async {
-    Object postBody;
-
-    // verify required params are set
-
-    // create path and map variables
-    final __path = '/portfolio';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-        if(brokerAccountId != null) {
-      queryParams.addAll(convertParametersForCollectionFormat(LocalApiClient.parameterToString, '', 'brokerAccountId', brokerAccountId));
-        }
-
-    final authNames = <String>['sso_auth'];
-    final opt = options ?? Options();
-
-      final contentTypes = [];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'GET';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<PortfolioResponse> 
-  portfolioGet_decode(ApiResponse response) async {
-    if(response.body != null) {
-            return LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'PortfolioResponse') as PortfolioResponse;
-    }
-
-    return null;
-    }
-  }
-
-

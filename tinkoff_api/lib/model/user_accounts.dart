@@ -1,90 +1,22 @@
-part of tinkoff_api.api;
+            import 'package:tinkoff_api/model/user_account.dart';
+            import 'package:built_collection/built_collection.dart';
+        import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-// UserAccounts
-class UserAccounts {
-    
-      List<UserAccount> accounts = [];
-UserAccounts();
+part 'user_accounts.g.dart';
 
-  @override
-  String toString() {
-    return 'UserAccounts[accounts=$accounts, ]';
-  }
-
-  fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-  
-    {
-      final _jsonData = json[r'accounts'];
-      accounts = (_jsonData == null) ? null :
-            UserAccount.listFromJson(_jsonData);
-    } // _jsonFieldName
-
-  }
-
-  UserAccounts.fromJson(Map<String, dynamic> json) {
-    fromJson(json); // allows child classes to call
-  }
-
-  Map<String, dynamic> toJson() {
-
-    final json = <String, dynamic>{};
-    if (accounts != null) {
-          json[r'accounts'] = LocalApiClient.serialize(accounts);
-    }
-    return json;
-  }
-  static List<UserAccounts> listFromJson(List<dynamic> json) {
-    return json == null ? <UserAccounts>[] : json.map((value) => UserAccounts.fromJson(value)).toList();
-  }
-
-  static Map<String, UserAccounts> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, UserAccounts>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = UserAccounts.fromJson(value));
-    }
-    return map;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-
-    if (other is UserAccounts && runtimeType == other.runtimeType) {
-    return 
-        const ListEquality().equals(accounts, other.accounts)    
-    ;
-    }
-
-    return false;
-  }
-
-  @override
-  int get hashCode {
-    var hashCode = runtimeType.hashCode;
+abstract class UserAccounts implements Built<UserAccounts, UserAccountsBuilder> {
 
     
-        hashCode = hashCode ^ const ListEquality().hash(accounts);
-    
+        @nullable
+    @BuiltValueField(wireName: r'accounts')
+    BuiltList<UserAccount> get accounts;
 
-    return hashCode;
-  }
+    // Boilerplate code needed to wire-up generated code
+    UserAccounts._();
 
-  UserAccounts copyWith({
-           List<UserAccount> accounts,
-    }) {
-    UserAccounts copy = UserAccounts();
-        {
-        var newVal;
-        final v = accounts ?? this.accounts;
-          newVal = <UserAccount>        []..addAll((v ?? []).map((y) => y.copyWith()).toList())
-;
-        copy.accounts = newVal;
-        }
-    return copy;
-  }
+    factory UserAccounts([updates(UserAccountsBuilder b)]) = _$UserAccounts;
+    static Serializer<UserAccounts> get serializer => _$userAccountsSerializer;
+
 }
-
 

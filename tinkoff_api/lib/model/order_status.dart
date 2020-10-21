@@ -1,45 +1,52 @@
-part of tinkoff_api.api;
+        import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
+part 'order_status.g.dart';
 
-enum OrderStatus {
-    new_, partiallyFill, fill, cancelled, replaced, pendingCancel, rejected, pendingReplace, pendingNew
+class OrderStatus extends EnumClass {
+
+  /// Статус заявки
+  @BuiltValueEnumConst(wireName: "New")
+  static const OrderStatus new_ = _$new_;
+  /// Статус заявки
+  @BuiltValueEnumConst(wireName: "PartiallyFill")
+  static const OrderStatus partiallyFill = _$partiallyFill;
+  /// Статус заявки
+  @BuiltValueEnumConst(wireName: "Fill")
+  static const OrderStatus fill = _$fill;
+  /// Статус заявки
+  @BuiltValueEnumConst(wireName: "Cancelled")
+  static const OrderStatus cancelled = _$cancelled;
+  /// Статус заявки
+  @BuiltValueEnumConst(wireName: "Replaced")
+  static const OrderStatus replaced = _$replaced;
+  /// Статус заявки
+  @BuiltValueEnumConst(wireName: "PendingCancel")
+  static const OrderStatus pendingCancel = _$pendingCancel;
+  /// Статус заявки
+  @BuiltValueEnumConst(wireName: "Rejected")
+  static const OrderStatus rejected = _$rejected;
+  /// Статус заявки
+  @BuiltValueEnumConst(wireName: "PendingReplace")
+  static const OrderStatus pendingReplace = _$pendingReplace;
+  /// Статус заявки
+  @BuiltValueEnumConst(wireName: "PendingNew")
+  static const OrderStatus pendingNew = _$pendingNew;
+
+  static Serializer<OrderStatus> get serializer => _$orderStatusSerializer;
+
+  const OrderStatus._(String name): super(name);
+
+  static BuiltSet<OrderStatus> get values => _$values;
+  static OrderStatus valueOf(String name) => _$valueOf(name);
 }
 
-class OrderStatusTypeTransformer {
-  static Map<String, OrderStatus> fromJsonMap = {  
-  "New":OrderStatus.new_, "PartiallyFill":OrderStatus.partiallyFill, "Fill":OrderStatus.fill, "Cancelled":OrderStatus.cancelled, "Replaced":OrderStatus.replaced, "PendingCancel":OrderStatus.pendingCancel, "Rejected":OrderStatus.rejected, "PendingReplace":OrderStatus.pendingReplace, "PendingNew":OrderStatus.pendingNew
- };
-  static Map<OrderStatus, String> toJsonMap = {  
-  OrderStatus.new_:"New", OrderStatus.partiallyFill:"PartiallyFill", OrderStatus.fill:"Fill", OrderStatus.cancelled:"Cancelled", OrderStatus.replaced:"Replaced", OrderStatus.pendingCancel:"PendingCancel", OrderStatus.rejected:"Rejected", OrderStatus.pendingReplace:"PendingReplace", OrderStatus.pendingNew:"PendingNew"
- };
-
-  static OrderStatus fromJson(dynamic data) {
-    var found = fromJsonMap[data];
-    if (found == null) {
-      throw('Unknown enum value to decode: $data');
-    }
-    return found;
-  }
-
-  static dynamic toJson(OrderStatus data) {
-    return toJsonMap[data];
-  }
-
-  static List<OrderStatus> listFromJson(List<dynamic> json) {
-    return json == null ? <OrderStatus>[] : json.map((value) => fromJson(value)).toList();
-  }
-
-  static OrderStatus copyWith(OrderStatus instance) {
-    return instance;
-  }
-
-  static Map<String, OrderStatus> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, OrderStatus>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = fromJson(value));
-    }
-    return map;
-  }
-}
-
+/// Optionally, enum_class can generate a mixin to go with your enum for use
+/// with Angular. It exposes your enum constants as getters. So, if you mix it
+/// in to your Dart component class, the values become available to the
+/// corresponding Angular template.
+///
+/// Trigger mixin generation by writing a line like this one next to your enum.
+abstract class OrderStatusMixin = Object with _$OrderStatusMixin;
 

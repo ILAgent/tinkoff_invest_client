@@ -1,45 +1,29 @@
-part of tinkoff_api.api;
+        import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
+part 'trade_status.g.dart';
 
-enum TradeStatus {
-    normalTrading, notAvailableForTrading
+class TradeStatus extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: "NormalTrading")
+  static const TradeStatus normalTrading = _$normalTrading;
+  @BuiltValueEnumConst(wireName: "NotAvailableForTrading")
+  static const TradeStatus notAvailableForTrading = _$notAvailableForTrading;
+
+  static Serializer<TradeStatus> get serializer => _$tradeStatusSerializer;
+
+  const TradeStatus._(String name): super(name);
+
+  static BuiltSet<TradeStatus> get values => _$values;
+  static TradeStatus valueOf(String name) => _$valueOf(name);
 }
 
-class TradeStatusTypeTransformer {
-  static Map<String, TradeStatus> fromJsonMap = {  
-  "NormalTrading":TradeStatus.normalTrading, "NotAvailableForTrading":TradeStatus.notAvailableForTrading
- };
-  static Map<TradeStatus, String> toJsonMap = {  
-  TradeStatus.normalTrading:"NormalTrading", TradeStatus.notAvailableForTrading:"NotAvailableForTrading"
- };
-
-  static TradeStatus fromJson(dynamic data) {
-    var found = fromJsonMap[data];
-    if (found == null) {
-      throw('Unknown enum value to decode: $data');
-    }
-    return found;
-  }
-
-  static dynamic toJson(TradeStatus data) {
-    return toJsonMap[data];
-  }
-
-  static List<TradeStatus> listFromJson(List<dynamic> json) {
-    return json == null ? <TradeStatus>[] : json.map((value) => fromJson(value)).toList();
-  }
-
-  static TradeStatus copyWith(TradeStatus instance) {
-    return instance;
-  }
-
-  static Map<String, TradeStatus> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, TradeStatus>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = fromJson(value));
-    }
-    return map;
-  }
-}
-
+/// Optionally, enum_class can generate a mixin to go with your enum for use
+/// with Angular. It exposes your enum constants as getters. So, if you mix it
+/// in to your Dart component class, the values become available to the
+/// corresponding Angular template.
+///
+/// Trigger mixin generation by writing a line like this one next to your enum.
+abstract class TradeStatusMixin = Object with _$TradeStatusMixin;
 

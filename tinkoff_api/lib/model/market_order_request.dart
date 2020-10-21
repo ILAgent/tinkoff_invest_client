@@ -1,107 +1,26 @@
-part of tinkoff_api.api;
+            import 'package:tinkoff_api/model/operation_type.dart';
+        import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-// MarketOrderRequest
-class MarketOrderRequest {
-    
-      int lots;
-    
-        OperationType operation;
-MarketOrderRequest();
+part 'market_order_request.g.dart';
 
-  @override
-  String toString() {
-    return 'MarketOrderRequest[lots=$lots, operation=$operation, ]';
-  }
-
-  fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-  
-    {
-      final _jsonData = json[r'lots'];
-      lots = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'operation'];
-      operation = (_jsonData == null) ? null :
-        OperationTypeTypeTransformer.fromJson(_jsonData);
-
-    } // _jsonFieldName
-
-  }
-
-  MarketOrderRequest.fromJson(Map<String, dynamic> json) {
-    fromJson(json); // allows child classes to call
-  }
-
-  Map<String, dynamic> toJson() {
-
-    final json = <String, dynamic>{};
-    if (lots != null) {
-            json[r'lots'] = LocalApiClient.serialize(lots);
-    }
-    if (operation != null) {
-          json[r'operation'] = LocalApiClient.serialize(operation);
-    }
-    return json;
-  }
-  static List<MarketOrderRequest> listFromJson(List<dynamic> json) {
-    return json == null ? <MarketOrderRequest>[] : json.map((value) => MarketOrderRequest.fromJson(value)).toList();
-  }
-
-  static Map<String, MarketOrderRequest> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, MarketOrderRequest>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = MarketOrderRequest.fromJson(value));
-    }
-    return map;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-
-    if (other is MarketOrderRequest && runtimeType == other.runtimeType) {
-    return 
-
-     lots == other.lots &&
-  
-          operation == other.operation    
-    ;
-    }
-
-    return false;
-  }
-
-  @override
-  int get hashCode {
-    var hashCode = runtimeType.hashCode;
+abstract class MarketOrderRequest implements Built<MarketOrderRequest, MarketOrderRequestBuilder> {
 
     
-
-    if (lots != null) {
-      hashCode = hashCode ^ lots.hashCode;
-    }
-
-            if (operation != null) {
-              hashCode = hashCode ^ operation.hashCode;
-            }
+        @nullable
+    @BuiltValueField(wireName: r'lots')
+    int get lots;
     
+        @nullable
+    @BuiltValueField(wireName: r'operation')
+    OperationType get operation;
+        //enum operationEnum {  Buy,  Sell,  };
 
-    return hashCode;
-  }
+    // Boilerplate code needed to wire-up generated code
+    MarketOrderRequest._();
 
-  MarketOrderRequest copyWith({
-             int lots,
-           OperationType operation,
-    }) {
-    MarketOrderRequest copy = MarketOrderRequest();
-        copy.lots = lots ?? this.lots;
-        copy.operation = operation ?? this.operation;
-    return copy;
-  }
+    factory MarketOrderRequest([updates(MarketOrderRequestBuilder b)]) = _$MarketOrderRequest;
+    static Serializer<MarketOrderRequest> get serializer => _$marketOrderRequestSerializer;
+
 }
-
 

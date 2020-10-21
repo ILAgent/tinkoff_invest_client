@@ -1,127 +1,29 @@
-part of tinkoff_api.api;
+            import 'package:tinkoff_api/model/error_payload.dart';
+        import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-// Error
-class Error {
-    
-      String trackingId;
-    
-      String status = "Error";
-    
-      ErrorPayload payload;
-Error();
+part 'error.g.dart';
 
-  @override
-  String toString() {
-    return 'Error[trackingId=$trackingId, status=$status, payload=$payload, ]';
-  }
-
-  fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-  
-    {
-      final _jsonData = json[r'trackingId'];
-      trackingId = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'status'];
-      status = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'payload'];
-      payload = (_jsonData == null) ? null :
-        
-        ErrorPayload.fromJson(_jsonData);
-    } // _jsonFieldName
-
-  }
-
-  Error.fromJson(Map<String, dynamic> json) {
-    fromJson(json); // allows child classes to call
-  }
-
-  Map<String, dynamic> toJson() {
-
-    final json = <String, dynamic>{};
-    if (trackingId != null) {
-            json[r'trackingId'] = LocalApiClient.serialize(trackingId);
-    }
-    if (status != null) {
-            json[r'status'] = LocalApiClient.serialize(status);
-    }
-    if (payload != null) {
-          json[r'payload'] = LocalApiClient.serialize(payload);
-    }
-    return json;
-  }
-  static List<Error> listFromJson(List<dynamic> json) {
-    return json == null ? <Error>[] : json.map((value) => Error.fromJson(value)).toList();
-  }
-
-  static Map<String, Error> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, Error>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = Error.fromJson(value));
-    }
-    return map;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-
-    if (other is Error && runtimeType == other.runtimeType) {
-    return 
-
-     trackingId == other.trackingId &&
-  
-
-     status == other.status &&
-  
-          payload == other.payload    
-    ;
-    }
-
-    return false;
-  }
-
-  @override
-  int get hashCode {
-    var hashCode = runtimeType.hashCode;
+abstract class Error implements Built<Error, ErrorBuilder> {
 
     
-
-    if (trackingId != null) {
-      hashCode = hashCode ^ trackingId.hashCode;
-    }
-
-
-    if (status != null) {
-      hashCode = hashCode ^ status.hashCode;
-    }
-
-            if (payload != null) {
-              hashCode = hashCode ^ payload.hashCode;
-            }
+        @nullable
+    @BuiltValueField(wireName: r'trackingId')
+    String get trackingId;
     
+        @nullable
+    @BuiltValueField(wireName: r'status')
+    String get status;
+    
+        @nullable
+    @BuiltValueField(wireName: r'payload')
+    ErrorPayload get payload;
 
-    return hashCode;
-  }
+    // Boilerplate code needed to wire-up generated code
+    Error._();
 
-  Error copyWith({
-             String trackingId,
-             String status,
-           ErrorPayload payload,
-    }) {
-    Error copy = Error();
-        copy.trackingId = trackingId ?? this.trackingId;
-        copy.status = status ?? this.status;
-        copy.payload = payload ?? this.payload?.copyWith();
-    return copy;
-  }
+    factory Error([updates(ErrorBuilder b)]) = _$Error;
+    static Serializer<Error> get serializer => _$errorSerializer;
+
 }
-
 

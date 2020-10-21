@@ -1,225 +1,54 @@
-part of tinkoff_api.api;
+            import 'package:tinkoff_api/model/order_type.dart';
+            import 'package:tinkoff_api/model/order_status.dart';
+            import 'package:tinkoff_api/model/operation_type.dart';
+        import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-// Order
-class Order {
-    
-      String orderId;
-    
-      String figi;
-    
-        OperationType operation;
-    
-        OrderStatus status;
-    
-      int requestedLots;
-    
-      int executedLots;
-    
-        OrderType type;
-    
-      double price;
-Order();
+part 'order.g.dart';
 
-  @override
-  String toString() {
-    return 'Order[orderId=$orderId, figi=$figi, operation=$operation, status=$status, requestedLots=$requestedLots, executedLots=$executedLots, type=$type, price=$price, ]';
-  }
-
-  fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-  
-    {
-      final _jsonData = json[r'orderId'];
-      orderId = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'figi'];
-      figi = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'operation'];
-      operation = (_jsonData == null) ? null :
-        OperationTypeTypeTransformer.fromJson(_jsonData);
-
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'status'];
-      status = (_jsonData == null) ? null :
-        OrderStatusTypeTransformer.fromJson(_jsonData);
-
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'requestedLots'];
-      requestedLots = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'executedLots'];
-      executedLots = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'type'];
-      type = (_jsonData == null) ? null :
-        OrderTypeTypeTransformer.fromJson(_jsonData);
-
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'price'];
-      price = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-
-  }
-
-  Order.fromJson(Map<String, dynamic> json) {
-    fromJson(json); // allows child classes to call
-  }
-
-  Map<String, dynamic> toJson() {
-
-    final json = <String, dynamic>{};
-    if (orderId != null) {
-            json[r'orderId'] = LocalApiClient.serialize(orderId);
-    }
-    if (figi != null) {
-            json[r'figi'] = LocalApiClient.serialize(figi);
-    }
-    if (operation != null) {
-          json[r'operation'] = LocalApiClient.serialize(operation);
-    }
-    if (status != null) {
-          json[r'status'] = LocalApiClient.serialize(status);
-    }
-    if (requestedLots != null) {
-            json[r'requestedLots'] = LocalApiClient.serialize(requestedLots);
-    }
-    if (executedLots != null) {
-            json[r'executedLots'] = LocalApiClient.serialize(executedLots);
-    }
-    if (type != null) {
-          json[r'type'] = LocalApiClient.serialize(type);
-    }
-    if (price != null) {
-            json[r'price'] = LocalApiClient.serialize(price);
-    }
-    return json;
-  }
-  static List<Order> listFromJson(List<dynamic> json) {
-    return json == null ? <Order>[] : json.map((value) => Order.fromJson(value)).toList();
-  }
-
-  static Map<String, Order> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, Order>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = Order.fromJson(value));
-    }
-    return map;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-
-    if (other is Order && runtimeType == other.runtimeType) {
-    return 
-
-     orderId == other.orderId &&
-  
-
-     figi == other.figi &&
-  
-          operation == other.operation && // other
-    
-          status == other.status && // other
-    
-
-     requestedLots == other.requestedLots &&
-  
-
-     executedLots == other.executedLots &&
-  
-          type == other.type && // other
-    
-
-     price == other.price  
-    ;
-    }
-
-    return false;
-  }
-
-  @override
-  int get hashCode {
-    var hashCode = runtimeType.hashCode;
+abstract class Order implements Built<Order, OrderBuilder> {
 
     
-
-    if (orderId != null) {
-      hashCode = hashCode ^ orderId.hashCode;
-    }
-
-
-    if (figi != null) {
-      hashCode = hashCode ^ figi.hashCode;
-    }
-
-            if (operation != null) {
-              hashCode = hashCode ^ operation.hashCode;
-            }
+        @nullable
+    @BuiltValueField(wireName: r'orderId')
+    String get orderId;
     
-            if (status != null) {
-              hashCode = hashCode ^ status.hashCode;
-            }
+        @nullable
+    @BuiltValueField(wireName: r'figi')
+    String get figi;
     
-
-    if (requestedLots != null) {
-      hashCode = hashCode ^ requestedLots.hashCode;
-    }
-
-
-    if (executedLots != null) {
-      hashCode = hashCode ^ executedLots.hashCode;
-    }
-
-            if (type != null) {
-              hashCode = hashCode ^ type.hashCode;
-            }
+        @nullable
+    @BuiltValueField(wireName: r'operation')
+    OperationType get operation;
+        //enum operationEnum {  Buy,  Sell,  };
     
+        @nullable
+    @BuiltValueField(wireName: r'status')
+    OrderStatus get status;
+        //enum statusEnum {  New,  PartiallyFill,  Fill,  Cancelled,  Replaced,  PendingCancel,  Rejected,  PendingReplace,  PendingNew,  };
+    
+        @nullable
+    @BuiltValueField(wireName: r'requestedLots')
+    int get requestedLots;
+    
+        @nullable
+    @BuiltValueField(wireName: r'executedLots')
+    int get executedLots;
+    
+        @nullable
+    @BuiltValueField(wireName: r'type')
+    OrderType get type;
+        //enum typeEnum {  Limit,  Market,  };
+    
+        @nullable
+    @BuiltValueField(wireName: r'price')
+    double get price;
 
-    if (price != null) {
-      hashCode = hashCode ^ price.hashCode;
-    }
+    // Boilerplate code needed to wire-up generated code
+    Order._();
 
+    factory Order([updates(OrderBuilder b)]) = _$Order;
+    static Serializer<Order> get serializer => _$orderSerializer;
 
-    return hashCode;
-  }
-
-  Order copyWith({
-             String orderId,
-             String figi,
-           OperationType operation,
-           OrderStatus status,
-             int requestedLots,
-             int executedLots,
-           OrderType type,
-             double price,
-    }) {
-    Order copy = Order();
-        copy.orderId = orderId ?? this.orderId;
-        copy.figi = figi ?? this.figi;
-        copy.operation = operation ?? this.operation;
-        copy.status = status ?? this.status;
-        copy.requestedLots = requestedLots ?? this.requestedLots;
-        copy.executedLots = executedLots ?? this.executedLots;
-        copy.type = type ?? this.type;
-        copy.price = price ?? this.price;
-    return copy;
-  }
 }
-
 

@@ -1,45 +1,43 @@
-part of tinkoff_api.api;
+        import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
+part 'sandbox_currency.g.dart';
 
-enum SandboxCurrency {
-    RUB, USD, EUR, GBP, HKD, CHF, JPY, CNY, TRY_
+class SandboxCurrency extends EnumClass {
+
+  @BuiltValueEnumConst(wireName: "RUB")
+  static const SandboxCurrency rUB = _$rUB;
+  @BuiltValueEnumConst(wireName: "USD")
+  static const SandboxCurrency uSD = _$uSD;
+  @BuiltValueEnumConst(wireName: "EUR")
+  static const SandboxCurrency eUR = _$eUR;
+  @BuiltValueEnumConst(wireName: "GBP")
+  static const SandboxCurrency gBP = _$gBP;
+  @BuiltValueEnumConst(wireName: "HKD")
+  static const SandboxCurrency hKD = _$hKD;
+  @BuiltValueEnumConst(wireName: "CHF")
+  static const SandboxCurrency cHF = _$cHF;
+  @BuiltValueEnumConst(wireName: "JPY")
+  static const SandboxCurrency jPY = _$jPY;
+  @BuiltValueEnumConst(wireName: "CNY")
+  static const SandboxCurrency cNY = _$cNY;
+  @BuiltValueEnumConst(wireName: "TRY")
+  static const SandboxCurrency tRY_ = _$tRY_;
+
+  static Serializer<SandboxCurrency> get serializer => _$sandboxCurrencySerializer;
+
+  const SandboxCurrency._(String name): super(name);
+
+  static BuiltSet<SandboxCurrency> get values => _$values;
+  static SandboxCurrency valueOf(String name) => _$valueOf(name);
 }
 
-class SandboxCurrencyTypeTransformer {
-  static Map<String, SandboxCurrency> fromJsonMap = {  
-  "RUB":SandboxCurrency.RUB, "USD":SandboxCurrency.USD, "EUR":SandboxCurrency.EUR, "GBP":SandboxCurrency.GBP, "HKD":SandboxCurrency.HKD, "CHF":SandboxCurrency.CHF, "JPY":SandboxCurrency.JPY, "CNY":SandboxCurrency.CNY, "TRY":SandboxCurrency.TRY_
- };
-  static Map<SandboxCurrency, String> toJsonMap = {  
-  SandboxCurrency.RUB:"RUB", SandboxCurrency.USD:"USD", SandboxCurrency.EUR:"EUR", SandboxCurrency.GBP:"GBP", SandboxCurrency.HKD:"HKD", SandboxCurrency.CHF:"CHF", SandboxCurrency.JPY:"JPY", SandboxCurrency.CNY:"CNY", SandboxCurrency.TRY_:"TRY"
- };
-
-  static SandboxCurrency fromJson(dynamic data) {
-    var found = fromJsonMap[data];
-    if (found == null) {
-      throw('Unknown enum value to decode: $data');
-    }
-    return found;
-  }
-
-  static dynamic toJson(SandboxCurrency data) {
-    return toJsonMap[data];
-  }
-
-  static List<SandboxCurrency> listFromJson(List<dynamic> json) {
-    return json == null ? <SandboxCurrency>[] : json.map((value) => fromJson(value)).toList();
-  }
-
-  static SandboxCurrency copyWith(SandboxCurrency instance) {
-    return instance;
-  }
-
-  static Map<String, SandboxCurrency> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, SandboxCurrency>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = fromJson(value));
-    }
-    return map;
-  }
-}
-
+/// Optionally, enum_class can generate a mixin to go with your enum for use
+/// with Angular. It exposes your enum constants as getters. So, if you mix it
+/// in to your Dart component class, the values become available to the
+/// corresponding Angular template.
+///
+/// Trigger mixin generation by writing a line like this one next to your enum.
+abstract class SandboxCurrencyMixin = Object with _$SandboxCurrencyMixin;
 

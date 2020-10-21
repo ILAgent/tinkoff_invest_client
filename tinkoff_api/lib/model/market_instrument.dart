@@ -1,246 +1,56 @@
-part of tinkoff_api.api;
+            import 'package:tinkoff_api/model/instrument_type.dart';
+            import 'package:tinkoff_api/model/currency.dart';
+        import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-// MarketInstrument
-class MarketInstrument {
+part 'market_instrument.g.dart';
+
+abstract class MarketInstrument implements Built<MarketInstrument, MarketInstrumentBuilder> {
+
     
-      String figi;
+        @nullable
+    @BuiltValueField(wireName: r'figi')
+    String get figi;
     
-      String ticker;
+        @nullable
+    @BuiltValueField(wireName: r'ticker')
+    String get ticker;
     
-      String isin;
+        @nullable
+    @BuiltValueField(wireName: r'isin')
+    String get isin;
     /* Шаг цены */
-      double minPriceIncrement;
+        @nullable
+    @BuiltValueField(wireName: r'minPriceIncrement')
+    double get minPriceIncrement;
     
-      int lot;
+        @nullable
+    @BuiltValueField(wireName: r'lot')
+    int get lot;
     /* Минимальное число инструментов для покупки должно быть не меньше, чем размер лота х количество лотов */
-      int minQuantity;
+        @nullable
+    @BuiltValueField(wireName: r'minQuantity')
+    int get minQuantity;
     
-        Currency currency;
+        @nullable
+    @BuiltValueField(wireName: r'currency')
+    Currency get currency;
+        //enum currencyEnum {  RUB,  USD,  EUR,  GBP,  HKD,  CHF,  JPY,  CNY,  TRY,  };
     
-      String name;
+        @nullable
+    @BuiltValueField(wireName: r'name')
+    String get name;
     
-        InstrumentType type;
-MarketInstrument();
+        @nullable
+    @BuiltValueField(wireName: r'type')
+    InstrumentType get type;
+        //enum typeEnum {  Stock,  Currency,  Bond,  Etf,  };
 
-  @override
-  String toString() {
-    return 'MarketInstrument[figi=$figi, ticker=$ticker, isin=$isin, minPriceIncrement=$minPriceIncrement, lot=$lot, minQuantity=$minQuantity, currency=$currency, name=$name, type=$type, ]';
-  }
+    // Boilerplate code needed to wire-up generated code
+    MarketInstrument._();
 
-  fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-  
-    {
-      final _jsonData = json[r'figi'];
-      figi = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'ticker'];
-      ticker = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'isin'];
-      isin = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'minPriceIncrement'];
-      minPriceIncrement = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'lot'];
-      lot = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'minQuantity'];
-      minQuantity = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'currency'];
-      currency = (_jsonData == null) ? null :
-        CurrencyTypeTransformer.fromJson(_jsonData);
+    factory MarketInstrument([updates(MarketInstrumentBuilder b)]) = _$MarketInstrument;
+    static Serializer<MarketInstrument> get serializer => _$marketInstrumentSerializer;
 
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'name'];
-      name = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'type'];
-      type = (_jsonData == null) ? null :
-        InstrumentTypeTypeTransformer.fromJson(_jsonData);
-
-    } // _jsonFieldName
-
-  }
-
-  MarketInstrument.fromJson(Map<String, dynamic> json) {
-    fromJson(json); // allows child classes to call
-  }
-
-  Map<String, dynamic> toJson() {
-
-    final json = <String, dynamic>{};
-    if (figi != null) {
-            json[r'figi'] = LocalApiClient.serialize(figi);
-    }
-    if (ticker != null) {
-            json[r'ticker'] = LocalApiClient.serialize(ticker);
-    }
-    if (isin != null) {
-            json[r'isin'] = LocalApiClient.serialize(isin);
-    }
-    if (minPriceIncrement != null) {
-            json[r'minPriceIncrement'] = LocalApiClient.serialize(minPriceIncrement);
-    }
-    if (lot != null) {
-            json[r'lot'] = LocalApiClient.serialize(lot);
-    }
-    if (minQuantity != null) {
-            json[r'minQuantity'] = LocalApiClient.serialize(minQuantity);
-    }
-    if (currency != null) {
-          json[r'currency'] = LocalApiClient.serialize(currency);
-    }
-    if (name != null) {
-            json[r'name'] = LocalApiClient.serialize(name);
-    }
-    if (type != null) {
-          json[r'type'] = LocalApiClient.serialize(type);
-    }
-    return json;
-  }
-  static List<MarketInstrument> listFromJson(List<dynamic> json) {
-    return json == null ? <MarketInstrument>[] : json.map((value) => MarketInstrument.fromJson(value)).toList();
-  }
-
-  static Map<String, MarketInstrument> mapFromJson(Map<String, dynamic> json) {
-    final map = <String, MarketInstrument>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = MarketInstrument.fromJson(value));
-    }
-    return map;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-
-    if (other is MarketInstrument && runtimeType == other.runtimeType) {
-    return 
-
-     figi == other.figi &&
-  
-
-     ticker == other.ticker &&
-  
-
-     isin == other.isin &&
-  
-
-     minPriceIncrement == other.minPriceIncrement &&
-  
-
-     lot == other.lot &&
-  
-
-     minQuantity == other.minQuantity &&
-  
-          currency == other.currency && // other
-    
-
-     name == other.name &&
-  
-          type == other.type    
-    ;
-    }
-
-    return false;
-  }
-
-  @override
-  int get hashCode {
-    var hashCode = runtimeType.hashCode;
-
-    
-
-    if (figi != null) {
-      hashCode = hashCode ^ figi.hashCode;
-    }
-
-
-    if (ticker != null) {
-      hashCode = hashCode ^ ticker.hashCode;
-    }
-
-
-    if (isin != null) {
-      hashCode = hashCode ^ isin.hashCode;
-    }
-
-
-    if (minPriceIncrement != null) {
-      hashCode = hashCode ^ minPriceIncrement.hashCode;
-    }
-
-
-    if (lot != null) {
-      hashCode = hashCode ^ lot.hashCode;
-    }
-
-
-    if (minQuantity != null) {
-      hashCode = hashCode ^ minQuantity.hashCode;
-    }
-
-            if (currency != null) {
-              hashCode = hashCode ^ currency.hashCode;
-            }
-    
-
-    if (name != null) {
-      hashCode = hashCode ^ name.hashCode;
-    }
-
-            if (type != null) {
-              hashCode = hashCode ^ type.hashCode;
-            }
-    
-
-    return hashCode;
-  }
-
-  MarketInstrument copyWith({
-             String figi,
-             String ticker,
-             String isin,
-             double minPriceIncrement,
-             int lot,
-             int minQuantity,
-           Currency currency,
-             String name,
-           InstrumentType type,
-    }) {
-    MarketInstrument copy = MarketInstrument();
-        copy.figi = figi ?? this.figi;
-        copy.ticker = ticker ?? this.ticker;
-        copy.isin = isin ?? this.isin;
-        copy.minPriceIncrement = minPriceIncrement ?? this.minPriceIncrement;
-        copy.lot = lot ?? this.lot;
-        copy.minQuantity = minQuantity ?? this.minQuantity;
-        copy.currency = currency ?? this.currency;
-        copy.name = name ?? this.name;
-        copy.type = type ?? this.type;
-    return copy;
-  }
 }
-
 
