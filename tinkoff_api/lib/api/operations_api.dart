@@ -25,8 +25,8 @@ class OperationsApi {
         Map<String, String> headerParams = Map.from(headers ?? {});
         dynamic bodyData;
 
-                queryParams[r'from'] = from;
-                queryParams[r'to'] = to;
+                queryParams[r'from'] = from.toIso8601String();
+                queryParams[r'to'] = to.toIso8601String();
                 queryParams[r'figi'] = figi;
                 queryParams[r'brokerAccountId'] = brokerAccountId;
         queryParams.removeWhere((key, value) => value == null);

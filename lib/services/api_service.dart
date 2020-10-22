@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:tinkoff_api/api.dart';
+import 'package:tinkoff_api/model/operations.dart';
 import 'package:tinkoff_api/model/portfolio.dart';
 import 'package:tinkoff_api/model/sandbox_register_request.dart';
 
@@ -21,10 +22,20 @@ class ApiService {
     return ApiService._initApi(api);
   }
 
-  Future<Portfolio> portfolio() async {
+  Future<void> initSandbox() async {
     await _api
         .getSandboxApi()
         .sandboxRegisterPost(sandboxRegisterRequest: SandboxRegisterRequest());
+  }
+
+  Future<Portfolio> portfolio() async {
     return (await _api.getPortfolioApi().portfolioGet()).data.payload;
+  }
+
+  Future<Operations> operations() async {
+    final response = await _api
+        .getOperationsApi()
+        .operationsGet(DateTime(2010, 6, 1).toUtc(), DateTime.now().toUtc());
+    return response.data.payload;
   }
 }

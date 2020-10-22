@@ -1,10 +1,19 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tinkoff_invest/services/ApiService.dart';
+import 'package:tinkoff_invest/services/api_service.dart';
 
-void main() {
+void main() async {
+
+  final apiService = ApiService();
+  await apiService.initSandbox();
+
+
   test("Portfolio test", () async {
-    final apiService = ApiService();
     final res = await apiService.portfolio();
+    print(res.toString());
+  });
+
+  test("Operations test", () async {
+    final res = await apiService.operations();
     print(res.toString());
   });
 }
