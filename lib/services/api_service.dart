@@ -11,18 +11,31 @@ class ApiService {
 
   ApiService._initApi(TinkoffApi api) : _api = api;
 
-  factory ApiService() {
+  factory ApiService._create(String url, String token) {
     final options = BaseOptions(
-      baseUrl: "https://api-invest.tinkoff.ru/openapi/sandbox",
+      baseUrl: url,
       connectTimeout: 5000,
       receiveTimeout: 3000,
-      headers: {"Authorization": "Bearer ${Private.token}"},
+      headers: {"Authorization": "Bearer $token"},
     );
     final api = TinkoffApi(dio: Dio(options));
     return ApiService._initApi(api);
   }
 
-  Future<void> initSandbox() async {
+  static Future<ApiService> sandbox() async {
+    final service = ApiService._create(
+        "https://api-invest.tinkoff.ru/openapi/sandbox", Private.sandboxToken);
+    await service._initSandbox();
+    return service;
+  }
+
+  factory ApiService() {
+    final service = ApiService._create(
+        "https://api-invest.tinkoff.ru/openapi", Private.token);
+    return service;
+  }
+
+  Future<void> _initSandbox() async {
     await _api
         .getSandboxApi()
         .sandboxRegisterPost(sandboxRegisterRequest: SandboxRegisterRequest());
