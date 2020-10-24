@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:tinkoff_api/api.dart';
+import 'package:tinkoff_api/model/candle_resolution.dart';
+import 'package:tinkoff_api/model/candles.dart';
 import 'package:tinkoff_api/model/operations.dart';
 import 'package:tinkoff_api/model/portfolio.dart';
 import 'package:tinkoff_api/model/sandbox_register_request.dart';
@@ -45,10 +47,27 @@ class ApiService {
     return (await _api.getPortfolioApi().portfolioGet()).data.payload;
   }
 
-  Future<Operations> operations() async {
-    final response = await _api
-        .getOperationsApi()
-        .operationsGet(DateTime(2010, 6, 1).toUtc(), DateTime.now().toUtc());
+  Future<Operations> operations({String figi}) async {
+    final response = await _api.getOperationsApi().operationsGet(
+          DateTime(2010, 6, 1).toUtc(),
+          DateTime.now().toUtc(),
+          figi: figi,
+        );
+    return response.data.payload;
+  }
+
+  Future<Candles> candles(
+    String figi,
+    DateTime from,
+    DateTime to,
+    CandleResolution interval,
+  ) async {
+    final response = await _api.getMarketApi().marketCandlesGet(
+          figi,
+          from,
+          to,
+          interval,
+        );
     return response.data.payload;
   }
 }

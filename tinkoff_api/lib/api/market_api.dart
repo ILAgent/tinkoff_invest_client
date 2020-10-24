@@ -77,8 +77,8 @@ class MarketApi {
         dynamic bodyData;
 
                 queryParams[r'figi'] = figi;
-                queryParams[r'from'] = from;
-                queryParams[r'to'] = to;
+                queryParams[r'from'] = from.toIso8601String();
+                queryParams[r'to'] = to.toIso8601String();
                 queryParams[r'interval'] = interval;
         queryParams.removeWhere((key, value) => value == null);
         headerParams.removeWhere((key, value) => value == null);
