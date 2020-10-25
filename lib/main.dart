@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:tinkoff_invest/view/portfolio/portfolio_widget.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(AppWidget());
 }
 
-class MyApp extends StatelessWidget {
+class AppWidget extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Tinkoff investor',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Material(child: PortfolioWidget()),
     );
   }
 }
