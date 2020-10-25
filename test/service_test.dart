@@ -28,4 +28,13 @@ void main() async {
 
     expect(await apiService.income(figi), equals(teur.expectedYield.value));
   });
+
+  test("Max requests test", () async {
+    int i = 0;
+    while (true) {
+      await apiService.operations();
+      ++i;
+      print("${DateTime.now()} $i");
+    }
+  });
 }
