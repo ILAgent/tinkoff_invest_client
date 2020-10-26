@@ -22,6 +22,7 @@ environment:
 
 dependencies:
   openapi_generator_annotations: ^1.1.3
+  built_value: ^7.1.0
   dio: ^3.0.9
   tinkoff_api:
     path: ./tinkoff_api
@@ -36,6 +37,7 @@ dependencies:
 dev_dependencies:
   openapi_generator: ^1.1.3
   build_runner: ^1.10.2
+  built_value_generator: ^7.1.0
   flutter_test:
     sdk: flutter
 
