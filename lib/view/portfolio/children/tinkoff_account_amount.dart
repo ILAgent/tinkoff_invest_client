@@ -1,21 +1,35 @@
 import 'package:flutter/widgets.dart';
+import 'package:tinkoff_api/model/currency.dart';
+import 'package:tinkoff_invest/redux/portfolio_state.dart';
 
-class TinkoffAccountAmountWidget extends StatefulWidget {
-  @override
-  _TinkoffAccountAmountWidgetState createState() =>
-      _TinkoffAccountAmountWidgetState();
-}
+class TinkoffAccountAmountWidget extends StatelessWidget {
+  final PortfolioState _state;
 
-class _TinkoffAccountAmountWidgetState
-    extends State<TinkoffAccountAmountWidget> {
+  TinkoffAccountAmountWidget(this._state);
+
   @override
   Widget build(BuildContext context) {
-    return Text(
-      "123 456,14 Rub",
-      style: TextStyle(
-        fontSize: 30,
-        fontWeight: FontWeight.w600
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(text: _state.amount.toString()),
+          TextSpan(text: _currency(_state)),
+        ],
       ),
+      style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
     );
+  }
+
+  String _currency(PortfolioState state) {
+    switch (state.currency) {
+      case Currency.rUB:
+        return " rub";
+      case Currency.eUR:
+        return " eur";
+      case Currency.uSD:
+        return " usd";
+      default:
+        throw ArgumentError(state.currency);
+    }
   }
 }

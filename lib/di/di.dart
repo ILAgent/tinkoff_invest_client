@@ -10,7 +10,7 @@ void initDI() {
   di.registerLazySingleton(() => Store<PortfolioState>(
         reducePortfolioState,
         initialState: PortfolioState((b) => b
-          ..currency = Currency.rUB
+          ..currency = Currency.uSD
           ..amount = 123456.78),
       ));
 }

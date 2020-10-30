@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
+import 'package:tinkoff_invest/redux/portfolio_state.dart';
 import 'package:tinkoff_invest/view/portfolio/portfolio_widget.dart';
 
 import 'di/di.dart';
@@ -17,7 +19,7 @@ class AppWidget extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Material(child: PortfolioWidget()),
+      home: Material(child: PortfolioWidget(di.get<Store<PortfolioState>>())),
     );
   }
 }

@@ -27,6 +27,7 @@ dependencies:
   redux: ^4.0.0+3
   flutter_redux: 0.7.0
   get_it: ^5.0.1
+  rxdart: ^0.24.1
   tinkoff_api:
     path: ./tinkoff_api
   flutter:
