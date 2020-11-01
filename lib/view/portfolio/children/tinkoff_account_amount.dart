@@ -12,7 +12,7 @@ class TinkoffAccountAmountWidget extends StatelessWidget {
     return Text.rich(
       TextSpan(
         children: [
-          TextSpan(text: _state.amount.toString()),
+          TextSpan(text: _state.amount.toStringAsFixed(2)),
           TextSpan(text: _currency(_state)),
         ],
       ),
