@@ -7,3 +7,5 @@ class ChangeTotalAmount {
 
   ChangeTotalAmount(this.amount);
 }
+
+class InitAction {}

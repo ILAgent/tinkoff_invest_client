@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
+import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/portfolio_state.dart';
 import 'package:tinkoff_invest/view/portfolio/portfolio_widget.dart';
 
@@ -7,6 +8,7 @@ import 'di/di.dart';
 
 void main() {
   initDI();
+  di.get<Store<PortfolioState>>().dispatch(InitAction());
   runApp(AppWidget());
 }
 
