@@ -53,4 +53,9 @@ void main() async {
         Currency.eUR);
     print(res);
   });
+
+  test("Total amount", () async {
+    final res = await apiService.totalMoney(Currency.eUR);
+    print(res);
+  });
 }
