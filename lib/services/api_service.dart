@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:tinkoff_api/api.dart';
 import 'package:tinkoff_api/model/candle_resolution.dart';
 import 'package:tinkoff_api/model/candles.dart';
+import 'package:tinkoff_api/model/market_instrument_list.dart';
 import 'package:tinkoff_api/model/operations.dart';
 import 'package:tinkoff_api/model/portfolio.dart';
 import 'package:tinkoff_api/model/sandbox_register_request.dart';
@@ -72,6 +73,11 @@ class ApiService {
           to,
           interval,
         );
+    return response.data.payload;
+  }
+
+  Future<MarketInstrumentList> currencies() async{
+    final response = await _api.getMarketApi().marketCurrenciesGet();
     return response.data.payload;
   }
 }

@@ -25,9 +25,9 @@ dependencies:
   built_value: ^7.1.0
   dio: ^3.0.9
   redux: ^4.0.0+3
-  flutter_redux: 0.7.0
   get_it: ^5.0.1
   rxdart: ^0.24.1
+  redux_epics: ^0.14.0
   tinkoff_api:
     path: ./tinkoff_api
   flutter:

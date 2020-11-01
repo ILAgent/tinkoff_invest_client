@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tinkoff_api/model/currency.dart';
+import 'package:tinkoff_api/model/money_amount.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/api_service_extension.dart';
 
@@ -36,5 +38,19 @@ void main() async {
       ++i;
       print("${DateTime.now()} $i");
     }
+  });
+
+  test("Currensies", () async {
+    final res = await apiService.currencies();
+    print(res);
+  });
+
+  test("Converter", () async {
+    final res = await apiService.convert(
+        MoneyAmount((b) => b
+          ..currency = Currency.rUB
+          ..value = 1),
+        Currency.eUR);
+    print(res);
   });
 }
