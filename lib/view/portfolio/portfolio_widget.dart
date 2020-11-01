@@ -21,6 +21,7 @@ class PortfolioWidget extends StatelessWidget {
       child: StreamBuilder<PortfolioState>(
           stream: _store.states,
           builder: (context, snapshot) {
+            print(snapshot.data);
             return Container(
               padding: EdgeInsets.only(top: 50, left: 40, right: 40),
               color: Colors.white,

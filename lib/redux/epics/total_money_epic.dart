@@ -17,9 +17,9 @@ class TotalAmountEpic {
   ) {
     return actions
         .where((action) => action is TogglePortfolioCurrency)
-        .startWith(TogglePortfolioCurrency)
         .asyncMap(
       (_) async {
+        print("TogglePortfolioCurrency");
         final state = store.state;
         Currency cur;
         switch (state.currency) {
