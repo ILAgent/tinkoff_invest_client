@@ -8,6 +8,10 @@ PortfolioState reducePortfolioState(PortfolioState state, dynamic action) {
         ..currency = action.amount.currency
         ..amount = action.amount.value,
     );
+  } else if (action is UpdatePortfolioItems) {
+    return state.rebuild(
+      (b) => b..positions = action.items.toBuilder(),
+    );
   }
   return state;
 }

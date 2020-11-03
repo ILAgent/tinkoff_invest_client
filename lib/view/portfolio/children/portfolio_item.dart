@@ -37,7 +37,7 @@ class PortfolioItemWidget extends StatelessWidget {
             ),
             SizedBox(height: 5),
             Text(
-              "${_position.lots} шт.",
+              "${_position.balance} шт.",
               style: TextStyle(
                   fontWeight: FontWeight.w300,
                   fontSize: 12
