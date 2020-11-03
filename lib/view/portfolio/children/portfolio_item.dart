@@ -36,7 +36,7 @@ class PortfolioItemWidget extends StatelessWidget {
             SizedBox(height: 4),
             Text(
               _position.instrumentType == InstrumentType.currency
-                  ? _position.balance.toStringAsFixed
+                  ? _position.balance.toStringAsFixed()
                   : "${_position.lots} шт.",
               style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
             ),
