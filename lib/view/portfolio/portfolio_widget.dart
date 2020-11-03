@@ -30,15 +30,20 @@ class PortfolioWidget extends StatelessWidget {
               color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   TinkoffAccountTileWidget(snapshot.data),
                   TinkoffAccountAmountWidget(snapshot.data),
                   Expanded(
-                    child: ListView.builder(
+                    child: ListView.separated(
+                      padding: EdgeInsets.only(top: 16),
                       itemBuilder: (context, index) {
                         return PortfolioItemWidget(
                             snapshot.data.positions[index]);
+                      },
+                      separatorBuilder: (context, index) {
+                        return Container(
+                          height: 10,
+                        );
                       },
                       itemCount: snapshot.data.positions.length,
                     ),

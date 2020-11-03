@@ -31,11 +31,11 @@ class PortfolioItemWidget extends StatelessWidget {
             Text(
               _position.name,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
                 fontSize: 16
               ),
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 4),
             Text(
               "${_position.balance} шт.",
               style: TextStyle(
