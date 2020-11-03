@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:redux/redux.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
-import 'package:tinkoff_invest/redux/portfolio_state.dart';
+import 'package:tinkoff_invest/redux/dispatcher.dart';
+import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/view/portfolio/portfolio_widget.dart';
 
 import 'di/di.dart';
 
 void main() {
   initDI();
-  di.get<Store<PortfolioState>>().dispatch(InitAction());
+  di.get<Dispatcher>().dispatch(InitAction());
   runApp(AppWidget());
 }
 
@@ -21,7 +21,7 @@ class AppWidget extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Material(child: PortfolioWidget(di.get<Store<PortfolioState>>())),
+      home: Material(child: PortfolioWidget(di.get<PortfolioStore>())),
     );
   }
 }
