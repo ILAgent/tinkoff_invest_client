@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinkoff_api/model/instrument_type.dart';
 import 'package:tinkoff_api/model/portfolio_position.dart';
 
 class PortfolioItemWidget extends StatelessWidget {
@@ -30,18 +31,14 @@ class PortfolioItemWidget extends StatelessWidget {
           children: [
             Text(
               _position.name,
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 16
-              ),
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
             ),
             SizedBox(height: 4),
             Text(
-              "${_position.balance} шт.",
-              style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 12
-              ),
+              _position.instrumentType == InstrumentType.currency
+                  ? "${_position.balance}."
+                  : "${_position.lots} шт.",
+              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
             ),
           ],
         )
