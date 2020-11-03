@@ -1,5 +1,7 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:tinkoff_api/model/currency.dart';
+import 'package:tinkoff_api/model/portfolio_position.dart';
 
 part 'portfolio_state.g.dart';
 
@@ -8,6 +10,8 @@ abstract class PortfolioState
   Currency get currency;
 
   double get amount;
+
+  BuiltList<PortfolioPosition> get positions;
 
   PortfolioState._();
 
