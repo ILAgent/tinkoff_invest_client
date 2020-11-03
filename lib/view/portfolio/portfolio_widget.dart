@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tinkoff_invest/redux/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
-import 'package:tinkoff_invest/redux/store_extension.dart';
-import 'package:tinkoff_invest/view/portfolio/children/portfolio_item.dart';
+import 'package:tinkoff_invest/view/portfolio/children/portfolio_items_list.dart';
 import 'package:tinkoff_invest/view/portfolio/children/tinkoff_account_amount.dart';
 import 'package:tinkoff_invest/view/portfolio/children/tinkoff_account_title.dart';
 
@@ -24,24 +22,8 @@ class PortfolioWidget extends StatelessWidget {
         children: [
           TinkoffAccountTileWidget(_store),
           TinkoffAccountAmountWidget(_store),
-          StreamBuilder<PortfolioState>(
-            stream: _store.states,
-            builder: (context, snapshot) {
-              return Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.only(top: 16),
-                  itemBuilder: (context, index) {
-                    return PortfolioItemWidget(snapshot.data.positions[index]);
-                  },
-                  separatorBuilder: (context, index) {
-                    return Container(
-                      height: 10,
-                    );
-                  },
-                  itemCount: snapshot.data.positions.length,
-                ),
-              );
-            }
+          Expanded(
+            child: PortfolioItemsList(_store),
           )
         ],
       ),
