@@ -9,7 +9,7 @@ import 'package:tinkoff_invest/services/api_service.dart';
 final di = GetIt.instance;
 
 void initDI() {
-  di.registerLazySingleton(() => PortfolioStore());
+  di.registerLazySingleton(() => PortfolioStore(di.get(), di.get()));
   di.registerFactory<Dispatcher>(() => di.get<PortfolioStore>());
   di.registerLazySingleton(() => EpicStore(di.get<PortfolioStore>()));
   di.registerLazySingleton(() => ApiService());
