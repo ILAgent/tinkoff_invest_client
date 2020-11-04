@@ -26,22 +26,41 @@ class PortfolioItemWidget extends StatelessWidget {
           ),
         ),
         SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              _position.name,
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-            ),
-            SizedBox(height: 4),
-            Text(
-              _position.instrumentType == InstrumentType.currency
-                  ? _position.balance.toStringAsFixed(2)
-                  : "${_position.lots} шт.",
-              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
-            ),
-          ],
-        )
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Text(
+                      _position.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Text("AAAAAA"),
+                ],
+              ),
+              SizedBox(height: 4),
+              Row(
+                children: [
+                  Text(
+                    _position.instrumentType == InstrumentType.currency
+                        ? _position.balance.toStringAsFixed(2)
+                        : "${_position.lots} шт.",
+                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

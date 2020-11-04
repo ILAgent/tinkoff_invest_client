@@ -36,11 +36,11 @@ class TinkoffAccountAmountWidget extends StatelessWidget {
   String _currency(PortfolioState state) {
     switch (state.currency) {
       case Currency.rUB:
-        return " rub";
+        return " ₽";
       case Currency.eUR:
-        return " eur";
+        return " €";
       case Currency.uSD:
-        return " usd";
+        return " \$";
       default:
         throw ArgumentError(state.currency);
     }
