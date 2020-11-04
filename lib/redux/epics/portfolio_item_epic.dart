@@ -2,7 +2,7 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 
-import '../portfolio_state.dart';
+import '../state/portfolio_state.dart';
 
 class PortfolioItemsEpic {
   final ApiService _apiService;

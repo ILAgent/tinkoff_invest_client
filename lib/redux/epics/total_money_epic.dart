@@ -1,7 +1,7 @@
 import 'package:redux_epics/redux_epics.dart';
 import 'package:tinkoff_api/model/currency.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
-import 'package:tinkoff_invest/redux/portfolio_state.dart';
+import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/api_service_extension.dart';
 

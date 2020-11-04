@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
-import 'package:tinkoff_invest/redux/portfolio_state.dart';
+import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
 import 'package:tinkoff_invest/utils/currency_utils.dart';

@@ -1,5 +1,5 @@
 import 'package:tinkoff_invest/redux/actions.dart';
-import 'package:tinkoff_invest/redux/portfolio_state.dart';
+import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 
 PortfolioState reducePortfolioState(PortfolioState state, dynamic action) {
   if (action is ChangeTotalAmount) {

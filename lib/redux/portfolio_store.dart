@@ -5,7 +5,7 @@ import 'package:tinkoff_api/model/currency.dart';
 import 'package:tinkoff_api/model/portfolio_position.dart';
 import 'package:tinkoff_invest/di/di.dart';
 import 'package:tinkoff_invest/redux/dispatcher.dart';
-import 'package:tinkoff_invest/redux/portfolio_state.dart';
+import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/protfolio_state_reducer.dart';
 
 import 'epics/portfolio_item_epic.dart';
