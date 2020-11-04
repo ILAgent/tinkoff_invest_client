@@ -12,20 +12,20 @@ class _$PortfolioState extends PortfolioState {
   @override
   final double amount;
   @override
-  final BuiltList<PortfolioPosition> positions;
+  final BuiltList<PortfolioItem> items;
 
   factory _$PortfolioState([void Function(PortfolioStateBuilder) updates]) =>
       (new PortfolioStateBuilder()..update(updates)).build();
 
-  _$PortfolioState._({this.currency, this.amount, this.positions}) : super._() {
+  _$PortfolioState._({this.currency, this.amount, this.items}) : super._() {
     if (currency == null) {
       throw new BuiltValueNullFieldError('PortfolioState', 'currency');
     }
     if (amount == null) {
       throw new BuiltValueNullFieldError('PortfolioState', 'amount');
     }
-    if (positions == null) {
-      throw new BuiltValueNullFieldError('PortfolioState', 'positions');
+    if (items == null) {
+      throw new BuiltValueNullFieldError('PortfolioState', 'items');
     }
   }
 
@@ -43,13 +43,13 @@ class _$PortfolioState extends PortfolioState {
     return other is PortfolioState &&
         currency == other.currency &&
         amount == other.amount &&
-        positions == other.positions;
+        items == other.items;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc(0, currency.hashCode), amount.hashCode), positions.hashCode));
+    return $jf(
+        $jc($jc($jc(0, currency.hashCode), amount.hashCode), items.hashCode));
   }
 
   @override
@@ -57,7 +57,7 @@ class _$PortfolioState extends PortfolioState {
     return (newBuiltValueToStringHelper('PortfolioState')
           ..add('currency', currency)
           ..add('amount', amount)
-          ..add('positions', positions))
+          ..add('items', items))
         .toString();
   }
 }
@@ -74,11 +74,10 @@ class PortfolioStateBuilder
   double get amount => _$this._amount;
   set amount(double amount) => _$this._amount = amount;
 
-  ListBuilder<PortfolioPosition> _positions;
-  ListBuilder<PortfolioPosition> get positions =>
-      _$this._positions ??= new ListBuilder<PortfolioPosition>();
-  set positions(ListBuilder<PortfolioPosition> positions) =>
-      _$this._positions = positions;
+  ListBuilder<PortfolioItem> _items;
+  ListBuilder<PortfolioItem> get items =>
+      _$this._items ??= new ListBuilder<PortfolioItem>();
+  set items(ListBuilder<PortfolioItem> items) => _$this._items = items;
 
   PortfolioStateBuilder();
 
@@ -86,7 +85,7 @@ class PortfolioStateBuilder
     if (_$v != null) {
       _currency = _$v.currency;
       _amount = _$v.amount;
-      _positions = _$v.positions?.toBuilder();
+      _items = _$v.items?.toBuilder();
       _$v = null;
     }
     return this;
@@ -111,12 +110,12 @@ class PortfolioStateBuilder
     try {
       _$result = _$v ??
           new _$PortfolioState._(
-              currency: currency, amount: amount, positions: positions.build());
+              currency: currency, amount: amount, items: items.build());
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'positions';
-        positions.build();
+        _$failedField = 'items';
+        items.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'PortfolioState', _$failedField, e.toString());

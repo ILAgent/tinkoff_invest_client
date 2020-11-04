@@ -10,7 +10,7 @@ PortfolioState reducePortfolioState(PortfolioState state, dynamic action) {
     );
   } else if (action is UpdatePortfolioItems) {
     return state.rebuild(
-      (b) => b..positions = action.items.toBuilder(),
+      (b) => b..items = action.items.toBuilder(),
     );
   }
   return state;

@@ -1,6 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:tinkoff_api/model/money_amount.dart';
-import 'package:tinkoff_api/model/portfolio_position.dart';
+import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 
 class InitAction {}
 
@@ -13,7 +13,7 @@ class ChangeTotalAmount {
 }
 
 class UpdatePortfolioItems {
-  final BuiltList<PortfolioPosition> items;
+  final BuiltList<PortfolioItem> items;
 
   UpdatePortfolioItems(this.items);
 }

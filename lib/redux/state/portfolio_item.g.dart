@@ -10,7 +10,7 @@ class _$PortfolioItem extends PortfolioItem {
   @override
   final PortfolioPosition portfolioPosition;
   @override
-  final MoneyAmount actualPrice;
+  final double actualPrice;
 
   factory _$PortfolioItem([void Function(PortfolioItemBuilder) updates]) =>
       (new PortfolioItemBuilder()..update(updates)).build();
@@ -63,18 +63,16 @@ class PortfolioItemBuilder
   set portfolioPosition(PortfolioPositionBuilder portfolioPosition) =>
       _$this._portfolioPosition = portfolioPosition;
 
-  MoneyAmountBuilder _actualPrice;
-  MoneyAmountBuilder get actualPrice =>
-      _$this._actualPrice ??= new MoneyAmountBuilder();
-  set actualPrice(MoneyAmountBuilder actualPrice) =>
-      _$this._actualPrice = actualPrice;
+  double _actualPrice;
+  double get actualPrice => _$this._actualPrice;
+  set actualPrice(double actualPrice) => _$this._actualPrice = actualPrice;
 
   PortfolioItemBuilder();
 
   PortfolioItemBuilder get _$this {
     if (_$v != null) {
       _portfolioPosition = _$v.portfolioPosition?.toBuilder();
-      _actualPrice = _$v.actualPrice?.toBuilder();
+      _actualPrice = _$v.actualPrice;
       _$v = null;
     }
     return this;
@@ -100,14 +98,12 @@ class PortfolioItemBuilder
       _$result = _$v ??
           new _$PortfolioItem._(
               portfolioPosition: portfolioPosition.build(),
-              actualPrice: actualPrice.build());
+              actualPrice: actualPrice);
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'portfolioPosition';
         portfolioPosition.build();
-        _$failedField = 'actualPrice';
-        actualPrice.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'PortfolioItem', _$failedField, e.toString());
