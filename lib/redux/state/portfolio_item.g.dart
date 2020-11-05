@@ -11,16 +11,22 @@ class _$PortfolioItem extends PortfolioItem {
   final PortfolioPosition portfolioPosition;
   @override
   final double actualPrice;
+  @override
+  final double income;
 
   factory _$PortfolioItem([void Function(PortfolioItemBuilder) updates]) =>
       (new PortfolioItemBuilder()..update(updates)).build();
 
-  _$PortfolioItem._({this.portfolioPosition, this.actualPrice}) : super._() {
+  _$PortfolioItem._({this.portfolioPosition, this.actualPrice, this.income})
+      : super._() {
     if (portfolioPosition == null) {
       throw new BuiltValueNullFieldError('PortfolioItem', 'portfolioPosition');
     }
     if (actualPrice == null) {
       throw new BuiltValueNullFieldError('PortfolioItem', 'actualPrice');
+    }
+    if (income == null) {
+      throw new BuiltValueNullFieldError('PortfolioItem', 'income');
     }
   }
 
@@ -36,19 +42,23 @@ class _$PortfolioItem extends PortfolioItem {
     if (identical(other, this)) return true;
     return other is PortfolioItem &&
         portfolioPosition == other.portfolioPosition &&
-        actualPrice == other.actualPrice;
+        actualPrice == other.actualPrice &&
+        income == other.income;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, portfolioPosition.hashCode), actualPrice.hashCode));
+    return $jf($jc(
+        $jc($jc(0, portfolioPosition.hashCode), actualPrice.hashCode),
+        income.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('PortfolioItem')
           ..add('portfolioPosition', portfolioPosition)
-          ..add('actualPrice', actualPrice))
+          ..add('actualPrice', actualPrice)
+          ..add('income', income))
         .toString();
   }
 }
@@ -67,12 +77,17 @@ class PortfolioItemBuilder
   double get actualPrice => _$this._actualPrice;
   set actualPrice(double actualPrice) => _$this._actualPrice = actualPrice;
 
+  double _income;
+  double get income => _$this._income;
+  set income(double income) => _$this._income = income;
+
   PortfolioItemBuilder();
 
   PortfolioItemBuilder get _$this {
     if (_$v != null) {
       _portfolioPosition = _$v.portfolioPosition?.toBuilder();
       _actualPrice = _$v.actualPrice;
+      _income = _$v.income;
       _$v = null;
     }
     return this;
@@ -98,7 +113,8 @@ class PortfolioItemBuilder
       _$result = _$v ??
           new _$PortfolioItem._(
               portfolioPosition: portfolioPosition.build(),
-              actualPrice: actualPrice);
+              actualPrice: actualPrice,
+              income: income);
     } catch (_) {
       String _$failedField;
       try {

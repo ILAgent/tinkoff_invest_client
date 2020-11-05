@@ -20,7 +20,7 @@ extension ApiServiceExtension on ApiService {
     return candles.candles.last.c;
   }
 
-  Future<double> income(String figi, {DateTime from, DateTime to}) async {
+  Future<double> income(String figi) async {
     final operations = await this.operations(figi: figi);
     final expenses =
         operations.operations.map((it) => it.payment).fold(0, (a, b) => a + b);
@@ -28,9 +28,9 @@ extension ApiServiceExtension on ApiService {
     final actualPrice = await this.actualPrice(figi);
 
     final portfolio = await this.portfolio();
-    final teur = portfolio.positions.firstWhere((it) => it.figi == figi);
+    final inPortfolio = portfolio.positions.firstWhere((it) => it.figi == figi);
 
-    final valueInPortfolio = teur.lots * actualPrice;
+    final valueInPortfolio = inPortfolio.lots * actualPrice;
 
     return expenses + valueInPortfolio;
   }

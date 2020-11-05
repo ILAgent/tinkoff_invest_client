@@ -10,6 +10,25 @@ class PortfolioItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final amount = _item.actualPrice * _item.portfolioPosition.balance;
+    final amountStr = amount.toStringAsFixed(2) +
+        _item.portfolioPosition.averagePositionPrice.currency.currencySymbol();
+    final balance =
+        _item.portfolioPosition.instrumentType == InstrumentType.currency
+            ? _item.portfolioPosition.balance.toStringAsFixed(2)
+            : "${_item.portfolioPosition.lots} шт.";
+
+    final incomePercent =
+        (_item.income / (amount - _item.income) * 100).toStringAsFixed(2) +
+            " %";
+
+    final income = _item.income.toStringAsFixed(2) +
+        _item.portfolioPosition.averagePositionPrice.currency.currencySymbol();
+    final incomeColor = _item.income == 0
+        ? Colors.black
+        : _item.income > 0
+            ? Colors.green
+            : Colors.red;
     return Row(
       children: [
         Container(
@@ -45,21 +64,26 @@ class PortfolioItemWidget extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 8),
-                  Text((_item.actualPrice * _item.portfolioPosition.balance)
-                          .toStringAsFixed(2) +
-                      _item.portfolioPosition.averagePositionPrice.currency
-                          .currencySymbol()),
+                  Text(
+                    amountStr,
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ],
               ),
               SizedBox(height: 4),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Flexible(
+                    child: Text(
+                      balance,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
+                    ),
+                  ),
                   Text(
-                    _item.portfolioPosition.instrumentType ==
-                            InstrumentType.currency
-                        ? _item.portfolioPosition.balance.toStringAsFixed(2)
-                        : "${_item.portfolioPosition.lots} шт.",
-                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
+                    "$income ($incomePercent)",
+                    style: TextStyle(fontSize: 12, color: incomeColor),
                   ),
                 ],
               ),

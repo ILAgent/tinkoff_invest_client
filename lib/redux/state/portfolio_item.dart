@@ -9,7 +9,9 @@ abstract class PortfolioItem implements Built<PortfolioItem, PortfolioItemBuilde
 
   double get actualPrice;
 
+  double get income;
+
   PortfolioItem._();
 
-  factory PortfolioItem([updates(PortfolioItemBuilder b)]) = _$PortfolioItem;
+  factory PortfolioItem([Function(PortfolioItemBuilder b) updates]) = _$PortfolioItem;
 }
