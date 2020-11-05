@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tinkoff_api/model/instrument_type.dart';
-import 'package:tinkoff_api/model/portfolio_position.dart';
+import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
+import 'package:tinkoff_invest/utils/currency_utils.dart';
 
 class PortfolioItemWidget extends StatelessWidget {
-  final PortfolioPosition _position;
+  final PortfolioItem _item;
 
-  const PortfolioItemWidget(this._position);
+  const PortfolioItemWidget(this._item);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class PortfolioItemWidget extends StatelessWidget {
           decoration:
               BoxDecoration(color: Colors.orange, shape: BoxShape.circle),
           child: Text(
-            _position.name.substring(0, 1),
+            _item.portfolioPosition.name.substring(0, 1),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
@@ -35,7 +36,7 @@ class PortfolioItemWidget extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      _position.name,
+                      _item.portfolioPosition.name,
                       maxLines: 1,
                       overflow: TextOverflow.fade,
                       softWrap: false,
@@ -44,16 +45,20 @@ class PortfolioItemWidget extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 8),
-                  Text("AAAAAA"),
+                  Text((_item.actualPrice * _item.portfolioPosition.balance)
+                          .toStringAsFixed(2) +
+                      _item.portfolioPosition.averagePositionPrice.currency
+                          .currencySymbol()),
                 ],
               ),
               SizedBox(height: 4),
               Row(
                 children: [
                   Text(
-                    _position.instrumentType == InstrumentType.currency
-                        ? _position.balance.toStringAsFixed(2)
-                        : "${_position.lots} шт.",
+                    _item.portfolioPosition.instrumentType ==
+                            InstrumentType.currency
+                        ? _item.portfolioPosition.balance.toStringAsFixed(2)
+                        : "${_item.portfolioPosition.lots} шт.",
                     style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
                   ),
                 ],

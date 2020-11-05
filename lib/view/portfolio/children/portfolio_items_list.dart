@@ -18,7 +18,7 @@ class PortfolioItemsList extends StatelessWidget {
         return ListView.separated(
           padding: EdgeInsets.only(top: 16),
           itemBuilder: (context, index) {
-            return PortfolioItemWidget(snapshot.data[index].portfolioPosition);
+            return PortfolioItemWidget(snapshot.data[index]);
           },
           separatorBuilder: (context, index) {
             return Container(
