@@ -1,17 +1,16 @@
-import 'package:built_value/built_value.dart';
 import 'package:tinkoff_api/model/portfolio_position.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part 'portfolio_item.g.dart';
+part 'portfolio_item.freezed.dart';
 
-abstract class PortfolioItem implements Built<PortfolioItem, PortfolioItemBuilder>{
+@freezed
+abstract class PortfolioItem with _$PortfolioItem {
 
-  PortfolioPosition get portfolioPosition;
+  factory PortfolioItem({
+    PortfolioPosition portfolioPosition,
+    double actualPrice,
+    double income
+  }) = _PortfolioItem;
 
-  double get actualPrice;
-
-  double get income;
-
-  PortfolioItem._();
-
-  factory PortfolioItem([Function(PortfolioItemBuilder b) updates]) = _$PortfolioItem;
 }

@@ -22,10 +22,11 @@ class PortfolioItemsEpic {
         (p) async {
           final price = await _apiService.actualPrice(p.figi);
           final income = await _apiService.income(p.figi);
-          return PortfolioItem((b) async => b
-            ..portfolioPosition = p.toBuilder()
-            ..actualPrice = price
-            ..income = income);
+          return PortfolioItem(
+            portfolioPosition: p,
+            actualPrice: price,
+            income: income,
+          );
         },
       ).toList();
       return UpdatePortfolioItems(BuiltList(items));
