@@ -21,5 +21,9 @@ List<PortfolioItem> _reduceItems(List<PortfolioItem> items, dynamic action) {
   if (action is UpdatePortfolioItems) {
     return action.items;
   }
-  return items;
+  return items.map((item) => _reduceItem(item, action)).toList();
+}
+
+PortfolioItem _reduceItem(PortfolioItem item, dynamic action) {
+  return item;
 }

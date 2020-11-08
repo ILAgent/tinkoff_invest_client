@@ -16,3 +16,9 @@ class UpdatePortfolioItems {
 
   UpdatePortfolioItems(this.items);
 }
+
+class UpdatePortfolioItem {
+  final PortfolioItem item;
+
+  UpdatePortfolioItem(this.item);
+}
