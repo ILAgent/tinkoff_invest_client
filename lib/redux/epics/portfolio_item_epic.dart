@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
@@ -29,7 +28,7 @@ class PortfolioItemsEpic {
           );
         },
       ).toList();
-      return UpdatePortfolioItems(BuiltList(items));
+      return UpdatePortfolioItems(items);
     });
   }
 }

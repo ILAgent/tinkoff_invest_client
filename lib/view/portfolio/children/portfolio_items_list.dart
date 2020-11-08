@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
@@ -12,7 +11,7 @@ class PortfolioItemsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<BuiltList<PortfolioItem>>(
+    return StreamBuilder<List<PortfolioItem>>(
       stream: _store.states.map((it) => it.items).distinct(),
       builder: (context, snapshot) {
         return ListView.separated(

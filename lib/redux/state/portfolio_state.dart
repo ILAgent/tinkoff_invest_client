@@ -1,19 +1,16 @@
-import 'package:built_collection/built_collection.dart';
-import 'package:built_value/built_value.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tinkoff_api/model/currency.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
+import 'package:flutter/foundation.dart';
 
-part 'portfolio_state.g.dart';
+part 'portfolio_state.freezed.dart';
 
-abstract class PortfolioState
-    implements Built<PortfolioState, PortfolioStateBuilder> {
-  Currency get currency;
+@freezed
+abstract class PortfolioState with _$PortfolioState {
+  factory PortfolioState({
+    Currency currency,
+    double amount,
+    List<PortfolioItem> items,
+  }) = _PortfolioState;
 
-  double get amount;
-
-  BuiltList<PortfolioItem> get items;
-
-  PortfolioState._();
-
-  factory PortfolioState([updates(PortfolioStateBuilder b)]) = _$PortfolioState;
 }
