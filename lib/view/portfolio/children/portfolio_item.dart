@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tinkoff_api/model/instrument_type.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/utils/currency_utils.dart';
@@ -10,21 +11,34 @@ class PortfolioItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final amount = _item.actualPrice * _item.portfolioPosition.balance;
-    final amountStr = amount.toStringAsFixed(2) +
-        _item.portfolioPosition.averagePositionPrice.currency.currencySymbol();
     final balance =
         _item.portfolioPosition.instrumentType == InstrumentType.currency
             ? _item.portfolioPosition.balance.toStringAsFixed(2)
             : "${_item.portfolioPosition.lots} шт.";
 
-    final incomePercent =
-        (_item.income / (amount - _item.income) * 100).toStringAsFixed(2) +
+    @nullable
+    final amount = _item.actualPrice == null
+        ? null
+        : _item.actualPrice * _item.portfolioPosition.balance;
+    @nullable
+    final amountStr = amount == null
+        ? null
+        : amount.toStringAsFixed(2) +
+            _item.portfolioPosition.averagePositionPrice.currency
+                .currencySymbol();
+    @nullable
+    final incomePercent = amount == null || _item.income == null
+        ? null
+        : (_item.income / (amount - _item.income) * 100).toStringAsFixed(2) +
             " %";
+    @nullable
+    final income = _item.income == null
+        ? null
+        : _item.income.toStringAsFixed(2) +
+            _item.portfolioPosition.averagePositionPrice.currency
+                .currencySymbol();
 
-    final income = _item.income.toStringAsFixed(2) +
-        _item.portfolioPosition.averagePositionPrice.currency.currencySymbol();
-    final incomeColor = _item.income == 0
+    final incomeColor = _item.income == null || _item.income == 0
         ? Colors.black
         : _item.income > 0
             ? Colors.green
@@ -65,7 +79,7 @@ class PortfolioItemWidget extends StatelessWidget {
                   ),
                   SizedBox(width: 8),
                   Text(
-                    amountStr,
+                    amountStr ?? '',
                     style: TextStyle(fontSize: 16),
                   ),
                 ],
@@ -82,7 +96,7 @@ class PortfolioItemWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "$income ($incomePercent)",
+                    income == null ? '' : "$income ($incomePercent)",
                     style: TextStyle(fontSize: 12, color: incomeColor),
                   ),
                 ],
