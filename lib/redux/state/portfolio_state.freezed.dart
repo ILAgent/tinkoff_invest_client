@@ -15,7 +15,9 @@ class _$PortfolioStateTearOff {
 
 // ignore: unused_element
   _PortfolioState call(
-      {Currency currency, double amount, List<PortfolioItem> items}) {
+      {@required Currency currency,
+      @required double amount,
+      @required List<PortfolioItem> items}) {
     return _PortfolioState(
       currency: currency,
       amount: amount,
@@ -107,7 +109,11 @@ class __$PortfolioStateCopyWithImpl<$Res>
 class _$_PortfolioState
     with DiagnosticableTreeMixin
     implements _PortfolioState {
-  _$_PortfolioState({this.currency, this.amount, this.items});
+  _$_PortfolioState(
+      {@required this.currency, @required this.amount, @required this.items})
+      : assert(currency != null),
+        assert(amount != null),
+        assert(items != null);
 
   @override
   final Currency currency;
@@ -158,9 +164,9 @@ class _$_PortfolioState
 
 abstract class _PortfolioState implements PortfolioState {
   factory _PortfolioState(
-      {Currency currency,
-      double amount,
-      List<PortfolioItem> items}) = _$_PortfolioState;
+      {@required Currency currency,
+      @required double amount,
+      @required List<PortfolioItem> items}) = _$_PortfolioState;
 
   @override
   Currency get currency;

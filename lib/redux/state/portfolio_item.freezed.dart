@@ -15,7 +15,7 @@ class _$PortfolioItemTearOff {
 
 // ignore: unused_element
   _PortfolioItem call(
-      {PortfolioPosition portfolioPosition,
+      {@required PortfolioPosition portfolioPosition,
       double actualPrice,
       double income}) {
     return _PortfolioItem(
@@ -115,7 +115,9 @@ class __$PortfolioItemCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_PortfolioItem with DiagnosticableTreeMixin implements _PortfolioItem {
-  _$_PortfolioItem({this.portfolioPosition, this.actualPrice, this.income});
+  _$_PortfolioItem(
+      {@required this.portfolioPosition, this.actualPrice, this.income})
+      : assert(portfolioPosition != null);
 
   @override
   final PortfolioPosition portfolioPosition;
@@ -167,7 +169,7 @@ class _$_PortfolioItem with DiagnosticableTreeMixin implements _PortfolioItem {
 
 abstract class _PortfolioItem implements PortfolioItem {
   factory _PortfolioItem(
-      {PortfolioPosition portfolioPosition,
+      {@required PortfolioPosition portfolioPosition,
       double actualPrice,
       double income}) = _$_PortfolioItem;
 
