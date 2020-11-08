@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
@@ -12,7 +13,7 @@ class PortfolioItemsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<PortfolioItem>>(
-      stream: _store.states.map((it) => it.items).distinct(),
+      stream: _store.states.map((it) => it.items).distinct(listEquals),
       builder: (context, snapshot) {
         return ListView.separated(
           padding: EdgeInsets.only(top: 16),
