@@ -17,7 +17,7 @@ class TinkoffAccountTileWidget extends StatelessWidget {
         _store.dispatch(TogglePortfolioCurrency());
       },
       child: StreamBuilder<Currency>(
-          stream: _store.states.map((it) => it.currency).distinct(),
+          stream: _store.states.map((it) => it.amount.currency).distinct(),
           builder: (context, snapshot) {
             return Text.rich(
               TextSpan(

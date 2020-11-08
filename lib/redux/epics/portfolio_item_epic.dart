@@ -1,4 +1,5 @@
 import 'package:redux_epics/redux_epics.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
@@ -14,20 +15,18 @@ class PortfolioItemsEpic {
     Stream<dynamic> actions,
     EpicStore<PortfolioState> store,
   ) {
-    return actions.where((action) => action is InitAction).asyncMap((_) async {
-      final portfolio = await _apiService.portfolio();
-      final items = await Stream.fromIterable(portfolio.positions).asyncMap(
-        (p) async {
-          // final price = await _apiService.actualPrice(p.figi);
-          // final income = await _apiService.income(p.figi);
-          return PortfolioItem(
-            portfolioPosition: p,
-            // actualPrice: price,
-            // income: income,
-          );
-        },
-      ).toList();
-      return UpdatePortfolioItems(items);
+    return actions
+        .where((action) => action is InitAction)
+        .asyncMap((_) async => await _apiService.portfolio())
+        .switchMap((portfolio) {
+      final items = portfolio.positions
+          .map(
+            (p) => PortfolioItem(portfolioPosition: p),
+          )
+          .toList();
+      return Stream.fromIterable([
+        UpdatePortfolioItems(items),
+      ]);
     });
   }
 }

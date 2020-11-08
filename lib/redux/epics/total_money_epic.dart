@@ -23,7 +23,7 @@ class TotalAmountEpic {
         Currency targetCur = Currency.rUB;
         if (action is TogglePortfolioCurrency) {
           final state = store.state;
-          switch (state.currency) {
+          switch (state.amount.currency) {
             case Currency.rUB:
               targetCur = Currency.uSD;
               break;

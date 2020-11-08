@@ -14,12 +14,11 @@ class _$PortfolioStateTearOff {
   const _$PortfolioStateTearOff();
 
 // ignore: unused_element
-  _PortfolioState call(
-      {@required Currency currency,
-      @required double amount,
-      @required List<PortfolioItem> items}) {
+  _PortfolioState call({
+    @required MoneyAmount amount,
+    @required List<PortfolioItem> items,
+  }) {
     return _PortfolioState(
-      currency: currency,
       amount: amount,
       items: items,
     );
@@ -32,8 +31,8 @@ const $PortfolioState = _$PortfolioStateTearOff();
 
 /// @nodoc
 mixin _$PortfolioState {
-  Currency get currency;
-  double get amount;
+  MoneyAmount get amount;
+
   List<PortfolioItem> get items;
 
   $PortfolioStateCopyWith<PortfolioState> get copyWith;
@@ -44,7 +43,8 @@ abstract class $PortfolioStateCopyWith<$Res> {
   factory $PortfolioStateCopyWith(
           PortfolioState value, $Res Function(PortfolioState) then) =
       _$PortfolioStateCopyWithImpl<$Res>;
-  $Res call({Currency currency, double amount, List<PortfolioItem> items});
+
+  $Res call({MoneyAmount amount, List<PortfolioItem> items});
 }
 
 /// @nodoc
@@ -53,18 +53,17 @@ class _$PortfolioStateCopyWithImpl<$Res>
   _$PortfolioStateCopyWithImpl(this._value, this._then);
 
   final PortfolioState _value;
+
   // ignore: unused_field
   final $Res Function(PortfolioState) _then;
 
   @override
   $Res call({
-    Object currency = freezed,
     Object amount = freezed,
     Object items = freezed,
   }) {
     return _then(_value.copyWith(
-      currency: currency == freezed ? _value.currency : currency as Currency,
-      amount: amount == freezed ? _value.amount : amount as double,
+      amount: amount == freezed ? _value.amount : amount as MoneyAmount,
       items: items == freezed ? _value.items : items as List<PortfolioItem>,
     ));
   }
@@ -76,8 +75,9 @@ abstract class _$PortfolioStateCopyWith<$Res>
   factory _$PortfolioStateCopyWith(
           _PortfolioState value, $Res Function(_PortfolioState) then) =
       __$PortfolioStateCopyWithImpl<$Res>;
+
   @override
-  $Res call({Currency currency, double amount, List<PortfolioItem> items});
+  $Res call({MoneyAmount amount, List<PortfolioItem> items});
 }
 
 /// @nodoc
@@ -93,13 +93,11 @@ class __$PortfolioStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object currency = freezed,
     Object amount = freezed,
     Object items = freezed,
   }) {
     return _then(_PortfolioState(
-      currency: currency == freezed ? _value.currency : currency as Currency,
-      amount: amount == freezed ? _value.amount : amount as double,
+      amount: amount == freezed ? _value.amount : amount as MoneyAmount,
       items: items == freezed ? _value.items : items as List<PortfolioItem>,
     ));
   }
@@ -109,22 +107,18 @@ class __$PortfolioStateCopyWithImpl<$Res>
 class _$_PortfolioState
     with DiagnosticableTreeMixin
     implements _PortfolioState {
-  _$_PortfolioState(
-      {@required this.currency, @required this.amount, @required this.items})
-      : assert(currency != null),
-        assert(amount != null),
+  _$_PortfolioState({@required this.amount, @required this.items})
+      : assert(amount != null),
         assert(items != null);
 
   @override
-  final Currency currency;
-  @override
-  final double amount;
+  final MoneyAmount amount;
   @override
   final List<PortfolioItem> items;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PortfolioState(currency: $currency, amount: $amount, items: $items)';
+    return 'PortfolioState(amount: $amount, items: $items)';
   }
 
   @override
@@ -132,7 +126,6 @@ class _$_PortfolioState
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'PortfolioState'))
-      ..add(DiagnosticsProperty('currency', currency))
       ..add(DiagnosticsProperty('amount', amount))
       ..add(DiagnosticsProperty('items', items));
   }
@@ -141,9 +134,6 @@ class _$_PortfolioState
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _PortfolioState &&
-            (identical(other.currency, currency) ||
-                const DeepCollectionEquality()
-                    .equals(other.currency, currency)) &&
             (identical(other.amount, amount) ||
                 const DeepCollectionEquality().equals(other.amount, amount)) &&
             (identical(other.items, items) ||
@@ -153,7 +143,6 @@ class _$_PortfolioState
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(currency) ^
       const DeepCollectionEquality().hash(amount) ^
       const DeepCollectionEquality().hash(items);
 
@@ -164,16 +153,15 @@ class _$_PortfolioState
 
 abstract class _PortfolioState implements PortfolioState {
   factory _PortfolioState(
-      {@required Currency currency,
-      @required double amount,
+      {@required MoneyAmount amount,
       @required List<PortfolioItem> items}) = _$_PortfolioState;
 
   @override
-  Currency get currency;
-  @override
-  double get amount;
+  MoneyAmount get amount;
+
   @override
   List<PortfolioItem> get items;
+
   @override
   _$PortfolioStateCopyWith<_PortfolioState> get copyWith;
 }

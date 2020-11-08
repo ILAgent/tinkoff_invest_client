@@ -1,6 +1,7 @@
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:tinkoff_api/model/currency.dart';
+import 'package:tinkoff_api/model/money_amount.dart';
 import 'package:tinkoff_invest/redux/dispatcher.dart';
 import 'package:tinkoff_invest/redux/protfolio_state_reducer.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
@@ -14,9 +15,10 @@ class PortfolioStore extends Store<PortfolioState> implements Dispatcher {
       TotalAmountEpic totalAmountEpic, PortfolioItemsEpic portfolioItemsEpic)
       : super(reducePortfolioState,
             initialState: PortfolioState(
-              currency: Currency.rUB,
-              amount: 0,
-              items: List<PortfolioItem>(),
+              amount: MoneyAmount((b) => b
+                ..currency = Currency.rUB
+                ..value = 0),
+              items: <PortfolioItem>[],
             ),
             middleware: [
               EpicMiddleware(totalAmountEpic.act),
