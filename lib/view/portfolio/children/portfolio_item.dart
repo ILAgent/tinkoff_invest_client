@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tinkoff_api/model/instrument_type.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
+import 'package:tinkoff_invest/utils/color_utils.dart';
 import 'package:tinkoff_invest/utils/currency_utils.dart';
 
 class PortfolioItemWidget extends StatelessWidget {
@@ -49,12 +50,14 @@ class PortfolioItemWidget extends StatelessWidget {
           width: 40,
           height: 40,
           alignment: Alignment.center,
-          decoration:
-              BoxDecoration(color: Colors.orange, shape: BoxShape.circle),
+          decoration: BoxDecoration(
+            color: colorFor(_item.portfolioPosition.name),
+            shape: BoxShape.circle,
+          ),
           child: Text(
             _item.portfolioPosition.name.substring(0, 1),
             style: TextStyle(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
               fontSize: 25,
             ),
           ),
