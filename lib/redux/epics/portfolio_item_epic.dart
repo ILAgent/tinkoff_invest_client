@@ -3,6 +3,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
+import 'package:tinkoff_invest/services/api_service_extension.dart';
 
 import '../state/portfolio_state.dart';
 
@@ -24,9 +25,17 @@ class PortfolioItemsEpic {
             (p) => PortfolioItem(portfolioPosition: p),
           )
           .toList();
-      return Stream.fromIterable([
-        UpdatePortfolioItems(items),
-      ]);
+      final updateItemStream =
+          Stream.fromIterable(items).asyncMap((item) async {
+        final actualPrice =
+            await _apiService.actualPrice(item.portfolioPosition.figi);
+        final income = await _apiService.income(item.portfolioPosition.figi);
+        return UpdatePortfolioItem(item.copyWith(
+          actualPrice: actualPrice,
+          income: income,
+        )) as dynamic;
+      });
+      return updateItemStream.startWith(UpdatePortfolioItems(items));
     });
   }
 }

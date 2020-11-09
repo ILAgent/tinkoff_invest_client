@@ -25,5 +25,9 @@ List<PortfolioItem> _reduceItems(List<PortfolioItem> items, dynamic action) {
 }
 
 PortfolioItem _reduceItem(PortfolioItem item, dynamic action) {
+  if (action is UpdatePortfolioItem &&
+      action.item.portfolioPosition.figi == item.portfolioPosition.figi) {
+    return action.item;
+  }
   return item;
 }
