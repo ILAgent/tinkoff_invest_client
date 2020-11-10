@@ -8,7 +8,7 @@ import 'package:tinkoff_invest/utils/currency_utils.dart';
 class PortfolioItemWidget extends StatelessWidget {
   final PortfolioItem _item;
 
-  const PortfolioItemWidget(this._item);
+  PortfolioItemWidget(this._item) : super(key: ValueKey(_item));
 
   @override
   Widget build(BuildContext context) {
@@ -44,70 +44,75 @@ class PortfolioItemWidget extends StatelessWidget {
         : _item.income > 0
             ? Colors.green
             : Colors.red;
-    return Row(
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: colorFor(_item.portfolioPosition.name),
-            shape: BoxShape.circle,
-          ),
-          child: Text(
-            _item.portfolioPosition.name.substring(0, 1),
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 25,
+    return Container(
+      decoration: BoxDecoration(color: Colors.transparent),
+      height: 50,
+      child: Row(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: colorFor(_item.portfolioPosition.name),
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              _item.portfolioPosition.name.substring(0, 1),
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 25,
+              ),
             ),
           ),
-        ),
-        SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    child: Text(
-                      _item.portfolioPosition.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.fade,
-                      softWrap: false,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+          SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        _item.portfolioPosition.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                        style:
+                            TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    amountStr ?? '',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-              SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    child: Text(
-                      balance,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
+                    SizedBox(width: 8),
+                    Text(
+                      amountStr ?? '',
+                      style: TextStyle(fontSize: 16),
                     ),
-                  ),
-                  Text(
-                    income == null ? '' : "$income ($incomePercent)",
-                    style: TextStyle(fontSize: 12, color: incomeColor),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+                SizedBox(height: 4),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        balance,
+                        style:
+                            TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
+                      ),
+                    ),
+                    Text(
+                      income == null ? '' : "$income ($incomePercent)",
+                      style: TextStyle(fontSize: 12, color: incomeColor),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

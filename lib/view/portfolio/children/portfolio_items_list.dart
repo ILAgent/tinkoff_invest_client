@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
@@ -15,17 +16,10 @@ class PortfolioItemsList extends StatelessWidget {
     return StreamBuilder<List<PortfolioItem>>(
       stream: _store.states.map((it) => it.items).distinct(listEquals),
       builder: (context, snapshot) {
-        return ListView.separated(
+        return ReorderableListView(
+          children: snapshot.data.map((e) => PortfolioItemWidget(e)).toList(),
           padding: EdgeInsets.only(top: 16),
-          itemBuilder: (context, index) {
-            return PortfolioItemWidget(snapshot.data[index]);
-          },
-          separatorBuilder: (context, index) {
-            return Container(
-              height: 10,
-            );
-          },
-          itemCount: snapshot.data.length,
+          onReorder: (int oldIndex, int newIndex) {  },
         );
       },
     );
