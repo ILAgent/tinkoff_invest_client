@@ -2,6 +2,7 @@ import "package:collection/collection.dart";
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/redux/state/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
@@ -20,42 +21,66 @@ class PortfolioItemsList extends StatelessWidget {
     return StreamBuilder<List<dynamic>>(
       stream: _store.states.map(_stateToList).distinct(listEquals),
       builder: (context, snapshot) {
+        final items = snapshot.data;
         return ReorderableListView(
-          children: snapshot.data.map((e) {
+          children: items.map((e) {
             if (e is PortfolioItem) return PortfolioItemWidget(e);
             if (e is ItemsGroup) return PortfolioGroupWidget(e);
             throw ArgumentError(e);
           }).toList(),
           padding: EdgeInsets.only(top: 16),
-          onReorder: (int oldIndex, int newIndex) {},
+          onReorder: (int oldIndex, int newIndex) {
+            _onReorder(oldIndex, newIndex, items);
+          },
         );
       },
     );
   }
-}
 
-List<dynamic> _stateToList(PortfolioState state) {
-  final groups =
-      groupBy(state.items, (PortfolioItem item) => item.group).entries.toList();
-  groups.sort(
-    (a, b) => a.key == null
-        ? -1
-        : b.key == null
-            ? 1
-            : a.key.title.compareTo(b.key.title),
-  );
-  final items = groups
-      .expand((e) => [
-            if (e.key != null) e.key,
-            ...e.value,
-          ])
-      .toList();
-
-  state.groups.forEach((g) {
-    if (!items.contains(g)) {
-      items.add(g);
+  void _onReorder(int oldIndex, int newIndex, List items) {
+    final draggableItem = items[oldIndex];
+    if (draggableItem is PortfolioItem) {
+      for (var i = newIndex - 1; i >= 0; --i) {
+        final item = items[i];
+        if (item is ItemsGroup) {
+          if (draggableItem.group != item) {
+            _store.dispatch(
+              UpdatePortfolioItem(draggableItem.copyWith(group: item)),
+            );
+          }
+          return;
+        }
+      }
+      _store.dispatch(
+        UpdatePortfolioItem(draggableItem.copyWith(group: null)),
+      );
     }
-  });
+  }
 
-  return items;
+  List<dynamic> _stateToList(PortfolioState state) {
+    final groups = groupBy(state.items, (PortfolioItem item) => item.group)
+        .entries
+        .toList();
+    groups.sort(
+      (a, b) => a.key == null
+          ? -1
+          : b.key == null
+              ? 1
+              : a.key.title.compareTo(b.key.title),
+    );
+    final items = groups
+        .expand((e) => [
+              if (e.key != null) e.key,
+              ...e.value,
+            ])
+        .toList();
+
+    state.groups.forEach((g) {
+      if (!items.contains(g)) {
+        items.add(g);
+      }
+    });
+
+    return items;
+  }
 }
