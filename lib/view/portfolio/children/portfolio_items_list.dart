@@ -44,10 +44,18 @@ List<dynamic> _stateToList(PortfolioState state) {
             ? 1
             : a.key.title.compareTo(b.key.title),
   );
-  return groups
+  final items = groups
       .expand((e) => [
             if (e.key != null) e.key,
             ...e.value,
           ])
       .toList();
+
+  state.groups.forEach((g) {
+    if (!items.contains(g)) {
+      items.add(g);
+    }
+  });
+
+  return items;
 }
