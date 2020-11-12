@@ -33,6 +33,7 @@ class PortfolioItemsEpic {
         return UpdatePortfolioItem(item.copyWith(
           actualPrice: actualPrice,
           income: income,
+          group: store.state.groups[0], //todo
         )) as dynamic;
       });
       return updateItemStream.startWith(UpdatePortfolioItems(items));

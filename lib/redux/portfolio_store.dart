@@ -4,6 +4,7 @@ import 'package:tinkoff_api/model/currency.dart';
 import 'package:tinkoff_api/model/money_amount.dart';
 import 'package:tinkoff_invest/redux/dispatcher.dart';
 import 'package:tinkoff_invest/redux/protfolio_state_reducer.dart';
+import 'package:tinkoff_invest/redux/state/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 
 import 'epics/portfolio_item_epic.dart';
@@ -18,7 +19,7 @@ class PortfolioStore extends Store<PortfolioState> implements Dispatcher {
                 ..currency = Currency.rUB
                 ..value = 0),
               items: [],
-              groups: [],
+              groups: [ItemsGroup(title: 'Всё моё')],
             ),
             middleware: [
               EpicMiddleware(totalAmountEpic.act),

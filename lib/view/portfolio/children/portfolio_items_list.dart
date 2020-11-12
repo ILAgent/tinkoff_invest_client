@@ -7,8 +7,8 @@ import 'package:tinkoff_invest/redux/state/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
-import 'package:tinkoff_invest/view/portfolio/children/portfolio_group/protfolio_group.dart';
-import 'package:tinkoff_invest/view/portfolio/children/portfolio_item/portfolio_item.dart';
+import 'package:tinkoff_invest/view/portfolio/children/portfolio_item.dart';
+import 'package:tinkoff_invest/view/portfolio/children/protfolio_group.dart';
 
 class PortfolioItemsList extends StatelessWidget {
   final PortfolioStore _store;
@@ -35,8 +35,16 @@ class PortfolioItemsList extends StatelessWidget {
 }
 
 List<dynamic> _stateToList(PortfolioState state) {
-  return groupBy(state.items, (PortfolioItem item) => item.group)
-      .entries
+  final groups =
+      groupBy(state.items, (PortfolioItem item) => item.group).entries.toList();
+  groups.sort(
+    (a, b) => a.key == null
+        ? -1
+        : b.key == null
+            ? 1
+            : a.key.title.compareTo(b.key.title),
+  );
+  return groups
       .expand((e) => [
             if (e.key != null) e.key,
             ...e.value,
