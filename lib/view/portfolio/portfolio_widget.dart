@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/view/portfolio/children/portfolio_items_list.dart';
 import 'package:tinkoff_invest/view/portfolio/children/tinkoff_account_amount.dart';
@@ -20,8 +19,31 @@ class PortfolioWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TinkoffAccountTileWidget(_store),
-          TinkoffAccountAmountWidget(_store),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TinkoffAccountTileWidget(_store),
+                    TinkoffAccountAmountWidget(_store),
+                  ],
+                ),
+              ),
+              Material(
+                child: InkWell(
+                  customBorder: CircleBorder(),
+                  splashColor: Colors.grey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Icon(Icons.settings),
+                  ),
+                  onTap: () {},
+                ),
+              )
+            ],
+          ),
           Expanded(
             child: PortfolioItemsList(_store),
           )
