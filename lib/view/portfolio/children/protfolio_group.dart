@@ -8,10 +8,13 @@ class PortfolioGroupWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 30,
-      alignment: Alignment.center,
-      child: Text(_group.title),
+    return GestureDetector(
+      onLongPress: () {},
+      child: Container(
+        height: 30,
+        alignment: Alignment.center,
+        child: Text(_group.title),
+      ),
     );
   }
 }
