@@ -22,3 +22,5 @@ class UpdatePortfolioItem {
 
   UpdatePortfolioItem(this.item);
 }
+
+class AddGroup {}

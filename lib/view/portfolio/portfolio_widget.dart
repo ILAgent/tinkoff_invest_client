@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/view/portfolio/children/portfolio_items_list.dart';
+import 'package:tinkoff_invest/view/portfolio/children/setting_button.dart';
 import 'package:tinkoff_invest/view/portfolio/children/tinkoff_account_amount.dart';
 import 'package:tinkoff_invest/view/portfolio/children/tinkoff_account_title.dart';
 
@@ -31,17 +32,7 @@ class PortfolioWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Material(
-                child: InkWell(
-                  customBorder: CircleBorder(),
-                  splashColor: Colors.grey,
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Icon(Icons.settings),
-                  ),
-                  onTap: () {},
-                ),
-              )
+              SettingsButtonWidget(_store),
             ],
           ),
           Expanded(
