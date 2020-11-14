@@ -17,11 +17,13 @@ class _$PortfolioStateTearOff {
   _PortfolioState call(
       {@required MoneyAmount amount,
       @required List<PortfolioItem> items,
-      @required List<ItemsGroup> groups}) {
+      @required List<ItemsGroup> groups,
+      ItemsGroup groupEditing}) {
     return _PortfolioState(
       amount: amount,
       items: items,
       groups: groups,
+      groupEditing: groupEditing,
     );
   }
 }
@@ -35,6 +37,7 @@ mixin _$PortfolioState {
   MoneyAmount get amount;
   List<PortfolioItem> get items;
   List<ItemsGroup> get groups;
+  ItemsGroup get groupEditing;
 
   $PortfolioStateCopyWith<PortfolioState> get copyWith;
 }
@@ -45,7 +48,12 @@ abstract class $PortfolioStateCopyWith<$Res> {
           PortfolioState value, $Res Function(PortfolioState) then) =
       _$PortfolioStateCopyWithImpl<$Res>;
   $Res call(
-      {MoneyAmount amount, List<PortfolioItem> items, List<ItemsGroup> groups});
+      {MoneyAmount amount,
+      List<PortfolioItem> items,
+      List<ItemsGroup> groups,
+      ItemsGroup groupEditing});
+
+  $ItemsGroupCopyWith<$Res> get groupEditing;
 }
 
 /// @nodoc
@@ -62,12 +70,26 @@ class _$PortfolioStateCopyWithImpl<$Res>
     Object amount = freezed,
     Object items = freezed,
     Object groups = freezed,
+    Object groupEditing = freezed,
   }) {
     return _then(_value.copyWith(
       amount: amount == freezed ? _value.amount : amount as MoneyAmount,
       items: items == freezed ? _value.items : items as List<PortfolioItem>,
       groups: groups == freezed ? _value.groups : groups as List<ItemsGroup>,
+      groupEditing: groupEditing == freezed
+          ? _value.groupEditing
+          : groupEditing as ItemsGroup,
     ));
+  }
+
+  @override
+  $ItemsGroupCopyWith<$Res> get groupEditing {
+    if (_value.groupEditing == null) {
+      return null;
+    }
+    return $ItemsGroupCopyWith<$Res>(_value.groupEditing, (value) {
+      return _then(_value.copyWith(groupEditing: value));
+    });
   }
 }
 
@@ -79,7 +101,13 @@ abstract class _$PortfolioStateCopyWith<$Res>
       __$PortfolioStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {MoneyAmount amount, List<PortfolioItem> items, List<ItemsGroup> groups});
+      {MoneyAmount amount,
+      List<PortfolioItem> items,
+      List<ItemsGroup> groups,
+      ItemsGroup groupEditing});
+
+  @override
+  $ItemsGroupCopyWith<$Res> get groupEditing;
 }
 
 /// @nodoc
@@ -98,11 +126,15 @@ class __$PortfolioStateCopyWithImpl<$Res>
     Object amount = freezed,
     Object items = freezed,
     Object groups = freezed,
+    Object groupEditing = freezed,
   }) {
     return _then(_PortfolioState(
       amount: amount == freezed ? _value.amount : amount as MoneyAmount,
       items: items == freezed ? _value.items : items as List<PortfolioItem>,
       groups: groups == freezed ? _value.groups : groups as List<ItemsGroup>,
+      groupEditing: groupEditing == freezed
+          ? _value.groupEditing
+          : groupEditing as ItemsGroup,
     ));
   }
 }
@@ -112,7 +144,10 @@ class _$_PortfolioState
     with DiagnosticableTreeMixin
     implements _PortfolioState {
   _$_PortfolioState(
-      {@required this.amount, @required this.items, @required this.groups})
+      {@required this.amount,
+      @required this.items,
+      @required this.groups,
+      this.groupEditing})
       : assert(amount != null),
         assert(items != null),
         assert(groups != null);
@@ -123,10 +158,12 @@ class _$_PortfolioState
   final List<PortfolioItem> items;
   @override
   final List<ItemsGroup> groups;
+  @override
+  final ItemsGroup groupEditing;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PortfolioState(amount: $amount, items: $items, groups: $groups)';
+    return 'PortfolioState(amount: $amount, items: $items, groups: $groups, groupEditing: $groupEditing)';
   }
 
   @override
@@ -136,7 +173,8 @@ class _$_PortfolioState
       ..add(DiagnosticsProperty('type', 'PortfolioState'))
       ..add(DiagnosticsProperty('amount', amount))
       ..add(DiagnosticsProperty('items', items))
-      ..add(DiagnosticsProperty('groups', groups));
+      ..add(DiagnosticsProperty('groups', groups))
+      ..add(DiagnosticsProperty('groupEditing', groupEditing));
   }
 
   @override
@@ -148,7 +186,10 @@ class _$_PortfolioState
             (identical(other.items, items) ||
                 const DeepCollectionEquality().equals(other.items, items)) &&
             (identical(other.groups, groups) ||
-                const DeepCollectionEquality().equals(other.groups, groups)));
+                const DeepCollectionEquality().equals(other.groups, groups)) &&
+            (identical(other.groupEditing, groupEditing) ||
+                const DeepCollectionEquality()
+                    .equals(other.groupEditing, groupEditing)));
   }
 
   @override
@@ -156,7 +197,8 @@ class _$_PortfolioState
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(amount) ^
       const DeepCollectionEquality().hash(items) ^
-      const DeepCollectionEquality().hash(groups);
+      const DeepCollectionEquality().hash(groups) ^
+      const DeepCollectionEquality().hash(groupEditing);
 
   @override
   _$PortfolioStateCopyWith<_PortfolioState> get copyWith =>
@@ -167,7 +209,8 @@ abstract class _PortfolioState implements PortfolioState {
   factory _PortfolioState(
       {@required MoneyAmount amount,
       @required List<PortfolioItem> items,
-      @required List<ItemsGroup> groups}) = _$_PortfolioState;
+      @required List<ItemsGroup> groups,
+      ItemsGroup groupEditing}) = _$_PortfolioState;
 
   @override
   MoneyAmount get amount;
@@ -175,6 +218,8 @@ abstract class _PortfolioState implements PortfolioState {
   List<PortfolioItem> get items;
   @override
   List<ItemsGroup> get groups;
+  @override
+  ItemsGroup get groupEditing;
   @override
   _$PortfolioStateCopyWith<_PortfolioState> get copyWith;
 }

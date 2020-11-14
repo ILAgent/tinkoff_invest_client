@@ -12,5 +12,6 @@ abstract class PortfolioState with _$PortfolioState {
     @required MoneyAmount amount,
     @required List<PortfolioItem> items,
     @required List<ItemsGroup> groups,
+    ItemsGroup groupEditing,
   }) = _PortfolioState;
 }

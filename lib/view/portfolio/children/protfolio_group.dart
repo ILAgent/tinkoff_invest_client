@@ -12,8 +12,8 @@ class PortfolioGroupWidget extends StatelessWidget {
       onLongPress: () {},
       child: Container(
         height: 30,
-        alignment: Alignment.center,
-        child: Text(_group.title),
+        alignment: Alignment.centerLeft,
+        child: GestureDetector(child: Text(_group.title)),
       ),
     );
   }

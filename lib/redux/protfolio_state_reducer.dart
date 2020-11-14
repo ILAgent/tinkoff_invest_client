@@ -1,5 +1,6 @@
 import 'package:tinkoff_api/model/money_amount.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
+import 'package:tinkoff_invest/redux/state/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 
@@ -7,6 +8,8 @@ PortfolioState reducePortfolioState(PortfolioState state, dynamic action) {
   return state.copyWith(
     amount: _reduceAmount(state.amount, action),
     items: _reduceItems(state.items, action),
+    groups: _reduceGroups(state.groups, action),
+    groupEditing: _reduceGroupEditing(state.groupEditing, action),
   );
 }
 
@@ -30,4 +33,18 @@ PortfolioItem _reduceItem(PortfolioItem item, dynamic action) {
     return action.item;
   }
   return item;
+}
+
+List<ItemsGroup> _reduceGroups(List<ItemsGroup> groups, dynamic action) {
+  if (action is AddGroup) {
+    return [
+      ...groups,
+      ItemsGroup(title: 'Новая группа'),
+    ];
+  }
+  return groups;
+}
+
+ItemsGroup _reduceGroupEditing(ItemsGroup groupEditing, dynamic action) {
+  return groupEditing;
 }
