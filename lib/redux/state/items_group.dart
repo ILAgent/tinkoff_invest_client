@@ -6,6 +6,7 @@ part 'items_group.freezed.dart';
 @freezed
 abstract class ItemsGroup with _$ItemsGroup {
   factory ItemsGroup({
+    @required String id,
     @required String title,
   }) = _ItemsGroup;
 }

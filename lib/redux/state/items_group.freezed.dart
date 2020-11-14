@@ -14,8 +14,9 @@ class _$ItemsGroupTearOff {
   const _$ItemsGroupTearOff();
 
 // ignore: unused_element
-  _ItemsGroup call({@required String title}) {
+  _ItemsGroup call({@required String id, @required String title}) {
     return _ItemsGroup(
+      id: id,
       title: title,
     );
   }
@@ -27,6 +28,7 @@ const $ItemsGroup = _$ItemsGroupTearOff();
 
 /// @nodoc
 mixin _$ItemsGroup {
+  String get id;
   String get title;
 
   $ItemsGroupCopyWith<ItemsGroup> get copyWith;
@@ -37,7 +39,7 @@ abstract class $ItemsGroupCopyWith<$Res> {
   factory $ItemsGroupCopyWith(
           ItemsGroup value, $Res Function(ItemsGroup) then) =
       _$ItemsGroupCopyWithImpl<$Res>;
-  $Res call({String title});
+  $Res call({String id, String title});
 }
 
 /// @nodoc
@@ -50,9 +52,11 @@ class _$ItemsGroupCopyWithImpl<$Res> implements $ItemsGroupCopyWith<$Res> {
 
   @override
   $Res call({
+    Object id = freezed,
     Object title = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed ? _value.id : id as String,
       title: title == freezed ? _value.title : title as String,
     ));
   }
@@ -64,7 +68,7 @@ abstract class _$ItemsGroupCopyWith<$Res> implements $ItemsGroupCopyWith<$Res> {
           _ItemsGroup value, $Res Function(_ItemsGroup) then) =
       __$ItemsGroupCopyWithImpl<$Res>;
   @override
-  $Res call({String title});
+  $Res call({String id, String title});
 }
 
 /// @nodoc
@@ -79,9 +83,11 @@ class __$ItemsGroupCopyWithImpl<$Res> extends _$ItemsGroupCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object id = freezed,
     Object title = freezed,
   }) {
     return _then(_ItemsGroup(
+      id: id == freezed ? _value.id : id as String,
       title: title == freezed ? _value.title : title as String,
     ));
   }
@@ -89,14 +95,18 @@ class __$ItemsGroupCopyWithImpl<$Res> extends _$ItemsGroupCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_ItemsGroup with DiagnosticableTreeMixin implements _ItemsGroup {
-  _$_ItemsGroup({@required this.title}) : assert(title != null);
+  _$_ItemsGroup({@required this.id, @required this.title})
+      : assert(id != null),
+        assert(title != null);
 
+  @override
+  final String id;
   @override
   final String title;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ItemsGroup(title: $title)';
+    return 'ItemsGroup(id: $id, title: $title)';
   }
 
   @override
@@ -104,6 +114,7 @@ class _$_ItemsGroup with DiagnosticableTreeMixin implements _ItemsGroup {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ItemsGroup'))
+      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('title', title));
   }
 
@@ -111,13 +122,17 @@ class _$_ItemsGroup with DiagnosticableTreeMixin implements _ItemsGroup {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _ItemsGroup &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(title);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(title);
 
   @override
   _$ItemsGroupCopyWith<_ItemsGroup> get copyWith =>
@@ -125,8 +140,11 @@ class _$_ItemsGroup with DiagnosticableTreeMixin implements _ItemsGroup {
 }
 
 abstract class _ItemsGroup implements ItemsGroup {
-  factory _ItemsGroup({@required String title}) = _$_ItemsGroup;
+  factory _ItemsGroup({@required String id, @required String title}) =
+      _$_ItemsGroup;
 
+  @override
+  String get id;
   @override
   String get title;
   @override

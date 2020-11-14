@@ -3,6 +3,7 @@ import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/state/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
+import 'package:uuid/uuid.dart';
 
 PortfolioState reducePortfolioState(PortfolioState state, dynamic action) {
   return state.copyWith(
@@ -39,7 +40,7 @@ List<ItemsGroup> _reduceGroups(List<ItemsGroup> groups, dynamic action) {
   if (action is AddGroup) {
     return [
       ...groups,
-      ItemsGroup(title: 'Новая группа'),
+      ItemsGroup(title: 'Новая группа', id: Uuid().v1()),
     ];
   }
   return groups;
