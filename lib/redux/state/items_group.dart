@@ -8,5 +8,7 @@ abstract class ItemsGroup with _$ItemsGroup {
   factory ItemsGroup({
     @required String id,
     @required String title,
+    double actualPrice,
+    double income,
   }) = _ItemsGroup;
 }
