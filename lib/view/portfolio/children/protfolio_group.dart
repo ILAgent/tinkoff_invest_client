@@ -17,14 +17,15 @@ class PortfolioGroupWidget extends StatelessWidget {
         /* prevent drag */
       },
       child: Container(
-        color: _store.state.groupEditing == _group ? Colors.green : null,
         height: 30,
         alignment: Alignment.centerLeft,
         child: GestureDetector(
           onTap: () {
             _store.dispatch(EditGroup(_group));
           },
-          child: Text(_group.title),
+          child: _store.state.groupEditing == _group
+              ? TextField(controller: TextEditingController(text: _group.title))
+              : Text(_group.title),
         ),
       ),
     );
