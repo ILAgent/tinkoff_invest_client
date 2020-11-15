@@ -1,5 +1,4 @@
 import "package:collection/collection.dart";
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
@@ -19,13 +18,13 @@ class PortfolioItemsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<dynamic>>(
-      stream: _store.states.map(_stateToList).distinct(listEquals),
+      stream: _store.states.map(_stateToList),
       builder: (context, snapshot) {
         final items = snapshot.data;
         return ReorderableListView(
           children: items.map((e) {
             if (e is PortfolioItem) return PortfolioItemWidget(e);
-            if (e is ItemsGroup) return PortfolioGroupWidget(e);
+            if (e is ItemsGroup) return PortfolioGroupWidget(e, _store);
             throw ArgumentError(e);
           }).toList(),
           padding: EdgeInsets.only(top: 16),
