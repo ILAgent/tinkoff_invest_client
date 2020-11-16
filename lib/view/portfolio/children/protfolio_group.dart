@@ -12,6 +12,22 @@ class PortfolioGroupWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget textWidget;
+    if (_store.state.groupEditing == _group) {
+      final controller = TextEditingController(text: _group.title);
+      textWidget = TextField(
+        controller: controller,
+        autofocus: true,
+      );
+      Future(() => {
+            controller.selection = TextSelection(
+              baseOffset: 0,
+              extentOffset: _group.title.length,
+            )
+          });
+    } else {
+      textWidget = Text(_group.title);
+    }
     return GestureDetector(
       onLongPress: () {
         /* prevent drag */
@@ -23,9 +39,7 @@ class PortfolioGroupWidget extends StatelessWidget {
           onTap: () {
             _store.dispatch(EditGroup(_group));
           },
-          child: _store.state.groupEditing == _group
-              ? TextField(controller: TextEditingController(text: _group.title))
-              : Text(_group.title),
+          child: textWidget,
         ),
       ),
     );
