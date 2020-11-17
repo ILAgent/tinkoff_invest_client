@@ -8,7 +8,7 @@ import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
 import 'package:tinkoff_invest/view/portfolio/children/portfolio_item.dart';
-import 'package:tinkoff_invest/view/portfolio/children/protfolio_group.dart';
+import 'package:tinkoff_invest/view/portfolio/children/group/protfolio_group.dart';
 
 class PortfolioItemsList extends StatelessWidget {
   final PortfolioStore _store;
