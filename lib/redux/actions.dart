@@ -36,3 +36,10 @@ class EditGroup {
 
   EditGroup(this.group);
 }
+
+class UpdateGroupTitle {
+  final String title;
+  final String id;
+
+  UpdateGroupTitle({this.title, this.id});
+}

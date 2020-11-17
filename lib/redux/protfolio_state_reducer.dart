@@ -42,7 +42,14 @@ List<ItemsGroup> _reduceGroups(List<ItemsGroup> groups, dynamic action) {
       action.group,
     ];
   }
-  return groups;
+  return groups.map((e) => _reduceGroup(e, action)).toList();
+}
+
+ItemsGroup _reduceGroup(ItemsGroup group, dynamic action) {
+  if (action is UpdateGroupTitle && group.id == action.id) {
+    return group.copyWith(title: action.title);
+  }
+  return group;
 }
 
 ItemsGroup _reduceGroupEditing(ItemsGroup groupEditing, dynamic action) {
@@ -51,6 +58,9 @@ ItemsGroup _reduceGroupEditing(ItemsGroup groupEditing, dynamic action) {
   }
   if (action is AddGroup) {
     return action.group;
+  }
+  if (action is UpdateGroupTitle) {
+    return null;
   }
   return groupEditing;
 }

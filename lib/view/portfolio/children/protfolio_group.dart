@@ -14,10 +14,22 @@ class PortfolioGroupWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget textWidget;
     if (_store.state.groupEditing == _group) {
-      final controller = TextEditingController(text: _group.title);
-      textWidget = TextField(
-        controller: controller,
-        autofocus: true,
+      final controller = TextEditingController(
+        text: _group.title,
+      );
+      textWidget = Focus(
+        child: TextField(
+          controller: controller,
+          autofocus: true,
+        ),
+        onFocusChange: (hasFocus) {
+          if (!hasFocus) {
+            _store.dispatch(
+              // todo doesn't work when tap groups one by one
+              UpdateGroupTitle(title: controller.text, id: _group.id),
+            );
+          }
+        },
       );
       Future(() => {
             controller.selection = TextSelection(
