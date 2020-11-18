@@ -18,6 +18,7 @@ class GroupEditableTitle extends StatelessWidget {
         text: _group.title,
       );
       textWidget = Focus(
+        // todo FIX overflow
         child: TextField(
           controller: controller,
           autofocus: true,
