@@ -49,6 +49,9 @@ ItemsGroup _reduceGroup(ItemsGroup group, dynamic action) {
   if (action is UpdateGroupTitle && group.id == action.id) {
     return group.copyWith(title: action.title);
   }
+  if (action is UpdateGroupAmounts && group.id == action.id) {
+    return group.copyWith(actualPrice: action.amount, income: action.income);
+  }
   return group;
 }
 

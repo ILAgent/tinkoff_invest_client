@@ -18,12 +18,12 @@ class _$PortfolioItemTearOff {
       {@required PortfolioPosition portfolioPosition,
       double actualPrice,
       double income,
-      ItemsGroup group}) {
+      String groupId}) {
     return _PortfolioItem(
       portfolioPosition: portfolioPosition,
       actualPrice: actualPrice,
       income: income,
-      group: group,
+      groupId: groupId,
     );
   }
 }
@@ -37,7 +37,7 @@ mixin _$PortfolioItem {
   PortfolioPosition get portfolioPosition;
   double get actualPrice;
   double get income;
-  ItemsGroup get group;
+  String get groupId;
 
   $PortfolioItemCopyWith<PortfolioItem> get copyWith;
 }
@@ -51,9 +51,7 @@ abstract class $PortfolioItemCopyWith<$Res> {
       {PortfolioPosition portfolioPosition,
       double actualPrice,
       double income,
-      ItemsGroup group});
-
-  $ItemsGroupCopyWith<$Res> get group;
+      String groupId});
 }
 
 /// @nodoc
@@ -70,7 +68,7 @@ class _$PortfolioItemCopyWithImpl<$Res>
     Object portfolioPosition = freezed,
     Object actualPrice = freezed,
     Object income = freezed,
-    Object group = freezed,
+    Object groupId = freezed,
   }) {
     return _then(_value.copyWith(
       portfolioPosition: portfolioPosition == freezed
@@ -79,18 +77,8 @@ class _$PortfolioItemCopyWithImpl<$Res>
       actualPrice:
           actualPrice == freezed ? _value.actualPrice : actualPrice as double,
       income: income == freezed ? _value.income : income as double,
-      group: group == freezed ? _value.group : group as ItemsGroup,
+      groupId: groupId == freezed ? _value.groupId : groupId as String,
     ));
-  }
-
-  @override
-  $ItemsGroupCopyWith<$Res> get group {
-    if (_value.group == null) {
-      return null;
-    }
-    return $ItemsGroupCopyWith<$Res>(_value.group, (value) {
-      return _then(_value.copyWith(group: value));
-    });
   }
 }
 
@@ -105,10 +93,7 @@ abstract class _$PortfolioItemCopyWith<$Res>
       {PortfolioPosition portfolioPosition,
       double actualPrice,
       double income,
-      ItemsGroup group});
-
-  @override
-  $ItemsGroupCopyWith<$Res> get group;
+      String groupId});
 }
 
 /// @nodoc
@@ -127,7 +112,7 @@ class __$PortfolioItemCopyWithImpl<$Res>
     Object portfolioPosition = freezed,
     Object actualPrice = freezed,
     Object income = freezed,
-    Object group = freezed,
+    Object groupId = freezed,
   }) {
     return _then(_PortfolioItem(
       portfolioPosition: portfolioPosition == freezed
@@ -136,7 +121,7 @@ class __$PortfolioItemCopyWithImpl<$Res>
       actualPrice:
           actualPrice == freezed ? _value.actualPrice : actualPrice as double,
       income: income == freezed ? _value.income : income as double,
-      group: group == freezed ? _value.group : group as ItemsGroup,
+      groupId: groupId == freezed ? _value.groupId : groupId as String,
     ));
   }
 }
@@ -147,7 +132,7 @@ class _$_PortfolioItem with DiagnosticableTreeMixin implements _PortfolioItem {
       {@required this.portfolioPosition,
       this.actualPrice,
       this.income,
-      this.group})
+      this.groupId})
       : assert(portfolioPosition != null);
 
   @override
@@ -157,11 +142,11 @@ class _$_PortfolioItem with DiagnosticableTreeMixin implements _PortfolioItem {
   @override
   final double income;
   @override
-  final ItemsGroup group;
+  final String groupId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PortfolioItem(portfolioPosition: $portfolioPosition, actualPrice: $actualPrice, income: $income, group: $group)';
+    return 'PortfolioItem(portfolioPosition: $portfolioPosition, actualPrice: $actualPrice, income: $income, groupId: $groupId)';
   }
 
   @override
@@ -172,7 +157,7 @@ class _$_PortfolioItem with DiagnosticableTreeMixin implements _PortfolioItem {
       ..add(DiagnosticsProperty('portfolioPosition', portfolioPosition))
       ..add(DiagnosticsProperty('actualPrice', actualPrice))
       ..add(DiagnosticsProperty('income', income))
-      ..add(DiagnosticsProperty('group', group));
+      ..add(DiagnosticsProperty('groupId', groupId));
   }
 
   @override
@@ -187,8 +172,8 @@ class _$_PortfolioItem with DiagnosticableTreeMixin implements _PortfolioItem {
                     .equals(other.actualPrice, actualPrice)) &&
             (identical(other.income, income) ||
                 const DeepCollectionEquality().equals(other.income, income)) &&
-            (identical(other.group, group) ||
-                const DeepCollectionEquality().equals(other.group, group)));
+            (identical(other.groupId, groupId) ||
+                const DeepCollectionEquality().equals(other.groupId, groupId)));
   }
 
   @override
@@ -197,7 +182,7 @@ class _$_PortfolioItem with DiagnosticableTreeMixin implements _PortfolioItem {
       const DeepCollectionEquality().hash(portfolioPosition) ^
       const DeepCollectionEquality().hash(actualPrice) ^
       const DeepCollectionEquality().hash(income) ^
-      const DeepCollectionEquality().hash(group);
+      const DeepCollectionEquality().hash(groupId);
 
   @override
   _$PortfolioItemCopyWith<_PortfolioItem> get copyWith =>
@@ -209,7 +194,7 @@ abstract class _PortfolioItem implements PortfolioItem {
       {@required PortfolioPosition portfolioPosition,
       double actualPrice,
       double income,
-      ItemsGroup group}) = _$_PortfolioItem;
+      String groupId}) = _$_PortfolioItem;
 
   @override
   PortfolioPosition get portfolioPosition;
@@ -218,7 +203,7 @@ abstract class _PortfolioItem implements PortfolioItem {
   @override
   double get income;
   @override
-  ItemsGroup get group;
+  String get groupId;
   @override
   _$PortfolioItemCopyWith<_PortfolioItem> get copyWith;
 }

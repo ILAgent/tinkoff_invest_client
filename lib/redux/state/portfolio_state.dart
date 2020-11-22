@@ -15,3 +15,9 @@ abstract class PortfolioState with _$PortfolioState {
     ItemsGroup groupEditing,
   }) = _PortfolioState;
 }
+
+extension PortfolioStateExtension on PortfolioState{
+  ItemsGroup groupById(String id){
+    return groups.firstWhere((g) => g.id == id);
+  }
+}

@@ -6,13 +6,16 @@ import 'package:tinkoff_invest/redux/dispatcher.dart';
 import 'package:tinkoff_invest/redux/protfolio_state_reducer.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 
+import 'epics/calculate_groups_epic.dart';
 import 'epics/portfolio_item_epic.dart';
 import 'epics/total_money_epic.dart';
 
 class PortfolioStore extends Store<PortfolioState> implements Dispatcher {
   PortfolioStore(
-      TotalAmountEpic totalAmountEpic, PortfolioItemsEpic portfolioItemsEpic)
-      : super(reducePortfolioState,
+    TotalAmountEpic totalAmountEpic,
+    PortfolioItemsEpic portfolioItemsEpic,
+    CalculateGroupsEpic calculateGroupsEpic,
+  ) : super(reducePortfolioState,
             initialState: PortfolioState(
               amount: MoneyAmount(
                 (b) => b
@@ -25,5 +28,6 @@ class PortfolioStore extends Store<PortfolioState> implements Dispatcher {
             middleware: [
               EpicMiddleware(totalAmountEpic.act),
               EpicMiddleware(portfolioItemsEpic.act),
+              EpicMiddleware(calculateGroupsEpic.act),
             ]);
 }

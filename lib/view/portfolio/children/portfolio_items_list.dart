@@ -1,4 +1,4 @@
-import "package:collection/collection.dart";
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
@@ -7,8 +7,8 @@ import 'package:tinkoff_invest/redux/state/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
-import 'package:tinkoff_invest/view/portfolio/children/portfolio_item.dart';
 import 'package:tinkoff_invest/view/portfolio/children/group/protfolio_group.dart';
+import 'package:tinkoff_invest/view/portfolio/children/portfolio_item.dart';
 
 class PortfolioItemsList extends StatelessWidget {
   final PortfolioStore _store;
@@ -42,22 +42,22 @@ class PortfolioItemsList extends StatelessWidget {
       for (var i = newIndex - 1; i >= 0; --i) {
         final item = items[i];
         if (item is ItemsGroup) {
-          if (draggableItem.group != item) {
+          if (draggableItem.groupId != item.id) {
             _store.dispatch(
-              UpdatePortfolioItem(draggableItem.copyWith(group: item)),
+              UpdatePortfolioItem(draggableItem.copyWith(groupId: item.id)),
             );
           }
           return;
         }
       }
       _store.dispatch(
-        UpdatePortfolioItem(draggableItem.copyWith(group: null)),
+        UpdatePortfolioItem(draggableItem.copyWith(groupId: null)),
       );
     }
   }
 
   List<dynamic> _stateToList(PortfolioState state) {
-    final groups = groupBy(state.items, (PortfolioItem item) => item.group)
+    final groups = groupBy(state.items, (PortfolioItem item) => item.groupId)
         .entries
         .toList();
     groups.sort(
@@ -65,11 +65,14 @@ class PortfolioItemsList extends StatelessWidget {
           ? -1
           : b.key == null
               ? 1
-              : a.key.title.compareTo(b.key.title),
+              : state
+                  .groupById(a.key)
+                  .title
+                  .compareTo(state.groupById(b.key).title),
     );
     final items = groups
         .expand((e) => [
-              if (e.key != null) e.key,
+              if (e.key != null) state.groupById(e.key),
               ...e.value,
             ])
         .toList();
