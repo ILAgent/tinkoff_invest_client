@@ -516,11 +516,9 @@ packages:
   tinkoff_invest_api:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "4b60b430a2cafa29a5c6056b036bf400a616264e"
-      url: "https://github.com/ILAgent/tinkoff_invest_api"
-    source: git
+      name: tinkoff_invest_api
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   typed_data:
     dependency: transitive
