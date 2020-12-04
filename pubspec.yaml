@@ -29,8 +29,8 @@ dependencies:
   rxdart: ^0.24.1
   redux_epics: ^0.14.0
   uuid: ^2.2.2
-  tinkoff_api:
-    path: ./tinkoff_api
+  tinkoff_invest_api:
+    git: https://github.com/ILAgent/tinkoff_invest_api
   flutter:
     sdk: flutter
 

@@ -1,10 +1,10 @@
 import 'dart:core';
 
 import "package:collection/collection.dart";
-import 'package:tinkoff_api/model/candle_resolution.dart';
-import 'package:tinkoff_api/model/currency.dart';
-import 'package:tinkoff_api/model/money_amount.dart';
-import 'package:tinkoff_api/model/portfolio_position.dart';
+import 'package:tinkoff_invest_api/model/candle_resolution.dart';
+import 'package:tinkoff_invest_api/model/currency.dart';
+import 'package:tinkoff_invest_api/model/money_amount.dart';
+import 'package:tinkoff_invest_api/model/portfolio_position.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/utils/iterable_etensions.dart';
 

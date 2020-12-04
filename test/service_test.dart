@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tinkoff_api/model/currency.dart';
-import 'package:tinkoff_api/model/money_amount.dart';
+import 'package:tinkoff_invest_api/model/currency.dart';
+import 'package:tinkoff_invest_api/model/money_amount.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/api_service_extension.dart';
 

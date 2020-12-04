@@ -22,9 +22,9 @@ class CalculateGroupsEpic {
           .toList();
       final actions = groups.map((group) {
         final amount = group.value
-            .fold(0.0, (prev, e) => prev + e.actualPrice * e.portfolioPosition.balance ?? 0.0);
+            .fold(0.0, (double prev, e) => prev + e.actualPrice * e.portfolioPosition.balance);
         final income = group.value
-            .fold(0.0, (prev, element) => prev + element.income ?? 0.0);
+            .fold(0.0, (double prev, element) => prev + element.income ?? 0.0);
         return UpdateGroupAmounts(
             amount: amount, income: income, id: group.key);
       });

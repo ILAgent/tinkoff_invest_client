@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tinkoff_api/model/portfolio_position.dart';
+import 'package:tinkoff_invest_api/model/portfolio_position.dart';
 
 part 'portfolio_item.freezed.dart';
 

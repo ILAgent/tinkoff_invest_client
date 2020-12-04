@@ -1,4 +1,4 @@
-import 'package:tinkoff_api/model/currency.dart';
+import 'package:tinkoff_invest_api/model/currency.dart';
 
 extension CurrencyExtensions on Currency {
   String currencySymbol() {

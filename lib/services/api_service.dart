@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:tinkoff_api/api.dart';
-import 'package:tinkoff_api/model/candle_resolution.dart';
-import 'package:tinkoff_api/model/candles.dart';
-import 'package:tinkoff_api/model/market_instrument_list.dart';
-import 'package:tinkoff_api/model/operations.dart';
-import 'package:tinkoff_api/model/portfolio.dart';
-import 'package:tinkoff_api/model/sandbox_register_request.dart';
+import 'package:tinkoff_invest_api/api.dart';
+import 'package:tinkoff_invest_api/model/candle_resolution.dart';
+import 'package:tinkoff_invest_api/model/candles.dart';
+import 'package:tinkoff_invest_api/model/market_instrument_list.dart';
+import 'package:tinkoff_invest_api/model/operations.dart';
+import 'package:tinkoff_invest_api/model/portfolio.dart';
+import 'package:tinkoff_invest_api/model/sandbox_register_request.dart';
 
 import 'private_data.dart' as Private;
 
