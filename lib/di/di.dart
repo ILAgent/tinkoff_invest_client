@@ -6,6 +6,8 @@ import 'package:tinkoff_invest/redux/epics/portfolio_item_epic.dart';
 import 'package:tinkoff_invest/redux/epics/total_money_epic.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
+import 'package:tinkoff_invest/services/currencies_converter.dart';
+import 'package:tinkoff_invest/services/total_money_calculator.dart';
 
 final di = GetIt.instance;
 
@@ -17,4 +19,6 @@ void initDI() {
   di.registerLazySingleton(() => TotalAmountEpic(di.get()));
   di.registerLazySingleton(() => PortfolioItemsEpic(di.get()));
   di.registerLazySingleton(() => CalculateGroupsEpic());
+  di.registerLazySingleton(() => CurrenciesConverter(di.get()));
+  di.registerLazySingleton(() => TotalMoneyCalculator(di.get(), di.get()));
 }

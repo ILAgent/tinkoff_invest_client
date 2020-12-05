@@ -1,23 +1,19 @@
 import 'package:redux_epics/redux_epics.dart';
-import 'package:tinkoff_invest_api/model/currency.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
-import 'package:tinkoff_invest/services/api_service.dart';
-import 'package:tinkoff_invest/services/api_service_extension.dart';
+import 'package:tinkoff_invest/services/total_money_calculator.dart';
+import 'package:tinkoff_invest_api/model/currency.dart';
 
 class TotalAmountEpic {
-  final ApiService _apiService;
+  final TotalMoneyCalculator _totalMoneyCalculator;
 
-  TotalAmountEpic(this._apiService);
+  TotalAmountEpic(this._totalMoneyCalculator);
 
   Stream<dynamic> act(
     Stream<dynamic> actions,
     EpicStore<PortfolioState> store,
   ) {
-    return actions
-        .where((action) =>
-            action is TogglePortfolioCurrency || action is InitAction)
-        .asyncMap(
+    return actions.where((action) => action is TogglePortfolioCurrency || action is InitAction).asyncMap(
       (action) async {
         print("TogglePortfolioCurrency");
         Currency targetCur = Currency.rUB;
@@ -32,7 +28,7 @@ class TotalAmountEpic {
               break;
           }
         }
-        final total = await _apiService.totalMoney(targetCur);
+        final total = await _totalMoneyCalculator.totalMoney(targetCur);
         return ChangeTotalAmount(total);
       },
     );

@@ -1,11 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tinkoff_invest_api/model/currency.dart';
-import 'package:tinkoff_invest_api/model/money_amount.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/api_service_extension.dart';
+import 'package:tinkoff_invest/services/currencies_converter.dart';
+import 'package:tinkoff_invest/services/total_money_calculator.dart';
+import 'package:tinkoff_invest_api/model/currency.dart';
+import 'package:tinkoff_invest_api/model/money_amount.dart';
 
 void main() async {
   final apiService = ApiService(); //await ApiService.sandbox();
+  final curConverter = CurrenciesConverter(apiService);
+  final amountCalc = TotalMoneyCalculator(apiService, curConverter);
 
   test("Portfolio test", () async {
     final res = await apiService.portfolio();
@@ -46,7 +50,7 @@ void main() async {
   });
 
   test("Converter", () async {
-    final res = await apiService.convert(
+    final res = await curConverter.convert(
         MoneyAmount((b) => b
           ..currency = Currency.rUB
           ..value = 1),
@@ -55,7 +59,7 @@ void main() async {
   });
 
   test("Total amount", () async {
-    final res = await apiService.totalMoney(Currency.eUR);
+    final res = await amountCalc.totalMoney(Currency.eUR);
     print(res);
   });
 }
