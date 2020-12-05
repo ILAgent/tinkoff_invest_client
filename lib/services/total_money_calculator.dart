@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/api_service_extension.dart';
@@ -14,8 +13,8 @@ class TotalMoneyCalculator {
 
   TotalMoneyCalculator(this._apiService, this._currenciesConverter);
 
-  Future<MoneyAmount> totalMoney(Currency currency, {BuiltList<PortfolioPosition> positions}) async {
-    final BuiltList<PortfolioPosition> portfolioPositions = positions ?? (await _apiService.portfolio()).positions;
+  Future<MoneyAmount> totalMoney(Currency currency, {Iterable<PortfolioPosition> positions}) async {
+    final Iterable<PortfolioPosition> portfolioPositions = positions ?? (await _apiService.portfolio()).positions;
     final Iterable<MapEntry<Currency, List<PortfolioPosition>>> groupedByCurrency = groupBy<PortfolioPosition, Currency>(
       portfolioPositions,
       (position) => position.averagePositionPrice.currency,

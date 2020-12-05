@@ -18,7 +18,7 @@ void initDI() {
   di.registerLazySingleton(() => ApiService());
   di.registerLazySingleton(() => TotalAmountEpic(di.get()));
   di.registerLazySingleton(() => PortfolioItemsEpic(di.get()));
-  di.registerLazySingleton(() => CalculateGroupsEpic());
+  di.registerLazySingleton(() => CalculateGroupsEpic(di.get()));
   di.registerLazySingleton(() => CurrenciesConverter(di.get()));
   di.registerLazySingleton(() => TotalMoneyCalculator(di.get(), di.get()));
 }
