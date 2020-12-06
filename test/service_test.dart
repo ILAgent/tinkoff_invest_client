@@ -59,7 +59,7 @@ void main() async {
   });
 
   test("Total amount", () async {
-    final res = await amountCalc.totalMoney(Currency.eUR);
+    final res = await amountCalc.sumPositionsAmount(Currency.eUR);
     print(res);
   });
 }

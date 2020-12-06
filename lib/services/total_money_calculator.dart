@@ -13,18 +13,30 @@ class TotalMoneyCalculator {
 
   TotalMoneyCalculator(this._apiService, this._currenciesConverter);
 
-  Future<MoneyAmount> totalMoney(Currency currency, {Iterable<PortfolioPosition> positions}) async {
+  Future<MoneyAmount> sumPositionsAmount(Currency currency, {Iterable<PortfolioPosition> positions}) async {
     final Iterable<PortfolioPosition> portfolioPositions = positions ?? (await _apiService.portfolio()).positions;
-    final Iterable<MapEntry<Currency, List<PortfolioPosition>>> groupedByCurrency = groupBy<PortfolioPosition, Currency>(
-      portfolioPositions,
-      (position) => position.averagePositionPrice.currency,
+    final List<MoneyAmount> amounts = await Stream.fromIterable(portfolioPositions) //
+        .asyncMap((p) async {
+      final value = p.balance * await _apiService.actualPrice(p.figi);
+      return MoneyAmount((b) => b
+        ..value = value
+        ..currency = p.averagePositionPrice.currency);
+    }).toList();
+
+    return await amountsSum(currency, amounts);
+  }
+
+  Future<MoneyAmount> amountsSum(Currency currency, Iterable<MoneyAmount> moneyAmounts) async {
+    final Iterable<MapEntry<Currency, List<MoneyAmount>>> groupedByCurrency = groupBy<MoneyAmount, Currency>(
+      moneyAmounts,
+      (amount) => amount.currency,
     ).entries;
 
-    final List<MoneyAmount> amounts = await Stream.fromIterable(groupedByCurrency)
-        .asyncMap(
-          (entry) async => MapEntry(
+    final List<MoneyAmount> amounts = groupedByCurrency //
+        .map(
+          (entry) => MapEntry(
             entry.key,
-            await entry.value.sumAsync((position) async => position.balance * await _apiService.actualPrice(position.figi)),
+            entry.value.fold(0.0, (prev, amount) => prev + amount.value),
           ),
         )
         .map((entry) => MoneyAmount(

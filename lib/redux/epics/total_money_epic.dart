@@ -28,7 +28,7 @@ class TotalAmountEpic {
               break;
           }
         }
-        final total = await _totalMoneyCalculator.totalMoney(targetCur);
+        final total = await _totalMoneyCalculator.sumPositionsAmount(targetCur);
         return ChangeTotalAmount(total);
       },
     );
