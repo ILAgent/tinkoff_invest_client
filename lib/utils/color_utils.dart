@@ -6,7 +6,6 @@ Color colorFor(String text) {
     hash = text.codeUnitAt(i) + ((hash << 5) - hash);
   }
   final finalHash = hash.abs() % (256 * 256 * 256);
-  print(finalHash);
   final red = ((finalHash & 0xFF0000) >> 16);
   final blue = ((finalHash & 0xFF00) >> 8);
   final green = ((finalHash & 0xFF));
