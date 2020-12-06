@@ -18,22 +18,15 @@ class CalculateGroupsEpic {
     Stream<dynamic> actions,
     EpicStore<PortfolioState> store,
   ) {
-    //todo exclude extra calcs
     final Stream<List<PortfolioItem>> itemsStream = store //
         .states
         .map((event) => event.items)
-        .distinct((a, b) => listEquals(a, b))
-        .doOnData((event) {
-      print("New Items");
-    });
+        .distinct((a, b) => listEquals(a, b));
 
     final currencyStream = store //
         .states
         .map((it) => it.amount.currency)
-        .distinct()
-        .doOnData((event) {
-      print("New Currency");
-    });
+        .distinct();
 
     final Stream<List<PortfolioItem>> stream = Rx.combineLatest(
       [itemsStream, currencyStream],
@@ -42,7 +35,6 @@ class CalculateGroupsEpic {
 
     return stream //
         .switchMap((items) {
-      print("CalculateGroupsEpic");
       final List<MapEntry<String, List<PortfolioItem>>> groups = groupBy(
         items,
         (PortfolioItem item) => item.groupId,
