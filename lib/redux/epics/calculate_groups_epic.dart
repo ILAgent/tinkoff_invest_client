@@ -17,6 +17,7 @@ class CalculateGroupsEpic {
     Stream<dynamic> actions,
     EpicStore<PortfolioState> store,
   ) {
+    //todo exclude extra calcs
     return store.states.map((event) => event.items).distinct((a, b) => listEquals(a, b)).switchMap((items) {
       final List<MapEntry<String, List<PortfolioItem>>> groups =
           groupBy(items, (PortfolioItem item) => item.groupId).entries.where((e) => e.key != null).toList();

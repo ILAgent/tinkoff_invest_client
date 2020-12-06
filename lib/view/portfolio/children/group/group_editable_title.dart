@@ -27,6 +27,7 @@ class GroupEditableTitle extends StatelessWidget {
           if (!hasFocus) {
             _store.dispatch(
               // todo doesn't work when tap groups one by one
+              // todo fix focus on ios 14
               UpdateGroupTitle(title: controller.text, id: _group.id),
             );
           }
