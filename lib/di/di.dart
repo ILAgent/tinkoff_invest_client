@@ -3,6 +3,7 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:tinkoff_invest/redux/dispatcher.dart';
 import 'package:tinkoff_invest/redux/epics/calculate_groups_epic.dart';
 import 'package:tinkoff_invest/redux/epics/portfolio_item_epic.dart';
+import 'package:tinkoff_invest/redux/epics/save_state_epic.dart';
 import 'package:tinkoff_invest/redux/epics/total_money_epic.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
@@ -14,13 +15,14 @@ final di = GetIt.instance;
 
 Future<void> initDI() async {
   di.registerSingleton(await Storage.create());
-  di.registerLazySingleton(() => PortfolioStore(di.get(), di.get(), di.get(), di.get()));
+  di.registerLazySingleton(() => PortfolioStore(di.get(), di.get(), di.get(), di.get(), di.get()));
   di.registerFactory<Dispatcher>(() => di.get<PortfolioStore>());
   di.registerLazySingleton(() => EpicStore(di.get<PortfolioStore>()));
   di.registerLazySingleton(() => ApiService());
   di.registerLazySingleton(() => TotalAmountEpic(di.get()));
   di.registerLazySingleton(() => PortfolioItemsEpic(di.get()));
   di.registerLazySingleton(() => CalculateGroupsEpic(di.get()));
+  di.registerLazySingleton(() => SaveSateEpic(di.get()));
   di.registerLazySingleton(() => CurrenciesConverter(di.get()));
   di.registerLazySingleton(() => TotalMoneyCalculator(di.get(), di.get()));
 }
