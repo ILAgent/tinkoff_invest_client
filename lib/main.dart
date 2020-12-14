@@ -5,8 +5,8 @@ import 'package:tinkoff_invest/view/portfolio/portfolio_widget.dart';
 
 import 'di/di.dart';
 
-void main() {
-  initDI();
+Future<void> main() async {
+  await initDI();
   runApp(
     AppWidget(
       di.get<PortfolioStore>()..dispatch(InitAction()),
