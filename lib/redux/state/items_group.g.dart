@@ -6,6 +6,73 @@ part of 'items_group.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+Serializer<ItemsGroup> _$itemsGroupSerializer = new _$ItemsGroupSerializer();
+
+class _$ItemsGroupSerializer implements StructuredSerializer<ItemsGroup> {
+  @override
+  final Iterable<Type> types = const [ItemsGroup, _$ItemsGroup];
+  @override
+  final String wireName = 'ItemsGroup';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, ItemsGroup object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'title',
+      serializers.serialize(object.title,
+          specifiedType: const FullType(String)),
+    ];
+    if (object.actualPrice != null) {
+      result
+        ..add('actualPrice')
+        ..add(serializers.serialize(object.actualPrice,
+            specifiedType: const FullType(double)));
+    }
+    if (object.income != null) {
+      result
+        ..add('income')
+        ..add(serializers.serialize(object.income,
+            specifiedType: const FullType(double)));
+    }
+    return result;
+  }
+
+  @override
+  ItemsGroup deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ItemsGroupBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'title':
+          result.title = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'actualPrice':
+          result.actualPrice = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'income':
+          result.income = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$ItemsGroup extends ItemsGroup {
   @override
   final String id;

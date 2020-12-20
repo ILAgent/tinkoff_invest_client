@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 import 'package:tinkoff_invest/redux/state/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest_api/model/currency.dart';
@@ -33,6 +34,9 @@ abstract class PortfolioState implements Built<PortfolioState, PortfolioStateBui
         ..groups = BuiltList<ItemsGroup>().toBuilder(),
     );
   }
+
+  static Serializer<PortfolioState> get serializer => _$portfolioStateSerializer;
+
 }
 
 extension PortfolioStateExtension on PortfolioState {

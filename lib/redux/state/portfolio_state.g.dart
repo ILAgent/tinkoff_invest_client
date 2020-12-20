@@ -6,6 +6,80 @@ part of 'portfolio_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+Serializer<PortfolioState> _$portfolioStateSerializer =
+    new _$PortfolioStateSerializer();
+
+class _$PortfolioStateSerializer
+    implements StructuredSerializer<PortfolioState> {
+  @override
+  final Iterable<Type> types = const [PortfolioState, _$PortfolioState];
+  @override
+  final String wireName = 'PortfolioState';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, PortfolioState object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'amount',
+      serializers.serialize(object.amount,
+          specifiedType: const FullType(MoneyAmount)),
+      'items',
+      serializers.serialize(object.items,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(PortfolioItem)])),
+      'groups',
+      serializers.serialize(object.groups,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(ItemsGroup)])),
+    ];
+    if (object.groupEditing != null) {
+      result
+        ..add('groupEditing')
+        ..add(serializers.serialize(object.groupEditing,
+            specifiedType: const FullType(ItemsGroup)));
+    }
+    return result;
+  }
+
+  @override
+  PortfolioState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new PortfolioStateBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'amount':
+          result.amount.replace(serializers.deserialize(value,
+              specifiedType: const FullType(MoneyAmount)) as MoneyAmount);
+          break;
+        case 'items':
+          result.items.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(PortfolioItem)]))
+              as BuiltList<Object>);
+          break;
+        case 'groups':
+          result.groups.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ItemsGroup)]))
+              as BuiltList<Object>);
+          break;
+        case 'groupEditing':
+          result.groupEditing.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ItemsGroup)) as ItemsGroup);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$PortfolioState extends PortfolioState {
   @override
   final MoneyAmount amount;
