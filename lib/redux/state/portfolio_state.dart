@@ -1,30 +1,36 @@
-import 'package:flutter/foundation.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
 import 'package:tinkoff_invest/redux/state/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest_api/model/currency.dart';
 import 'package:tinkoff_invest_api/model/money_amount.dart';
 
-part 'portfolio_state.freezed.dart';
+part 'portfolio_state.g.dart';
 
-@freezed
-abstract class PortfolioState with _$PortfolioState {
-  factory PortfolioState({
-    @required MoneyAmount amount,
-    @required List<PortfolioItem> items,
-    @required List<ItemsGroup> groups,
-    ItemsGroup groupEditing,
-  }) = _PortfolioState;
+abstract class PortfolioState implements Built<PortfolioState, PortfolioStateBuilder> {
+  MoneyAmount get amount;
+
+  BuiltList<PortfolioItem> get items;
+
+  BuiltList<ItemsGroup> get groups;
+
+  @nullable
+  ItemsGroup get groupEditing;
+
+  PortfolioState._();
+
+  factory PortfolioState([void Function(PortfolioStateBuilder) updates]) = _$PortfolioState;
 
   factory PortfolioState.defaultSate() {
     return PortfolioState(
-      amount: MoneyAmount(
-        (b) => b
-          ..currency = Currency.rUB
-          ..value = 0,
-      ),
-      items: [],
-      groups: [],
+      (b) => b
+        ..amount = MoneyAmount(
+          (b) => b
+            ..currency = Currency.rUB
+            ..value = 0,
+        ).toBuilder()
+        ..items = BuiltList<PortfolioItem>().toBuilder()
+        ..groups = BuiltList<ItemsGroup>().toBuilder(),
     );
   }
 }

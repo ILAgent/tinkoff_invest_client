@@ -44,31 +44,30 @@ class PortfolioItemsList extends StatelessWidget {
         if (item is ItemsGroup) {
           if (draggableItem.groupId != item.id) {
             _store.dispatch(
-              UpdatePortfolioItem(draggableItem.copyWith(groupId: item.id)),
+              UpdatePortfolioItem(
+                draggableItem.rebuild((b) => b.groupId = item.id),
+              ),
             );
           }
           return;
         }
       }
       _store.dispatch(
-        UpdatePortfolioItem(draggableItem.copyWith(groupId: null)),
+        UpdatePortfolioItem(
+          draggableItem.rebuild((b) => b.groupId = null),
+        ),
       );
     }
   }
 
   List<dynamic> _stateToList(PortfolioState state) {
-    final groups = groupBy(state.items, (PortfolioItem item) => item.groupId)
-        .entries
-        .toList();
+    final groups = groupBy(state.items, (PortfolioItem item) => item.groupId).entries.toList();
     groups.sort(
       (a, b) => a.key == null
           ? -1
           : b.key == null
               ? 1
-              : state
-                  .groupById(a.key)
-                  .title
-                  .compareTo(state.groupById(b.key).title),
+              : state.groupById(a.key).title.compareTo(state.groupById(b.key).title),
     );
     final items = groups
         .expand((e) => [

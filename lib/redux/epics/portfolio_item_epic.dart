@@ -16,23 +16,19 @@ class PortfolioItemsEpic {
     Stream<dynamic> actions,
     EpicStore<PortfolioState> store,
   ) {
-    return actions
-        .where((action) => action is InitAction)
-        .asyncMap((_) async => await _apiService.portfolio())
-        .switchMap((portfolio) {
+    return actions.where((action) => action is InitAction).asyncMap((_) async => await _apiService.portfolio()).switchMap((portfolio) {
       final items = portfolio.positions
           .map(
-            (p) => PortfolioItem(portfolioPosition: p),
+            (p) => PortfolioItem((b) => b..portfolioPosition = p.toBuilder()),
           )
           .toList();
-      final updateItemStream =
-          Stream.fromIterable(items).asyncMap((item) async {
-        final actualPrice =
-            await _apiService.actualPrice(item.portfolioPosition.figi);
+      final updateItemStream = Stream.fromIterable(items).asyncMap((item) async {
+        final actualPrice = await _apiService.actualPrice(item.portfolioPosition.figi);
         final income = await _apiService.income(item.portfolioPosition.figi);
-        return UpdatePortfolioItem(item.copyWith(
-          actualPrice: actualPrice,
-          income: income,
+        return UpdatePortfolioItem(item.rebuild(
+          (b) => b
+            ..actualPrice = actualPrice
+            ..income = income,
         )) as dynamic;
       });
       return updateItemStream.startWith(UpdatePortfolioItems(items));

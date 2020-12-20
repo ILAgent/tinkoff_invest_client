@@ -1,5 +1,5 @@
+import 'package:built_value/built_value.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tinkoff_invest_api/model/instrument_type.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/utils/color_utils.dart';

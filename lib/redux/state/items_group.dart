@@ -1,14 +1,19 @@
-import 'package:flutter/foundation.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:built_value/built_value.dart';
 
-part 'items_group.freezed.dart';
+part 'items_group.g.dart';
 
-@freezed
-abstract class ItemsGroup with _$ItemsGroup {
-  factory ItemsGroup({
-    @required String id,
-    @required String title,
-    double actualPrice,
-    double income,
-  }) = _ItemsGroup;
+abstract class ItemsGroup implements Built<ItemsGroup, ItemsGroupBuilder> {
+  String get id;
+
+  String get title;
+
+  @nullable
+  double get actualPrice;
+
+  @nullable
+  double get income;
+
+  ItemsGroup._();
+
+  factory ItemsGroup([void Function(ItemsGroupBuilder) updates]) = _$ItemsGroup;
 }

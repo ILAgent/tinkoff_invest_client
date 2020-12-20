@@ -1,5 +1,5 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/transformers.dart';
@@ -18,17 +18,17 @@ class CalculateGroupsEpic {
     Stream<dynamic> actions,
     EpicStore<PortfolioState> store,
   ) {
-    final Stream<List<PortfolioItem>> itemsStream = store //
+    final Stream<BuiltList<PortfolioItem>> itemsStream = store //
         .states
         .map((event) => event.items)
-        .distinct((a, b) => listEquals(a, b));
+        .distinct();
 
     final currencyStream = store //
         .states
         .map((it) => it.amount.currency)
         .distinct();
 
-    final Stream<List<PortfolioItem>> stream = Rx.combineLatest(
+    final Stream<Iterable<PortfolioItem>> stream = Rx.combineLatest(
       [itemsStream, currencyStream],
       (values) => values[0],
     );
