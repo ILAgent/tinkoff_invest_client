@@ -14,5 +14,5 @@ part 'state_serializers.g.dart';
 @SerializersFor([
   PortfolioState
 ])
-final Serializers serializers =
+final Serializers stateSerializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
