@@ -36,7 +36,7 @@ class TotalMoneyCalculator {
         .map(
           (entry) => MapEntry(
             entry.key,
-            entry.value.fold(0.0, (prev, amount) => prev + amount.value),
+            entry.value.fold<double>(0.0, (prev, amount) => prev + amount.value),
           ),
         )
         .map((entry) => MoneyAmount(

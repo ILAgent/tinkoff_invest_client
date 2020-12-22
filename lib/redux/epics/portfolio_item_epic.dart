@@ -16,7 +16,10 @@ class PortfolioItemsEpic {
     Stream<dynamic> actions,
     EpicStore<PortfolioState> store,
   ) {
-    return actions.where((action) => action is InitAction).asyncMap((_) async => await _apiService.portfolio()).switchMap((portfolio) {
+    return actions
+        .where((action) => action is InitAction) //
+        .asyncMap((_) async => await _apiService.portfolio())
+        .switchMap((portfolio) {
       final items = portfolio.positions
           .map(
             (p) => PortfolioItem((b) => b..portfolioPosition = p.toBuilder()),

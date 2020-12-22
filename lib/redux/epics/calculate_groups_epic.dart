@@ -28,13 +28,13 @@ class CalculateGroupsEpic {
         .map((it) => it.amount.currency)
         .distinct();
 
-    final Stream<Iterable<PortfolioItem>> stream = Rx.combineLatest(
+    final Stream<BuiltList<PortfolioItem>> stream = Rx.combineLatest(
       [itemsStream, currencyStream],
-      (values) => values[0],
+      (values) => values[0] as BuiltList<PortfolioItem>,
     );
 
     return stream //
-        .switchMap((items) {
+        .switchMap<dynamic>((items) {
       final List<MapEntry<String, List<PortfolioItem>>> groups = groupBy(
         items,
         (PortfolioItem item) => item.groupId,

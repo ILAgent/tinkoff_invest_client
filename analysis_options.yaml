@@ -1,6 +1,9 @@
 include: package:pedantic/analysis_options.yaml
 
 analyzer:
+  strong-mode:
+    implicit-casts: false
+    #implicit-dynamic: false
   enable-experiment:
     - non-nullable
 linter:
@@ -8,3 +11,4 @@ linter:
     omit_local_variable_types: false
     prefer_single_quotes: false
     library_prefixes: false
+
