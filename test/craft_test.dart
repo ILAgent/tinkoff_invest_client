@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tinkoff_invest/utils/iterable_etensions.dart';
 
@@ -17,9 +16,9 @@ void main() {
     expect(sum, equals(6));
   });
 
-  test("Collections test", () {
-    List<int> rawList = [0, 1, 2];
-    //BuiltList<int> list = rawList; compile error
-    BuiltList<int> list = rawList.map((n) => n * 2);
-  });
+  // test("Collections test", () {
+  //   List<int> rawList = [0, 1, 2];
+  //   //BuiltList<int> list = rawList; compile error
+  //   //BuiltList<int> list = rawList.map((n) => n * 2);
+  // });
 }
