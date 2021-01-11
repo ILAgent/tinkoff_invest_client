@@ -1,7 +1,11 @@
 import 'dart:core';
 
+import 'package:collection/collection.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest_api/model/candle_resolution.dart';
+import 'package:tinkoff_invest_api/model/operation.dart';
+import 'package:tinkoff_invest_api/model/operation_type_with_commission.dart';
+import 'package:tinkoff_invest_api/model/operations.dart';
 
 extension ApiServiceExtension on ApiService {
   Future<double> actualPrice(String figi) async {
@@ -27,5 +31,11 @@ extension ApiServiceExtension on ApiService {
     final valueInPortfolio = inPortfolio.lots * actualPrice;
 
     return expenses + valueInPortfolio;
+  }
+
+  Future<void> operationsGroupedByType() async {
+    final Operations opers = await operations();
+    final Map<OperationTypeWithCommission, List<Operation>> byType = groupBy(opers.operations, (Operation op) => op.operationType);
+    print(byType.toString());
   }
 }
