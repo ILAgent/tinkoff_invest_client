@@ -7,13 +7,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:tinkoff_invest/main.dart';
+import 'package:tinkoff_invest/redux/portfolio_store.dart';
+import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(AppWidget(null));
+    await tester.pumpWidget(AppWidget(_StoreStub()));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
@@ -27,4 +28,29 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
+}
+
+class _StoreStub implements PortfolioStore {
+  @override
+  late var reducer;
+
+  @override
+  dispatch(action) {
+    // TODO: implement dispatch
+    throw UnimplementedError();
+  }
+
+  @override
+  // TODO: implement onChange
+  Stream<PortfolioState> get onChange => throw UnimplementedError();
+
+  @override
+  // TODO: implement state
+  PortfolioState get state => throw UnimplementedError();
+
+  @override
+  Future teardown() {
+    // TODO: implement teardown
+    throw UnimplementedError();
+  }
 }
