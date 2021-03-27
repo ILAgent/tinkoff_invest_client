@@ -27,7 +27,7 @@ void main() async {
   });
 
   test("Operations test", () async {
-    final res = await apiService.operations().then((ops) => ops.operations.where((op) => op.figi == "BBG009J3VGJ3"));
+    final res = await apiService.operations().then((ops) => ops.operations!.where((op) => op.figi == "BBG009J3VGJ3"));
     print(IterableBase.iterableToFullString(res));
   });
 
@@ -35,9 +35,9 @@ void main() async {
     const figi = "BBG000000002";
 
     final portfolio = await apiService.portfolio();
-    final teur = portfolio.positions.firstWhere((it) => it.figi == figi);
+    final teur = portfolio.positions!.firstWhere((it) => it.figi == figi);
 
-    expect(await apiService.income(figi), equals(teur.expectedYield.value));
+    expect(await apiService.income(figi), equals(teur.expectedYield!.value));
   });
 
   test("Max requests test", () async {
@@ -75,8 +75,8 @@ void main() async {
   test("tickers list", () async {
     final Iterable<Operation> opers = await apiService
         .operations() //
-        .then((value) => value.operations.where((op) => op.figi != null));
-    final Map<String, List<Operation>> byFigi = groupBy(opers, (Operation op) => op.figi);
+        .then((value) => value.operations!.where((op) => op.figi != null));
+    final Map<String, List<Operation>> byFigi = groupBy(opers, (Operation op) => op.figi!);
     final tickers = await Stream.fromIterable(byFigi.keys) //
         .asyncMap((figi) => apiService.instrumentByFigi(figi))
         .map((event) => event.ticker)
@@ -85,18 +85,18 @@ void main() async {
   });
 
   test("tickers balances", () async {
-    final Iterable<Operation> opers = await apiService.operations().then((value) => value.operations.where((op) =>
+    final Iterable<Operation> opers = await apiService.operations().then((value) => value.operations!.where((op) =>
         op.operationType == OperationTypeWithCommission.buy ||
         op.operationType == OperationTypeWithCommission.sell ||
         op.operationType == OperationTypeWithCommission.buyCard));
-    final Map<String, List<Operation>> byFigi = groupBy(opers, (Operation op) => op.figi);
+    final Map<String, List<Operation>> byFigi = groupBy(opers, (Operation op) => op.figi!);
 
     final figiBalances = byFigi.map((key, value) {
       return MapEntry(
           key,
           value.fold<int>(0, (previousValue, op) {
             final sign = op.operationType == OperationTypeWithCommission.sell ? -1 : 1;
-            return previousValue + op.quantityExecuted * sign;
+            return previousValue + op.quantityExecuted! * sign;
           }));
     });
 
@@ -108,9 +108,9 @@ void main() async {
   });
 
   test("previous tickers income", () async {
-    final Iterable<Operation> opers = await apiService.operations().then((value) => value.operations.where((op) => op.figi != null));
+    final Iterable<Operation> opers = await apiService.operations().then((value) => value.operations!.where((op) => op.figi != null));
 
-    final Map<String, List<Operation>> byFigi = groupBy(opers, (Operation op) => op.figi);
+    final Map<String, List<Operation>> byFigi = groupBy(opers, (Operation op) => op.figi!);
 
     final figiIncomes = byFigi.entries.map((e) {
       final balance = e.value.fold<int>(0, (previousValue, op) {
@@ -118,7 +118,7 @@ void main() async {
         return previousValue + (op.quantityExecuted ?? 0) * sign;
       });
       final income = e.value.fold<double>(0.0, (previousValue, op) {
-        return previousValue + op.payment;
+        return previousValue + op.payment!;
       });
       return _Income("", e.key, balance, income);
     });
@@ -126,7 +126,7 @@ void main() async {
     final result = await Stream.fromIterable(figiIncomes)
         .asyncMap((e) async {
           final ticker = await apiService.instrumentByFigi(e.figi);
-          return _Income(ticker.name, ticker.figi, e.balance, e.income);
+          return _Income(ticker.name!, ticker.figi!, e.balance, e.income);
         })
         .where((e) => e.balance == 0)
         .toList();
