@@ -28,7 +28,7 @@ class _StorageImpl implements Storage {
 
   @override
   PortfolioState get state {
-    return _openedBox.get("0", defaultValue: PortfolioState.defaultSate());
+    return _openedBox.get("0", defaultValue: PortfolioState.defaultSate())!;
   }
 }
 

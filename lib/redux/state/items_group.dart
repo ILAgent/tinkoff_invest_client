@@ -9,11 +9,9 @@ abstract class ItemsGroup implements Built<ItemsGroup, ItemsGroupBuilder>, Portf
 
   String get title;
 
-  @nullable
-  double get actualPrice;
+  double? get actualPrice;
 
-  @nullable
-  double get income;
+  double? get income;
 
   ItemsGroup._();
 

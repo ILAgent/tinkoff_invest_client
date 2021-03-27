@@ -9,14 +9,11 @@ abstract class PortfolioItem implements Built<PortfolioItem, PortfolioItemBuilde
 
   PortfolioPosition get portfolioPosition;
 
-  @nullable
-  double get actualPrice;
+  double? get actualPrice;
 
-  @nullable
-  double get income;
+  double? get income;
 
-  @nullable
-  String get groupId;
+  String? get groupId;
 
   PortfolioItem._();
 

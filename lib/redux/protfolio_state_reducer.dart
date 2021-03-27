@@ -60,7 +60,7 @@ ItemsGroup _reduceGroup(ItemsGroup group, dynamic action) {
   return group;
 }
 
-ItemsGroup _reduceGroupEditing(ItemsGroup groupEditing, dynamic action) {
+ItemsGroup? _reduceGroupEditing(ItemsGroup groupEditing, dynamic action) {
   if (action is EditGroup) {
     return action.group;
   }

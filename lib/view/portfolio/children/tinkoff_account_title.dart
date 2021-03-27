@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tinkoff_invest_api/model/currency.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
+import 'package:tinkoff_invest_api/model/currency.dart';
 
 class TinkoffAccountTileWidget extends StatelessWidget {
   final PortfolioStore _store;
@@ -17,14 +17,14 @@ class TinkoffAccountTileWidget extends StatelessWidget {
         _store.dispatch(TogglePortfolioCurrency());
       },
       child: StreamBuilder<Currency>(
-          stream: _store.states.map((it) => it.amount.currency).distinct(),
+          stream: _store.states.map((it) => it.amount.currency!).distinct(),
           builder: (context, snapshot) {
             return Text.rich(
               TextSpan(
                 text: "Счёт Тинькофф",
                 children: [
                   TextSpan(
-                    text: _currencyToName(snapshot.data),
+                    text: snapshot.data == null ? null : _currencyToName(snapshot.data!),
                     style: TextStyle(color: Colors.blue),
                   ),
                 ],

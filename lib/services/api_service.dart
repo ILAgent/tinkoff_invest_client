@@ -42,20 +42,20 @@ class ApiService {
   }
 
   Future<Portfolio> portfolio() async {
-    return (await _api.getPortfolioApi().portfolioGet()).data.payload;
+    return (await _api.getPortfolioApi().portfolioGet()).data!.payload!;
   }
 
   Future<Operations> operations({
-    String figi,
-    DateTime from,
-    DateTime to,
+    String? figi,
+    DateTime? from,
+    DateTime? to,
   }) async {
     final response = await _api.getOperationsApi().operationsGet(
           from ?? DateTime(2010, 6, 1).toUtc(),
           to ?? DateTime.now().toUtc(),
           figi: figi,
         );
-    return response.data.payload;
+    return response.data!.payload!;
   }
 
   Future<Candles> candles(
@@ -70,16 +70,16 @@ class ApiService {
           to,
           interval,
         );
-    return response.data.payload;
+    return response.data!.payload!;
   }
 
   Future<MarketInstrumentList> currencies() async {
     final response = await _api.getMarketApi().marketCurrenciesGet();
-    return response.data.payload;
+    return response.data!.payload!;
   }
 
   Future<SearchMarketInstrument> instrumentByFigi(String figi) async {
     final response = await _api.getMarketApi().marketSearchByFigiGet(figi);
-    return response.data.payload;
+    return response.data!.payload!;
   }
 }

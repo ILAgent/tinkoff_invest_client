@@ -5,7 +5,7 @@ import 'package:tinkoff_invest_api/model/money_amount.dart';
 
 class CurrenciesConverter {
   final ApiService _apiService;
-  List<MapEntry<Currency, double>> _curToRub;
+  List<MapEntry<Currency, double>>? _curToRub;
   DateTime _lastUpdate = DateTime.now();
 
   CurrenciesConverter(this._apiService);
@@ -13,21 +13,25 @@ class CurrenciesConverter {
   Future<MoneyAmount> convert(MoneyAmount from, Currency to) async {
     if (from.currency == to) return from;
 
-    final currencies = (await _apiService.currencies()).instruments;
-    final curToFigi = currencies.map((cur) => MapEntry(_curFromTicker(cur.ticker), cur.figi));
+    final currencies = (await _apiService.currencies()).instruments!;
+    final curToFigi = currencies.map((cur) => MapEntry(_curFromTicker(cur.ticker!), cur.figi!));
+    List<MapEntry<Currency, double>> curToRub;
     if (_curToRub == null || _isCacheOutdated()) {
-      _curToRub = await Stream.fromIterable(curToFigi)
+      curToRub = await Stream.fromIterable(curToFigi)
           .asyncMap(
             (entry) async => MapEntry(entry.key, await _apiService.actualPrice(entry.value)),
           )
           .toList();
-      _curToRub.add(MapEntry(Currency.rUB, 1));
+      curToRub.add(MapEntry(Currency.rUB, 1));
+      _curToRub = curToRub;
       _lastUpdate = DateTime.now();
+    } else {
+      curToRub = _curToRub!;
     }
 
-    final amountInRub = _curToRub.firstWhere((entry) => entry.key == from.currency).value * from.value;
+    final amountInRub = curToRub.firstWhere((entry) => entry.key == from.currency).value * from.value!;
 
-    final resultAmount = amountInRub / _curToRub.firstWhere((entry) => entry.key == to).value;
+    final resultAmount = amountInRub / curToRub.firstWhere((entry) => entry.key == to).value;
 
     return MoneyAmount((b) => b
       ..currency = to

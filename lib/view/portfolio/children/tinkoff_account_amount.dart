@@ -23,8 +23,8 @@ class TinkoffAccountAmountWidget extends StatelessWidget {
             return Text.rich(
               TextSpan(
                 children: [
-                  TextSpan(text: state.value.toStringAsFixed(2)),
-                  TextSpan(text: state.currency.currencySymbol()),
+                  TextSpan(text: state?.value?.toStringAsFixed(2)),
+                  TextSpan(text: state?.currency?.currencySymbol()),
                 ],
               ),
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),

@@ -20,17 +20,17 @@ class PortfolioItemsList extends StatelessWidget {
     return StreamBuilder<List<dynamic>>(
       stream: _store.states.map(_stateToList),
       builder: (context, snapshot) {
-        final items = snapshot.data;
+        final items = snapshot.data ?? [];
         return ReorderableListView(
+          padding: EdgeInsets.only(top: 16),
+          onReorder: (int oldIndex, int newIndex) {
+            _onReorder(oldIndex, newIndex, items);
+          },
           children: items.map((e) {
             if (e is PortfolioItem) return PortfolioItemWidget(e);
             if (e is ItemsGroup) return PortfolioGroupWidget(e, _store);
             throw ArgumentError(e);
           }).toList(),
-          padding: EdgeInsets.only(top: 16),
-          onReorder: (int oldIndex, int newIndex) {
-            _onReorder(oldIndex, newIndex, items);
-          },
         );
       },
     );
@@ -67,11 +67,11 @@ class PortfolioItemsList extends StatelessWidget {
           ? -1
           : b.key == null
               ? 1
-              : state.groupById(a.key).title.compareTo(state.groupById(b.key).title),
+              : state.groupById(a.key!).title.compareTo(state.groupById(b.key!).title),
     );
     final items = groups
         .expand((e) => [
-              if (e.key != null) state.groupById(e.key),
+              if (e.key != null) state.groupById(e.key!),
               ...e.value,
             ])
         .toList();

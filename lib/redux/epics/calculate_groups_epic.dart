@@ -41,10 +41,11 @@ class CalculateGroupsEpic {
       ) //
           .entries
           .where((e) => e.key != null)
+          .map((e) => MapEntry(e.key!, e.value))
           .toList();
 
       final actions = Stream.fromIterable(groups).asyncMap((entry) async {
-        final amount = await _calc.sumPositionsAmount(store.state.amount.currency, positions: entry.value.map((e) => e.portfolioPosition));
+        final amount = await _calc.sumPositionsAmount(store.state.amount.currency!, positions: entry.value.map((e) => e.portfolioPosition));
         return UpdateGroupAmounts(amount: amount.value, id: entry.key);
       });
 

@@ -44,13 +44,13 @@ class UpdateGroupTitle {
   final String title;
   final String id;
 
-  UpdateGroupTitle({this.title, this.id});
+  UpdateGroupTitle({required this.title, required this.id});
 }
 
 class UpdateGroupAmounts {
-  final double amount;
-  final double income;
+  final double? amount;
+  final double? income;
   final String id;
 
-  UpdateGroupAmounts({this.amount, this.income, this.id});
+  UpdateGroupAmounts({this.amount, this.income, required this.id});
 }

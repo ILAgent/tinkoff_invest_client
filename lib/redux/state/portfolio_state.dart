@@ -15,8 +15,7 @@ abstract class PortfolioState implements Built<PortfolioState, PortfolioStateBui
 
   BuiltList<ItemsGroup> get groups;
 
-  @nullable
-  ItemsGroup get groupEditing;
+  ItemsGroup? get groupEditing;
 
   PortfolioState._();
 
@@ -40,7 +39,7 @@ abstract class PortfolioState implements Built<PortfolioState, PortfolioStateBui
 }
 
 extension PortfolioStateExtension on PortfolioState {
-  ItemsGroup groupById(String id) {
+  ItemsGroup groupById(String/*!*/ id) {
     return groups.firstWhere((g) => g.id == id);
   }
 }

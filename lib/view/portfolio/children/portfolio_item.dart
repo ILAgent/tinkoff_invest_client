@@ -14,34 +14,34 @@ class PortfolioItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final balance =
         _item.portfolioPosition.instrumentType == InstrumentType.currency
-            ? _item.portfolioPosition.balance.toStringAsFixed(2)
+            ? _item.portfolioPosition.balance!.toStringAsFixed(2)
             : "${_item.portfolioPosition.lots} шт.";
 
     @nullable
     final amount = _item.actualPrice == null
         ? null
-        : _item.actualPrice * _item.portfolioPosition.balance;
+        : _item.actualPrice! * _item.portfolioPosition.balance!;
     @nullable
     final amountStr = amount == null
         ? null
         : amount.toStringAsFixed(2) +
-            _item.portfolioPosition.averagePositionPrice.currency
+            _item.portfolioPosition.averagePositionPrice!.currency!
                 .currencySymbol();
     @nullable
     final incomePercent = amount == null || _item.income == null
         ? null
-        : (_item.income / (amount - _item.income) * 100).toStringAsFixed(2) +
+        : (_item.income! / (amount - _item.income!) * 100).toStringAsFixed(2) +
             " %";
     @nullable
     final income = _item.income == null
         ? null
-        : _item.income.toStringAsFixed(2) +
-            _item.portfolioPosition.averagePositionPrice.currency
+        : _item.income!.toStringAsFixed(2) +
+            _item.portfolioPosition.averagePositionPrice!.currency!
                 .currencySymbol();
 
     final incomeColor = _item.income == null || _item.income == 0
         ? Colors.black
-        : _item.income > 0
+        : _item.income! > 0
             ? Colors.green
             : Colors.red;
     return Container(
@@ -54,11 +54,11 @@ class PortfolioItemWidget extends StatelessWidget {
             height: 40,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: colorFor(_item.portfolioPosition.name),
+              color: colorFor(_item.portfolioPosition.name!),
               shape: BoxShape.circle,
             ),
             child: Text(
-              _item.portfolioPosition.name.substring(0, 1),
+              _item.portfolioPosition.name!.substring(0, 1),
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 25,
@@ -76,7 +76,7 @@ class PortfolioItemWidget extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        _item.portfolioPosition.name,
+                        _item.portfolioPosition.name!,
                         maxLines: 1,
                         overflow: TextOverflow.fade,
                         softWrap: false,

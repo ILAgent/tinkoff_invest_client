@@ -13,14 +13,14 @@ class TotalMoneyCalculator {
 
   TotalMoneyCalculator(this._apiService, this._currenciesConverter);
 
-  Future<MoneyAmount> sumPositionsAmount(Currency currency, {Iterable<PortfolioPosition> positions}) async {
-    final Iterable<PortfolioPosition> portfolioPositions = positions ?? (await _apiService.portfolio()).positions;
+  Future<MoneyAmount> sumPositionsAmount(Currency currency, {Iterable<PortfolioPosition>? positions}) async {
+    final Iterable<PortfolioPosition> portfolioPositions = positions ?? (await _apiService.portfolio()).positions!;
     final List<MoneyAmount> amounts = await Stream.fromIterable(portfolioPositions) //
         .asyncMap((p) async {
-      final value = p.balance * await _apiService.actualPrice(p.figi);
+      final value = p.balance! * await _apiService.actualPrice(p.figi!);
       return MoneyAmount((b) => b
         ..value = value
-        ..currency = p.averagePositionPrice.currency);
+        ..currency = p.averagePositionPrice!.currency);
     }).toList();
 
     return await amountsSum(currency, amounts);
@@ -29,14 +29,14 @@ class TotalMoneyCalculator {
   Future<MoneyAmount> amountsSum(Currency currency, Iterable<MoneyAmount> moneyAmounts) async {
     final Iterable<MapEntry<Currency, List<MoneyAmount>>> groupedByCurrency = groupBy<MoneyAmount, Currency>(
       moneyAmounts,
-      (amount) => amount.currency,
+      (amount) => amount.currency!,
     ).entries;
 
     final List<MoneyAmount> amounts = groupedByCurrency //
         .map(
           (entry) => MapEntry(
             entry.key,
-            entry.value.fold<double>(0.0, (prev, amount) => prev + amount.value),
+            entry.value.fold<double>(0.0, (prev, amount) => prev + amount.value!),
           ),
         )
         .map((entry) => MoneyAmount(
@@ -46,7 +46,7 @@ class TotalMoneyCalculator {
             ))
         .toList();
 
-    final result = await amounts.sumAsync((money) async => (await _currenciesConverter.convert(money, currency)).value);
+    final result = await amounts.sumAsync((money) async => (await _currenciesConverter.convert(money, currency)).value!);
 
     return MoneyAmount(
       (b) => b
