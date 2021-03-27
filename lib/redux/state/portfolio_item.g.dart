@@ -16,29 +16,33 @@ class _$PortfolioItemSerializer implements StructuredSerializer<PortfolioItem> {
   final String wireName = 'PortfolioItem';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, PortfolioItem object,
+  Iterable<Object?> serialize(Serializers serializers, PortfolioItem object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'portfolioPosition',
       serializers.serialize(object.portfolioPosition,
           specifiedType: const FullType(PortfolioPosition)),
     ];
-    if (object.actualPrice != null) {
+    Object? value;
+    value = object.actualPrice;
+    if (value != null) {
       result
         ..add('actualPrice')
-        ..add(serializers.serialize(object.actualPrice,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.income != null) {
+    value = object.income;
+    if (value != null) {
       result
         ..add('income')
-        ..add(serializers.serialize(object.income,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.groupId != null) {
+    value = object.groupId;
+    if (value != null) {
       result
         ..add('groupId')
-        ..add(serializers.serialize(object.groupId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -46,7 +50,7 @@ class _$PortfolioItemSerializer implements StructuredSerializer<PortfolioItem> {
 
   @override
   PortfolioItem deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PortfolioItemBuilder();
 
@@ -54,11 +58,11 @@ class _$PortfolioItemSerializer implements StructuredSerializer<PortfolioItem> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'portfolioPosition':
           result.portfolioPosition.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(PortfolioPosition))
+                  specifiedType: const FullType(PortfolioPosition))!
               as PortfolioPosition);
           break;
         case 'actualPrice':
@@ -84,21 +88,23 @@ class _$PortfolioItem extends PortfolioItem {
   @override
   final PortfolioPosition portfolioPosition;
   @override
-  final double actualPrice;
+  final double? actualPrice;
   @override
-  final double income;
+  final double? income;
   @override
-  final String groupId;
+  final String? groupId;
 
-  factory _$PortfolioItem([void Function(PortfolioItemBuilder) updates]) =>
+  factory _$PortfolioItem([void Function(PortfolioItemBuilder)? updates]) =>
       (new PortfolioItemBuilder()..update(updates)).build();
 
   _$PortfolioItem._(
-      {this.portfolioPosition, this.actualPrice, this.income, this.groupId})
+      {required this.portfolioPosition,
+      this.actualPrice,
+      this.income,
+      this.groupId})
       : super._() {
-    if (portfolioPosition == null) {
-      throw new BuiltValueNullFieldError('PortfolioItem', 'portfolioPosition');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        portfolioPosition, 'PortfolioItem', 'portfolioPosition');
   }
 
   @override
@@ -139,34 +145,35 @@ class _$PortfolioItem extends PortfolioItem {
 
 class PortfolioItemBuilder
     implements Builder<PortfolioItem, PortfolioItemBuilder> {
-  _$PortfolioItem _$v;
+  _$PortfolioItem? _$v;
 
-  PortfolioPositionBuilder _portfolioPosition;
+  PortfolioPositionBuilder? _portfolioPosition;
   PortfolioPositionBuilder get portfolioPosition =>
       _$this._portfolioPosition ??= new PortfolioPositionBuilder();
-  set portfolioPosition(PortfolioPositionBuilder portfolioPosition) =>
+  set portfolioPosition(PortfolioPositionBuilder? portfolioPosition) =>
       _$this._portfolioPosition = portfolioPosition;
 
-  double _actualPrice;
-  double get actualPrice => _$this._actualPrice;
-  set actualPrice(double actualPrice) => _$this._actualPrice = actualPrice;
+  double? _actualPrice;
+  double? get actualPrice => _$this._actualPrice;
+  set actualPrice(double? actualPrice) => _$this._actualPrice = actualPrice;
 
-  double _income;
-  double get income => _$this._income;
-  set income(double income) => _$this._income = income;
+  double? _income;
+  double? get income => _$this._income;
+  set income(double? income) => _$this._income = income;
 
-  String _groupId;
-  String get groupId => _$this._groupId;
-  set groupId(String groupId) => _$this._groupId = groupId;
+  String? _groupId;
+  String? get groupId => _$this._groupId;
+  set groupId(String? groupId) => _$this._groupId = groupId;
 
   PortfolioItemBuilder();
 
   PortfolioItemBuilder get _$this {
-    if (_$v != null) {
-      _portfolioPosition = _$v.portfolioPosition?.toBuilder();
-      _actualPrice = _$v.actualPrice;
-      _income = _$v.income;
-      _groupId = _$v.groupId;
+    final $v = _$v;
+    if ($v != null) {
+      _portfolioPosition = $v.portfolioPosition.toBuilder();
+      _actualPrice = $v.actualPrice;
+      _income = $v.income;
+      _groupId = $v.groupId;
       _$v = null;
     }
     return this;
@@ -174,14 +181,12 @@ class PortfolioItemBuilder
 
   @override
   void replace(PortfolioItem other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PortfolioItem;
   }
 
   @override
-  void update(void Function(PortfolioItemBuilder) updates) {
+  void update(void Function(PortfolioItemBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -196,7 +201,7 @@ class PortfolioItemBuilder
               income: income,
               groupId: groupId);
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'portfolioPosition';
         portfolioPosition.build();

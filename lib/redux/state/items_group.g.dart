@@ -15,32 +15,35 @@ class _$ItemsGroupSerializer implements StructuredSerializer<ItemsGroup> {
   final String wireName = 'ItemsGroup';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ItemsGroup object,
+  Iterable<Object?> serialize(Serializers serializers, ItemsGroup object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'title',
       serializers.serialize(object.title,
           specifiedType: const FullType(String)),
     ];
-    if (object.actualPrice != null) {
+    Object? value;
+    value = object.actualPrice;
+    if (value != null) {
       result
         ..add('actualPrice')
-        ..add(serializers.serialize(object.actualPrice,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.income != null) {
+    value = object.income;
+    if (value != null) {
       result
         ..add('income')
-        ..add(serializers.serialize(object.income,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
     return result;
   }
 
   @override
-  ItemsGroup deserialize(Serializers serializers, Iterable<Object> serialized,
+  ItemsGroup deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ItemsGroupBuilder();
 
@@ -48,7 +51,7 @@ class _$ItemsGroupSerializer implements StructuredSerializer<ItemsGroup> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
@@ -79,21 +82,18 @@ class _$ItemsGroup extends ItemsGroup {
   @override
   final String title;
   @override
-  final double actualPrice;
+  final double? actualPrice;
   @override
-  final double income;
+  final double? income;
 
-  factory _$ItemsGroup([void Function(ItemsGroupBuilder) updates]) =>
+  factory _$ItemsGroup([void Function(ItemsGroupBuilder)? updates]) =>
       (new ItemsGroupBuilder()..update(updates)).build();
 
-  _$ItemsGroup._({this.id, this.title, this.actualPrice, this.income})
+  _$ItemsGroup._(
+      {required this.id, required this.title, this.actualPrice, this.income})
       : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('ItemsGroup', 'id');
-    }
-    if (title == null) {
-      throw new BuiltValueNullFieldError('ItemsGroup', 'title');
-    }
+    BuiltValueNullFieldError.checkNotNull(id, 'ItemsGroup', 'id');
+    BuiltValueNullFieldError.checkNotNull(title, 'ItemsGroup', 'title');
   }
 
   @override
@@ -132,32 +132,33 @@ class _$ItemsGroup extends ItemsGroup {
 }
 
 class ItemsGroupBuilder implements Builder<ItemsGroup, ItemsGroupBuilder> {
-  _$ItemsGroup _$v;
+  _$ItemsGroup? _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
-  String _title;
-  String get title => _$this._title;
-  set title(String title) => _$this._title = title;
+  String? _title;
+  String? get title => _$this._title;
+  set title(String? title) => _$this._title = title;
 
-  double _actualPrice;
-  double get actualPrice => _$this._actualPrice;
-  set actualPrice(double actualPrice) => _$this._actualPrice = actualPrice;
+  double? _actualPrice;
+  double? get actualPrice => _$this._actualPrice;
+  set actualPrice(double? actualPrice) => _$this._actualPrice = actualPrice;
 
-  double _income;
-  double get income => _$this._income;
-  set income(double income) => _$this._income = income;
+  double? _income;
+  double? get income => _$this._income;
+  set income(double? income) => _$this._income = income;
 
   ItemsGroupBuilder();
 
   ItemsGroupBuilder get _$this {
-    if (_$v != null) {
-      _id = _$v.id;
-      _title = _$v.title;
-      _actualPrice = _$v.actualPrice;
-      _income = _$v.income;
+    final $v = _$v;
+    if ($v != null) {
+      _id = $v.id;
+      _title = $v.title;
+      _actualPrice = $v.actualPrice;
+      _income = $v.income;
       _$v = null;
     }
     return this;
@@ -165,14 +166,12 @@ class ItemsGroupBuilder implements Builder<ItemsGroup, ItemsGroupBuilder> {
 
   @override
   void replace(ItemsGroup other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ItemsGroup;
   }
 
   @override
-  void update(void Function(ItemsGroupBuilder) updates) {
+  void update(void Function(ItemsGroupBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -180,7 +179,11 @@ class ItemsGroupBuilder implements Builder<ItemsGroup, ItemsGroupBuilder> {
   _$ItemsGroup build() {
     final _$result = _$v ??
         new _$ItemsGroup._(
-            id: id, title: title, actualPrice: actualPrice, income: income);
+            id: BuiltValueNullFieldError.checkNotNull(id, 'ItemsGroup', 'id'),
+            title: BuiltValueNullFieldError.checkNotNull(
+                title, 'ItemsGroup', 'title'),
+            actualPrice: actualPrice,
+            income: income);
     replace(_$result);
     return _$result;
   }

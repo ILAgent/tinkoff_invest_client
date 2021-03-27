@@ -6,7 +6,7 @@ part of 'state_serializers.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializers _$serializers = (new Serializers().toBuilder()
+Serializers _$stateSerializers = (new Serializers().toBuilder()
       ..add(Currency.serializer)
       ..add(InstrumentType.serializer)
       ..add(ItemsGroup.serializer)

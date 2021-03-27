@@ -17,9 +17,9 @@ class _$PortfolioStateSerializer
   final String wireName = 'PortfolioState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, PortfolioState object,
+  Iterable<Object?> serialize(Serializers serializers, PortfolioState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(MoneyAmount)),
@@ -32,10 +32,12 @@ class _$PortfolioStateSerializer
           specifiedType:
               const FullType(BuiltList, const [const FullType(ItemsGroup)])),
     ];
-    if (object.groupEditing != null) {
+    Object? value;
+    value = object.groupEditing;
+    if (value != null) {
       result
         ..add('groupEditing')
-        ..add(serializers.serialize(object.groupEditing,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(ItemsGroup)));
     }
     return result;
@@ -43,7 +45,7 @@ class _$PortfolioStateSerializer
 
   @override
   PortfolioState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PortfolioStateBuilder();
 
@@ -51,27 +53,27 @@ class _$PortfolioStateSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'amount':
           result.amount.replace(serializers.deserialize(value,
-              specifiedType: const FullType(MoneyAmount)) as MoneyAmount);
+              specifiedType: const FullType(MoneyAmount))! as MoneyAmount);
           break;
         case 'items':
           result.items.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(PortfolioItem)]))
+                      BuiltList, const [const FullType(PortfolioItem)]))!
               as BuiltList<Object>);
           break;
         case 'groups':
           result.groups.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(ItemsGroup)]))
+                      BuiltList, const [const FullType(ItemsGroup)]))!
               as BuiltList<Object>);
           break;
         case 'groupEditing':
           result.groupEditing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ItemsGroup)) as ItemsGroup);
+              specifiedType: const FullType(ItemsGroup))! as ItemsGroup);
           break;
       }
     }
@@ -88,22 +90,20 @@ class _$PortfolioState extends PortfolioState {
   @override
   final BuiltList<ItemsGroup> groups;
   @override
-  final ItemsGroup groupEditing;
+  final ItemsGroup? groupEditing;
 
-  factory _$PortfolioState([void Function(PortfolioStateBuilder) updates]) =>
+  factory _$PortfolioState([void Function(PortfolioStateBuilder)? updates]) =>
       (new PortfolioStateBuilder()..update(updates)).build();
 
-  _$PortfolioState._({this.amount, this.items, this.groups, this.groupEditing})
+  _$PortfolioState._(
+      {required this.amount,
+      required this.items,
+      required this.groups,
+      this.groupEditing})
       : super._() {
-    if (amount == null) {
-      throw new BuiltValueNullFieldError('PortfolioState', 'amount');
-    }
-    if (items == null) {
-      throw new BuiltValueNullFieldError('PortfolioState', 'items');
-    }
-    if (groups == null) {
-      throw new BuiltValueNullFieldError('PortfolioState', 'groups');
-    }
+    BuiltValueNullFieldError.checkNotNull(amount, 'PortfolioState', 'amount');
+    BuiltValueNullFieldError.checkNotNull(items, 'PortfolioState', 'items');
+    BuiltValueNullFieldError.checkNotNull(groups, 'PortfolioState', 'groups');
   }
 
   @override
@@ -144,36 +144,37 @@ class _$PortfolioState extends PortfolioState {
 
 class PortfolioStateBuilder
     implements Builder<PortfolioState, PortfolioStateBuilder> {
-  _$PortfolioState _$v;
+  _$PortfolioState? _$v;
 
-  MoneyAmountBuilder _amount;
+  MoneyAmountBuilder? _amount;
   MoneyAmountBuilder get amount => _$this._amount ??= new MoneyAmountBuilder();
-  set amount(MoneyAmountBuilder amount) => _$this._amount = amount;
+  set amount(MoneyAmountBuilder? amount) => _$this._amount = amount;
 
-  ListBuilder<PortfolioItem> _items;
+  ListBuilder<PortfolioItem>? _items;
   ListBuilder<PortfolioItem> get items =>
       _$this._items ??= new ListBuilder<PortfolioItem>();
-  set items(ListBuilder<PortfolioItem> items) => _$this._items = items;
+  set items(ListBuilder<PortfolioItem>? items) => _$this._items = items;
 
-  ListBuilder<ItemsGroup> _groups;
+  ListBuilder<ItemsGroup>? _groups;
   ListBuilder<ItemsGroup> get groups =>
       _$this._groups ??= new ListBuilder<ItemsGroup>();
-  set groups(ListBuilder<ItemsGroup> groups) => _$this._groups = groups;
+  set groups(ListBuilder<ItemsGroup>? groups) => _$this._groups = groups;
 
-  ItemsGroupBuilder _groupEditing;
+  ItemsGroupBuilder? _groupEditing;
   ItemsGroupBuilder get groupEditing =>
       _$this._groupEditing ??= new ItemsGroupBuilder();
-  set groupEditing(ItemsGroupBuilder groupEditing) =>
+  set groupEditing(ItemsGroupBuilder? groupEditing) =>
       _$this._groupEditing = groupEditing;
 
   PortfolioStateBuilder();
 
   PortfolioStateBuilder get _$this {
-    if (_$v != null) {
-      _amount = _$v.amount?.toBuilder();
-      _items = _$v.items?.toBuilder();
-      _groups = _$v.groups?.toBuilder();
-      _groupEditing = _$v.groupEditing?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _amount = $v.amount.toBuilder();
+      _items = $v.items.toBuilder();
+      _groups = $v.groups.toBuilder();
+      _groupEditing = $v.groupEditing?.toBuilder();
       _$v = null;
     }
     return this;
@@ -181,14 +182,12 @@ class PortfolioStateBuilder
 
   @override
   void replace(PortfolioState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PortfolioState;
   }
 
   @override
-  void update(void Function(PortfolioStateBuilder) updates) {
+  void update(void Function(PortfolioStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -203,7 +202,7 @@ class PortfolioStateBuilder
               groups: groups.build(),
               groupEditing: _groupEditing?.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'amount';
         amount.build();
