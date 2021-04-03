@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:tinkoff_invest_api/model/money_amount.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
+import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 import 'package:tinkoff_invest/utils/currency_utils.dart';
 
 class TinkoffAccountAmountWidget extends StatelessWidget {
@@ -23,8 +23,8 @@ class TinkoffAccountAmountWidget extends StatelessWidget {
             return Text.rich(
               TextSpan(
                 children: [
-                  TextSpan(text: state?.value?.toStringAsFixed(2)),
-                  TextSpan(text: state?.currency?.currencySymbol()),
+                  TextSpan(text: state?.value.toStringAsFixed(2)),
+                  TextSpan(text: state?.currency.currencySymbol()),
                 ],
               ),
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),

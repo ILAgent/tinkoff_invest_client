@@ -1,7 +1,6 @@
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/api_service_extension.dart';
-import 'package:tinkoff_invest_api/model/currency.dart';
-import 'package:tinkoff_invest_api/model/money_amount.dart';
+import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 class CurrenciesConverter {
   final ApiService _apiService;
@@ -13,8 +12,8 @@ class CurrenciesConverter {
   Future<MoneyAmount> convert(MoneyAmount from, Currency to) async {
     if (from.currency == to) return from;
 
-    final currencies = (await _apiService.currencies()).instruments!;
-    final curToFigi = currencies.map((cur) => MapEntry(_curFromTicker(cur.ticker!), cur.figi!));
+    final currencies = (await _apiService.currencies()).instruments;
+    final curToFigi = currencies.map((cur) => MapEntry(_curFromTicker(cur.ticker), cur.figi));
     List<MapEntry<Currency, double>> curToRub;
     if (_curToRub == null || _isCacheOutdated()) {
       curToRub = await Stream.fromIterable(curToFigi)
@@ -22,14 +21,14 @@ class CurrenciesConverter {
             (entry) async => MapEntry(entry.key, await _apiService.actualPrice(entry.value)),
           )
           .toList();
-      curToRub.add(MapEntry(Currency.rUB, 1));
+      curToRub.add(MapEntry(Currency.RUB, 1));
       _curToRub = curToRub;
       _lastUpdate = DateTime.now();
     } else {
       curToRub = _curToRub!;
     }
 
-    final amountInRub = curToRub.firstWhere((entry) => entry.key == from.currency).value * from.value!;
+    final amountInRub = curToRub.firstWhere((entry) => entry.key == from.currency).value * from.value;
 
     final resultAmount = amountInRub / curToRub.firstWhere((entry) => entry.key == to).value;
 
@@ -42,10 +41,10 @@ class CurrenciesConverter {
 
   Currency _curFromTicker(String ticker) {
     if (ticker.startsWith("USD")) {
-      return Currency.uSD;
+      return Currency.USD;
     }
     if (ticker.startsWith("EUR")) {
-      return Currency.eUR;
+      return Currency.EUR;
     }
     throw ArgumentError("unknown currency $ticker");
   }

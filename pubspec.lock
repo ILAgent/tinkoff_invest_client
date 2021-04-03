@@ -182,7 +182,7 @@ packages:
       name: dio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0-prev3"
+    version: "4.0.0-prev2"
   fake_async:
     dependency: transitive
     description:
@@ -319,6 +319,29 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.7"
+  openapi_generator:
+    dependency: "direct dev"
+    description:
+      path: openapi-generator
+      ref: HEAD
+      resolved-ref: "57d5defbecac460595713ebcbc2930488961e181"
+      url: "https://github.com/ILAgent/openapi-generator-dart"
+    source: git
+    version: "3.1.1-2"
+  openapi_generator_annotations:
+    dependency: "direct main"
+    description:
+      name: openapi_generator_annotations
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
+  openapi_generator_cli:
+    dependency: transitive
+    description:
+      name: openapi_generator_cli
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
   package_config:
     dependency: transitive
     description:
@@ -530,10 +553,12 @@ packages:
   tinkoff_invest_api:
     dependency: "direct main"
     description:
-      path: "../tinkoff_invest_api"
-      relative: true
-    source: path
-    version: "0.0.1"
+      path: "."
+      ref: HEAD
+      resolved-ref: "48951d6f09e8ab9c4ed651cac26ffd6061550ae1"
+      url: "https://github.com/ILAgent/tinkoff_invest_api"
+    source: git
+    version: "0.0.3"
   typed_data:
     dependency: transitive
     description:

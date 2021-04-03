@@ -35,7 +35,7 @@ class _StoreStub implements PortfolioStore {
   late var reducer;
 
   @override
-  dispatch(action) {
+  dynamic dispatch(action) {
     // TODO: implement dispatch
     throw UnimplementedError();
   }

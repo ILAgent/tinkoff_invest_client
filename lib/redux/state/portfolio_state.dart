@@ -3,8 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:tinkoff_invest/redux/state/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
-import 'package:tinkoff_invest_api/model/currency.dart';
-import 'package:tinkoff_invest_api/model/money_amount.dart';
+import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 part 'portfolio_state.g.dart';
 
@@ -26,7 +25,7 @@ abstract class PortfolioState implements Built<PortfolioState, PortfolioStateBui
       (b) => b
         ..amount = MoneyAmount(
           (b) => b
-            ..currency = Currency.rUB
+            ..currency = Currency.RUB
             ..value = 0,
         ).toBuilder()
         ..items = BuiltList<PortfolioItem>().toBuilder()

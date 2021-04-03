@@ -4,10 +4,7 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:tinkoff_invest/redux/state/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
-import 'package:tinkoff_invest_api/model/currency.dart';
-import 'package:tinkoff_invest_api/model/instrument_type.dart';
-import 'package:tinkoff_invest_api/model/money_amount.dart';
-import 'package:tinkoff_invest_api/model/portfolio_position.dart';
+import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 part 'state_serializers.g.dart';
 

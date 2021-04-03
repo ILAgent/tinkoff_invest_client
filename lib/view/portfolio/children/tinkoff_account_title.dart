@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
-import 'package:tinkoff_invest_api/model/currency.dart';
+import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 class TinkoffAccountTileWidget extends StatelessWidget {
   final PortfolioStore _store;
@@ -17,7 +17,7 @@ class TinkoffAccountTileWidget extends StatelessWidget {
         _store.dispatch(TogglePortfolioCurrency());
       },
       child: StreamBuilder<Currency>(
-          stream: _store.states.map((it) => it.amount.currency!).distinct(),
+          stream: _store.states.map((it) => it.amount.currency).distinct(),
           builder: (context, snapshot) {
             return Text.rich(
               TextSpan(
@@ -41,11 +41,11 @@ class TinkoffAccountTileWidget extends StatelessWidget {
 
   String _currencyToName(Currency currency) {
     switch (currency) {
-      case Currency.rUB:
+      case Currency.RUB:
         return " в рублях";
-      case Currency.eUR:
+      case Currency.EUR:
         return " в евро";
-      case Currency.uSD:
+      case Currency.USD:
         return " в долларах";
       default:
         throw ArgumentError(currency);

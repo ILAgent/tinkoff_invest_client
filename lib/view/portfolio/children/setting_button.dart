@@ -13,10 +13,6 @@ class SettingsButtonWidget extends StatelessWidget {
     return Material(
       child: InkWell(
         customBorder: CircleBorder(),
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Icon(Icons.settings),
-        ),
         onTap: () {
           showModalBottomSheet(
               context: context,
@@ -37,6 +33,10 @@ class SettingsButtonWidget extends StatelessWidget {
                 );
               });
         },
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Icon(Icons.settings),
+        ),
       ),
     );
   }

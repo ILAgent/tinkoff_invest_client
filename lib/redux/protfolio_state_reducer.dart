@@ -3,7 +3,7 @@ import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/state/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
-import 'package:tinkoff_invest_api/model/money_amount.dart';
+import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 PortfolioState reducePortfolioState(PortfolioState state, dynamic action) {
   return state.rebuild(

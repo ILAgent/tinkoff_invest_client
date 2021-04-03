@@ -18,11 +18,6 @@ class GroupEditableTitle extends StatelessWidget {
         text: _group.title,
       );
       textWidget = Focus(
-        // todo FIX overflow
-        child: TextField(
-          controller: controller,
-          autofocus: true,
-        ),
         onFocusChange: (hasFocus) {
           if (!hasFocus) {
             _store.dispatch(
@@ -32,6 +27,11 @@ class GroupEditableTitle extends StatelessWidget {
             );
           }
         },
+        // todo FIX overflow
+        child: TextField(
+          controller: controller,
+          autofocus: true,
+        ),
       );
       Future(() => {
             controller.selection = TextSelection(

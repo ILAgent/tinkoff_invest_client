@@ -6,10 +6,7 @@ import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/api_service_extension.dart';
 import 'package:tinkoff_invest/services/currencies_converter.dart';
 import 'package:tinkoff_invest/services/total_money_calculator.dart';
-import 'package:tinkoff_invest_api/model/currency.dart';
-import 'package:tinkoff_invest_api/model/money_amount.dart';
-import 'package:tinkoff_invest_api/model/operation.dart';
-import 'package:tinkoff_invest_api/model/operation_type_with_commission.dart';
+import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 void main() async {
   final apiService = ApiService(); //await ApiService.sandbox();
@@ -27,7 +24,7 @@ void main() async {
   });
 
   test("Operations test", () async {
-    final res = await apiService.operations().then((ops) => ops.operations!.where((op) => op.figi == "BBG009J3VGJ3"));
+    final res = await apiService.operations().then((ops) => ops.operations.where((op) => op.figi == "BBG009J3VGJ3"));
     print(IterableBase.iterableToFullString(res));
   });
 
@@ -35,7 +32,7 @@ void main() async {
     const figi = "BBG000000002";
 
     final portfolio = await apiService.portfolio();
-    final teur = portfolio.positions!.firstWhere((it) => it.figi == figi);
+    final teur = portfolio.positions.firstWhere((it) => it.figi == figi);
 
     expect(await apiService.income(figi), equals(teur.expectedYield!.value));
   });
@@ -57,14 +54,14 @@ void main() async {
   test("Converter", () async {
     final res = await curConverter.convert(
         MoneyAmount((b) => b
-          ..currency = Currency.rUB
+          ..currency = Currency.RUB
           ..value = 1),
-        Currency.eUR);
+        Currency.EUR);
     print(res);
   });
 
   test("Total amount", () async {
-    final res = await amountCalc.sumPositionsAmount(Currency.eUR);
+    final res = await amountCalc.sumPositionsAmount(Currency.EUR);
     print(res);
   });
 
@@ -75,7 +72,7 @@ void main() async {
   test("tickers list", () async {
     final Iterable<Operation> opers = await apiService
         .operations() //
-        .then((value) => value.operations!.where((op) => op.figi != null));
+        .then((value) => value.operations.where((op) => op.figi != null));
     final Map<String, List<Operation>> byFigi = groupBy(opers, (Operation op) => op.figi!);
     final tickers = await Stream.fromIterable(byFigi.keys) //
         .asyncMap((figi) => apiService.instrumentByFigi(figi))
@@ -85,7 +82,7 @@ void main() async {
   });
 
   test("tickers balances", () async {
-    final Iterable<Operation> opers = await apiService.operations().then((value) => value.operations!.where((op) =>
+    final Iterable<Operation> opers = await apiService.operations().then((value) => value.operations.where((op) =>
         op.operationType == OperationTypeWithCommission.buy ||
         op.operationType == OperationTypeWithCommission.sell ||
         op.operationType == OperationTypeWithCommission.buyCard));
@@ -108,7 +105,7 @@ void main() async {
   });
 
   test("previous tickers income", () async {
-    final Iterable<Operation> opers = await apiService.operations().then((value) => value.operations!.where((op) => op.figi != null));
+    final Iterable<Operation> opers = await apiService.operations().then((value) => value.operations.where((op) => op.figi != null));
 
     final Map<String, List<Operation>> byFigi = groupBy(opers, (Operation op) => op.figi!);
 
@@ -118,7 +115,7 @@ void main() async {
         return previousValue + (op.quantityExecuted ?? 0) * sign;
       });
       final income = e.value.fold<double>(0.0, (previousValue, op) {
-        return previousValue + op.payment!;
+        return previousValue + op.payment;
       });
       return _Income("", e.key, balance, income);
     });
@@ -126,7 +123,7 @@ void main() async {
     final result = await Stream.fromIterable(figiIncomes)
         .asyncMap((e) async {
           final ticker = await apiService.instrumentByFigi(e.figi);
-          return _Income(ticker.name!, ticker.figi!, e.balance, e.income);
+          return _Income(ticker.name, ticker.figi, e.balance, e.income);
         })
         .where((e) => e.balance == 0)
         .toList();
