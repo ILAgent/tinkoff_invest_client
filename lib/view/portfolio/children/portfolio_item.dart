@@ -1,4 +1,3 @@
-import 'package:built_value/built_value.dart';
 import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/utils/color_utils.dart';
@@ -16,13 +15,9 @@ class PortfolioItemWidget extends StatelessWidget {
         ? _item.portfolioPosition.balance.toStringAsFixed(2)
         : "${_item.portfolioPosition.lots} шт.";
 
-    @nullable
     final amount = _item.actualPrice == null ? null : _item.actualPrice! * _item.portfolioPosition.balance;
-    @nullable
     final amountStr = amount == null ? null : amount.toStringAsFixed(2) + _item.currency().currencySymbol();
-    @nullable
     final incomePercent = amount == null || _item.income == null ? null : (_item.income! / (amount - _item.income!) * 100).toStringAsFixed(2) + "%";
-    @nullable
     final income = _item.income == null ? null : _item.income!.toStringAsFixed(2) + _item.currency().currencySymbol();
 
     final incomeColor = _item.income == null || _item.income == 0
