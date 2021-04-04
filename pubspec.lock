@@ -319,29 +319,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.7"
-  openapi_generator:
-    dependency: "direct dev"
-    description:
-      path: openapi-generator
-      ref: HEAD
-      resolved-ref: "57d5defbecac460595713ebcbc2930488961e181"
-      url: "https://github.com/ILAgent/openapi-generator-dart"
-    source: git
-    version: "3.1.1-2"
-  openapi_generator_annotations:
-    dependency: "direct main"
-    description:
-      name: openapi_generator_annotations
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.0"
-  openapi_generator_cli:
-    dependency: transitive
-    description:
-      name: openapi_generator_cli
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.0"
   package_config:
     dependency: transitive
     description:
