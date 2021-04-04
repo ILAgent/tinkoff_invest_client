@@ -7,12 +7,14 @@ import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
-import 'package:tinkoff_invest/services/total_money_calculator.dart';
+import 'package:tinkoff_invest/services/currencies_converter.dart';
+import 'package:tinkoff_invest/utils/iterable_etensions.dart';
+import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 class CalculateGroupsEpic {
-  final TotalMoneyCalculator _calc;
+  final CurrenciesConverter _converter;
 
-  CalculateGroupsEpic(this._calc);
+  CalculateGroupsEpic(this._converter);
 
   Stream<dynamic> act(
     Stream<dynamic> actions,
@@ -45,8 +47,24 @@ class CalculateGroupsEpic {
           .toList();
 
       final actions = Stream.fromIterable(groups).asyncMap((entry) async {
-        final amount = await _calc.sumPositionsAmount(store.state.amount.currency, positions: entry.value.map((e) => e.portfolioPosition));
-        return UpdateGroupAmounts(amount: amount.value, id: entry.key);
+        final targetCurrency = store.state.amount.currency;
+        final convertedAmount = await entry.value.sumAsync((portfolioItem) async {
+          final amount = (portfolioItem.actualPrice ?? 0.0) * portfolioItem.portfolioPosition.balance;
+          final moneyAmount = MoneyAmount((b) => b
+            ..currency = portfolioItem.currency()
+            ..value = amount);
+          return (await _converter.convert(moneyAmount, targetCurrency)).value;
+        });
+
+        final convertedIncome = await entry.value.sumAsync((portfolioItem) async {
+          final income = portfolioItem.income ?? 0.0;
+          final moneyAmountIncome = MoneyAmount((b) => b
+            ..currency = portfolioItem.currency()
+            ..value = income);
+          return (await _converter.convert(moneyAmountIncome, targetCurrency)).value;
+        });
+
+        return UpdateGroupAmounts(amount: convertedAmount, income: convertedIncome, id: entry.key);
       });
 
       return actions;
