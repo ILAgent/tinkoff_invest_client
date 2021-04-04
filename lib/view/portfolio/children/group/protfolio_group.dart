@@ -14,8 +14,8 @@ class PortfolioGroupWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currency = _store.state.amount.currency.currencySymbol();
-    final amountStr = _group.actualPrice?.toStringAsFixed(2) ?? '_' + currency;
-    final incomeStr = _group.income?.toStringAsFixed(2) ?? '_' + currency;
+    final amountStr = (_group.actualPrice?.toStringAsFixed(2) ?? '_') + currency;
+    final incomeStr = (_group.income?.toStringAsFixed(2) ?? '_') + currency;
     final incomeColor =
         _group.income == null || _group.income! > 0 ? Colors.green : Colors.red;
     return Row(
