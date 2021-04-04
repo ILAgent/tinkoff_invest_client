@@ -12,30 +12,18 @@ class PortfolioItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final balance =
-        _item.portfolioPosition.instrumentType == InstrumentType.currency
-            ? _item.portfolioPosition.balance.toStringAsFixed(2)
-            : "${_item.portfolioPosition.lots} шт.";
+    final balance = _item.portfolioPosition.instrumentType == InstrumentType.currency
+        ? _item.portfolioPosition.balance.toStringAsFixed(2)
+        : "${_item.portfolioPosition.lots} шт.";
 
     @nullable
-    final amount = _item.actualPrice == null
-        ? null
-        : _item.actualPrice! * _item.portfolioPosition.balance;
+    final amount = _item.actualPrice == null ? null : _item.actualPrice! * _item.portfolioPosition.balance;
     @nullable
-    final amountStr = amount == null
-        ? null
-        : amount.toStringAsFixed(2) +
-            _item.portfolioPosition.averagePositionPrice!.currency.currencySymbol();
+    final amountStr = amount == null ? null : amount.toStringAsFixed(2) + _item.currency().currencySymbol();
     @nullable
-    final incomePercent = amount == null || _item.income == null
-        ? null
-        : (_item.income! / (amount - _item.income!) * 100).toStringAsFixed(2) +
-            " %";
+    final incomePercent = amount == null || _item.income == null ? null : (_item.income! / (amount - _item.income!) * 100).toStringAsFixed(2) + " %";
     @nullable
-    final income = _item.income == null
-        ? null
-        : _item.income!.toStringAsFixed(2) +
-            _item.portfolioPosition.averagePositionPrice!.currency.currencySymbol();
+    final income = _item.income == null ? null : _item.income!.toStringAsFixed(2) + _item.currency().currencySymbol();
 
     final incomeColor = _item.income == null || _item.income == 0
         ? Colors.black
@@ -78,8 +66,7 @@ class PortfolioItemWidget extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.fade,
                         softWrap: false,
-                        style:
-                            TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                       ),
                     ),
                     SizedBox(width: 8),
@@ -96,8 +83,7 @@ class PortfolioItemWidget extends StatelessWidget {
                     Flexible(
                       child: Text(
                         balance,
-                        style:
-                            TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
+                        style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
                       ),
                     ),
                     Text(

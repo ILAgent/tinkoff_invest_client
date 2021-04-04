@@ -5,8 +5,7 @@ import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 part 'portfolio_item.g.dart';
 
-abstract class PortfolioItem implements Built<PortfolioItem, PortfolioItemBuilder>, PortfolioListElement{
-
+abstract class PortfolioItem implements Built<PortfolioItem, PortfolioItemBuilder>, PortfolioListElement {
   PortfolioPosition get portfolioPosition;
 
   double? get actualPrice;
@@ -14,6 +13,8 @@ abstract class PortfolioItem implements Built<PortfolioItem, PortfolioItemBuilde
   double? get income;
 
   String? get groupId;
+
+  Currency currency() => portfolioPosition.averagePositionPrice!.currency;
 
   PortfolioItem._();
 
