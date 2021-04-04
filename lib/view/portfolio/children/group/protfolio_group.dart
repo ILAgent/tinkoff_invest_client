@@ -16,26 +16,29 @@ class PortfolioGroupWidget extends StatelessWidget {
     final currency = _store.state.amount.currency.currencySymbol();
     final amountStr = (_group.actualPrice?.toStringAsFixed(2) ?? '_') + currency;
     final incomeStr = (_group.income?.toStringAsFixed(2) ?? '_') + currency;
-    final incomeColor =
-        _group.income == null || _group.income! > 0 ? Colors.green : Colors.red;
-    return Row(
-      children: [
-        Expanded(
-          child: GroupEditableTitle(_group, _store),
-        ),
-        Column(
-          children: [
-            Text(
-              amountStr,
-              style: TextStyle(fontSize: 16),
-            ),
-            Text(
-              incomeStr,
-              style: TextStyle(fontSize: 12, color: incomeColor),
-            ),
-          ],
-        ),
-      ],
+    final incomeColor = _group.income == null || _group.income! > 0 ? Colors.green : Colors.red;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: GroupEditableTitle(_group, _store),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                amountStr,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                incomeStr,
+                style: TextStyle(fontSize: 12, color: incomeColor, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

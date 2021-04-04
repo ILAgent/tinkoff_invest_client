@@ -40,7 +40,10 @@ class GroupEditableTitle extends StatelessWidget {
             )
           });
     } else {
-      textWidget = Text(_group.title);
+      textWidget = Text(
+        _group.title,
+        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+      );
     }
     return GestureDetector(
       onLongPress: () {
