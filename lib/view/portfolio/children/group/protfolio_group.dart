@@ -13,10 +13,14 @@ class PortfolioGroupWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currency = _store.state.amount.currency.currencySymbol();
-    final amountStr = (_group.actualPrice?.toStringAsFixed(2) ?? '_') + currency;
-    final incomeStr = (_group.income?.toStringAsFixed(2) ?? '_') + currency;
-    final incomeColor = _group.income == null || _group.income! > 0 ? Colors.green : Colors.red;
+    final String currency = _store.state.amount.currency.currencySymbol();
+    final double? amount = _group.actualPrice;
+    final double? income = _group.income;
+    final String incomePercent = income != null && amount != null ? " (" + (income / (amount - income) * 100).toStringAsFixed(2) + "%)" : "";
+
+    final amountStr = amount == null ? "" : amount.toStringAsFixed(2) + currency;
+    final incomeStr = income == null ? "" : income.toStringAsFixed(2) + currency;
+    final incomeColor = income == null || income > 0 ? Colors.green : Colors.red;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: Row(
@@ -32,7 +36,7 @@ class PortfolioGroupWidget extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Text(
-                incomeStr,
+                incomeStr + incomePercent,
                 style: TextStyle(fontSize: 12, color: incomeColor, fontWeight: FontWeight.bold),
               ),
             ],

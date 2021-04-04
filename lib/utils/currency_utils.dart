@@ -5,11 +5,11 @@ extension CurrencyExtensions on Currency {
   String currencySymbol() {
     switch (this) {
       case Currency.RUB:
-        return " ₽";
+        return "₽";
       case Currency.EUR:
-        return " €";
+        return "€";
       case Currency.USD:
-        return " \$";
+        return "\$";
       default:
         throw ArgumentError(this);
     }

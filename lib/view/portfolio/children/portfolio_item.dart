@@ -21,7 +21,7 @@ class PortfolioItemWidget extends StatelessWidget {
     @nullable
     final amountStr = amount == null ? null : amount.toStringAsFixed(2) + _item.currency().currencySymbol();
     @nullable
-    final incomePercent = amount == null || _item.income == null ? null : (_item.income! / (amount - _item.income!) * 100).toStringAsFixed(2) + " %";
+    final incomePercent = amount == null || _item.income == null ? null : (_item.income! / (amount - _item.income!) * 100).toStringAsFixed(2) + "%";
     @nullable
     final income = _item.income == null ? null : _item.income!.toStringAsFixed(2) + _item.currency().currencySymbol();
 
