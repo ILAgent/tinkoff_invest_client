@@ -6,13 +6,16 @@ import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 PortfolioState reducePortfolioState(PortfolioState state, dynamic action) {
-  return state.rebuild(
+  final reducedState = state.rebuild(
     (b) => b
       ..amount = _reduceAmount(state.amount, action).toBuilder()
       ..items = _reduceItems(state.items, action).toBuilder()
       ..groups = _reduceGroups(state.groups, action).toBuilder()
       ..groupEditing = _reduceGroupEditing(state.groupEditing, action)?.toBuilder(),
   );
+  print("$action\n");
+  print("$reducedState\n");
+  return reducedState;
 }
 
 MoneyAmount _reduceAmount(MoneyAmount amount, dynamic action) {
