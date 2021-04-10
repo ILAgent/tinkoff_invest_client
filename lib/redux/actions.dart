@@ -13,17 +13,27 @@ class ChangeTotalAmount {
   ChangeTotalAmount(this.amount);
 }
 
-class UpdatePortfolioItems {
+class InitPortfolioItems {
   final List<PortfolioItem> items;
 
-  UpdatePortfolioItems(this.items);
+  InitPortfolioItems(this.items);
 }
 
-class UpdatePortfolioItem {
-  final PortfolioItem item;
+class UpdatePortfolioItemValues {
+  final String figi;
+  final double? actualPrice;
+  final double? income;
 
-  UpdatePortfolioItem(this.item);
+  UpdatePortfolioItemValues(this.figi, this.actualPrice, this.income);
 }
+
+class UpdatePortfolioItemGroup {
+  final String figi;
+  final String? groupId;
+
+  UpdatePortfolioItemGroup(this.figi, this.groupId);
+}
+
 
 class AddGroup {
   final ItemsGroup group;

@@ -44,18 +44,14 @@ class PortfolioItemsList extends StatelessWidget {
         if (item is ItemsGroup) {
           if (draggableItem.groupId != item.id) {
             _store.dispatch(
-              UpdatePortfolioItem(
-                draggableItem.rebuild((b) => b.groupId = item.id),
-              ),
+              UpdatePortfolioItemGroup(draggableItem.figi(), item.id),
             );
           }
           return;
         }
       }
       _store.dispatch(
-        UpdatePortfolioItem(
-          draggableItem.rebuild((b) => b.groupId = null),
-        ),
+        UpdatePortfolioItemGroup(draggableItem.figi(), null),
       );
     }
   }

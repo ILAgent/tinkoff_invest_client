@@ -26,15 +26,11 @@ class PortfolioItemsEpic {
           )
           .toList();
       final updateItemStream = Stream.fromIterable(items).asyncMap((item) async {
-        final actualPrice = await _apiService.actualPrice(item.portfolioPosition.figi);
-        final income = await _apiService.income(item.portfolioPosition.figi);
-        return UpdatePortfolioItem(item.rebuild(
-          (b) => b
-            ..actualPrice = actualPrice
-            ..income = income,
-        )) as dynamic;
+        final actualPrice = await _apiService.actualPrice(item.figi());
+        final income = await _apiService.income(item.figi());
+        return UpdatePortfolioItemValues(item.figi(), actualPrice, income) as dynamic;
       });
-      return updateItemStream.startWith(UpdatePortfolioItems(items));
+      return updateItemStream.startWith(InitPortfolioItems(items));
     });
   }
 }

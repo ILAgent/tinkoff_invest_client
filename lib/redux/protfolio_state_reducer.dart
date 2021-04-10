@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/state/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
@@ -26,8 +27,11 @@ MoneyAmount _reduceAmount(MoneyAmount amount, dynamic action) {
 }
 
 BuiltList<PortfolioItem> _reduceItems(BuiltList<PortfolioItem> items, dynamic action) {
-  if (action is UpdatePortfolioItems) {
-    return BuiltList.from(action.items);
+  if (action is InitPortfolioItems) {
+    return BuiltList.from(action.items.map((item) {
+      final oldItem = items.firstWhereOrNull((old) => old.figi() == item.figi());
+      return item.rebuild((b) => b..groupId = oldItem?.groupId);
+    }));
   }
   return BuiltList.from(
     items.map((item) => _reduceItem(item, action)),
@@ -35,8 +39,15 @@ BuiltList<PortfolioItem> _reduceItems(BuiltList<PortfolioItem> items, dynamic ac
 }
 
 PortfolioItem _reduceItem(PortfolioItem item, dynamic action) {
-  if (action is UpdatePortfolioItem && action.item.portfolioPosition.figi == item.portfolioPosition.figi) {
-    return action.item;
+  if (action is UpdatePortfolioItemValues && action.figi == item.figi()) {
+    return item.rebuild(
+      (b) => b
+        ..income = action.income
+        ..actualPrice = action.actualPrice,
+    );
+  }
+  if (action is UpdatePortfolioItemGroup && action.figi == item.figi()) {
+    return item.rebuild((b) => b..groupId = action.groupId);
   }
   return item;
 }

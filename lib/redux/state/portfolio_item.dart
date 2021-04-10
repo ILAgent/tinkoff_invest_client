@@ -16,7 +16,7 @@ abstract class PortfolioItem implements Built<PortfolioItem, PortfolioItemBuilde
 
   Currency currency() => portfolioPosition.averagePositionPrice!.currency;
 
-  String id() => portfolioPosition.figi;
+  String figi() => portfolioPosition.figi;
 
   PortfolioItem._();
 
