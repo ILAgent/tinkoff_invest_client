@@ -11,6 +11,7 @@ class SettingsButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.transparent,
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
