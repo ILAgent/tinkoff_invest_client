@@ -15,28 +15,38 @@ class PortfolioWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      padding: EdgeInsets.only(top: 50, left: 40, right: 40),
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TinkoffAccountTileWidget(_store),
-                    TinkoffAccountAmountWidget(_store),
-                  ],
-                ),
+          Material(
+            color: Colors.white,
+            elevation: 4,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 40, bottom: 8, left: 20, right: 20),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TinkoffAccountTileWidget(_store),
+                        TinkoffAccountAmountWidget(_store),
+                      ],
+                    ),
+                  ),
+                  SettingsButtonWidget(_store),
+                ],
               ),
-              SettingsButtonWidget(_store),
-            ],
+            ),
           ),
           Expanded(
-            child: PortfolioItemsList(_store),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: PortfolioItemsList(_store),
+            ),
           )
         ],
       ),

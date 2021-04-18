@@ -21,7 +21,6 @@ class PortfolioItemsList extends StatelessWidget {
       builder: (context, snapshot) {
         final items = snapshot.data ?? [];
         return ReorderableListView(
-          padding: EdgeInsets.only(top: 16),
           onReorder: (int oldIndex, int newIndex) {
             _onReorder(oldIndex, newIndex, items);
           },
@@ -56,13 +55,18 @@ class PortfolioItemsList extends StatelessWidget {
   }
 
   List<dynamic> _stateToList(PortfolioState state) {
-    final groups = groupBy(state.items, (PortfolioItem item) => item.groupId).entries.toList();
+    final groups = groupBy(state.items, (PortfolioItem item) => item.groupId)
+        .entries
+        .toList();
     groups.sort(
       (a, b) => a.key == null
           ? -1
           : b.key == null
               ? 1
-              : state.groupById(a.key!).title.compareTo(state.groupById(b.key!).title),
+              : state
+                  .groupById(a.key!)
+                  .title
+                  .compareTo(state.groupById(b.key!).title),
     );
     final items = groups
         .expand((e) => [
