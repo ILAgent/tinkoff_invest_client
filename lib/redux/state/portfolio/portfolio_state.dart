@@ -1,8 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:tinkoff_invest/redux/state/items_group.dart';
-import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 part 'portfolio_state.g.dart';

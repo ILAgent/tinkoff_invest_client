@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tinkoff_invest/main.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
-import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

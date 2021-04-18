@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
-import 'package:tinkoff_invest/redux/state/items_group.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 
 class GroupEditableTitle extends StatelessWidget {
   final ItemsGroup _group;

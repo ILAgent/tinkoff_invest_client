@@ -1,5 +1,5 @@
-import 'package:tinkoff_invest/redux/state/items_group.dart';
-import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 import 'package:uuid/uuid.dart';
 

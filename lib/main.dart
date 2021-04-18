@@ -27,7 +27,16 @@ class AppWidget extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Scaffold(body: PortfolioWidget(_store)),
+      home: Scaffold(
+        body: Navigator(
+          pages: [
+            MaterialPage(child: PortfolioWidget(_store)),
+          ],
+          onPopPage:(route,result){
+            return false;
+          },
+        ),
+      ),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:tinkoff_invest/redux/state/portfolio_state.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/state/serializers/state_serializers.dart';
 
 abstract class Storage {

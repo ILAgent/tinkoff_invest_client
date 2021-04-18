@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tinkoff_invest/redux/state/portfolio_item.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
 import 'package:tinkoff_invest/utils/color_utils.dart';
 import 'package:tinkoff_invest/utils/currency_utils.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
