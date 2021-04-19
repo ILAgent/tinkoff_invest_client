@@ -1,11 +1,10 @@
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
+import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/api_service_extension.dart';
-
-import '../state/portfolio/portfolio_state.dart';
 
 class PortfolioItemsEpic {
   final ApiService _apiService;
@@ -14,7 +13,7 @@ class PortfolioItemsEpic {
 
   Stream<dynamic> act(
     Stream<dynamic> actions,
-    EpicStore<PortfolioState> store,
+    EpicStore<AppState> store,
   ) {
     return actions
         .where((action) => action is InitAction) //

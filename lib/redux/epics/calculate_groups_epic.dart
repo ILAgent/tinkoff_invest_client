@@ -3,8 +3,8 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/transformers.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
+import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
-import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
 import 'package:tinkoff_invest/services/currencies_converter.dart';
 import 'package:tinkoff_invest/utils/iterable_etensions.dart';
@@ -17,7 +17,7 @@ class CalculateGroupsEpic {
 
   Stream<dynamic> act(
     Stream<dynamic> actions,
-    EpicStore<PortfolioState> store,
+    EpicStore<AppState> store,
   ) {
     final Stream<BuiltList<PortfolioItem>> itemsStream = store //
         .states

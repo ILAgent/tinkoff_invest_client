@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
+import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
@@ -10,9 +11,11 @@ import 'package:tinkoff_invest/view/portfolio/children/group/protfolio_group.dar
 import 'package:tinkoff_invest/view/portfolio/children/portfolio_item.dart';
 
 class PortfolioItemsList extends StatelessWidget {
-  final PortfolioStore _store;
+  final AppStore _store;
+  final PortfolioState _state;
 
-  PortfolioItemsList(this._store);
+
+  PortfolioItemsList(this._store, this._state);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class PortfolioItemsList extends StatelessWidget {
           },
           children: items.map((e) {
             if (e is PortfolioItem) return PortfolioItemWidget(e);
-            if (e is ItemsGroup) return PortfolioGroupWidget(e, _store);
+            if (e is ItemsGroup) return PortfolioGroupWidget(e, _store, _state);
             throw ArgumentError(e);
           }).toList(),
         );
@@ -54,7 +57,7 @@ class PortfolioItemsList extends StatelessWidget {
     }
   }
 
-  List<dynamic> _stateToList(PortfolioState state) {
+  List<dynamic> _stateToList(AppState state) {
     final groups = groupBy(state.items, (PortfolioItem item) => item.groupId)
         .entries
         .toList();

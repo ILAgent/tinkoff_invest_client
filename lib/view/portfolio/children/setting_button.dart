@@ -4,7 +4,7 @@ import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 
 class SettingsButtonWidget extends StatelessWidget {
-  final PortfolioStore _store;
+  final AppStore _store;
 
   SettingsButtonWidget(this._store);
 

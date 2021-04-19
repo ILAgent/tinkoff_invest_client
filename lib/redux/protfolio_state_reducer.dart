@@ -1,22 +1,26 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
+import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
-import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
+import 'package:tinkoff_invest/redux/state/screen_state.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
-PortfolioState reducePortfolioState(PortfolioState state, dynamic action) {
-  final reducedState = state.rebuild(
-    (b) => b
-      ..amount = _reduceAmount(state.amount, action).toBuilder()
-      ..items = _reduceItems(state.items, action).toBuilder()
-      ..groups = _reduceGroups(state.groups, action).toBuilder()
-      ..groupEditing = _reduceGroupEditing(state.groupEditing, action)?.toBuilder(),
-  );
+AppState reduceAppState(AppState state, dynamic action) {
+  final reducedState = state.rebuild((b) => b
+    ..amount = _reduceAmount(state.amount, action).toBuilder()
+    ..items = _reduceItems(state.items, action).toBuilder()
+    ..groups = _reduceGroups(state.groups, action).toBuilder()
+    ..backStack = _reduceBackstack(state.backStack, action).toBuilder());
   print("$action\n");
   print("$reducedState\n");
   return reducedState;
+}
+
+BuiltList<ScreenState> _reduceBackstack(
+    BuiltList<ScreenState> backStack, dynamic action) {
+  return BuiltList.from(backStack.map((screen) => screen.reduce(action)));
 }
 
 MoneyAmount _reduceAmount(MoneyAmount amount, dynamic action) {
@@ -26,10 +30,12 @@ MoneyAmount _reduceAmount(MoneyAmount amount, dynamic action) {
   return amount;
 }
 
-BuiltList<PortfolioItem> _reduceItems(BuiltList<PortfolioItem> items, dynamic action) {
+BuiltList<PortfolioItem> _reduceItems(
+    BuiltList<PortfolioItem> items, dynamic action) {
   if (action is InitPortfolioItems) {
     return BuiltList.from(action.items.map((item) {
-      final oldItem = items.firstWhereOrNull((old) => old.figi() == item.figi());
+      final oldItem =
+          items.firstWhereOrNull((old) => old.figi() == item.figi());
       return item.rebuild((b) => b..groupId = oldItem?.groupId);
     }));
   }
@@ -52,7 +58,8 @@ PortfolioItem _reduceItem(PortfolioItem item, dynamic action) {
   return item;
 }
 
-BuiltList<ItemsGroup> _reduceGroups(BuiltList<ItemsGroup> groups, dynamic action) {
+BuiltList<ItemsGroup> _reduceGroups(
+    BuiltList<ItemsGroup> groups, dynamic action) {
   if (action is AddGroup) {
     return BuiltList.from([
       ...groups,
@@ -72,17 +79,4 @@ ItemsGroup _reduceGroup(ItemsGroup group, dynamic action) {
       ..income = action.income);
   }
   return group;
-}
-
-ItemsGroup? _reduceGroupEditing(ItemsGroup? groupEditing, dynamic action) {
-  if (action is EditGroup) {
-    return action.group;
-  }
-  if (action is AddGroup) {
-    return action.group;
-  }
-  if (action is UpdateGroupTitle) {
-    return null;
-  }
-  return groupEditing;
 }

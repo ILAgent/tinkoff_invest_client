@@ -6,7 +6,7 @@ import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 import 'package:tinkoff_invest/utils/currency_utils.dart';
 
 class TinkoffAccountAmountWidget extends StatelessWidget {
-  final PortfolioStore _store;
+  final AppStore _store;
 
   TinkoffAccountAmountWidget(this._store);
 

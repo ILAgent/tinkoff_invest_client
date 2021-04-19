@@ -1,6 +1,6 @@
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
+import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
 import 'package:tinkoff_invest/services/storage/storage.dart';
 
@@ -11,7 +11,7 @@ class SaveSateEpic {
 
   Stream<dynamic> act(
     Stream<dynamic> actions,
-    EpicStore<PortfolioState> store,
+    EpicStore<AppState> store,
   ) {
     return store.states //
         .skip(1)

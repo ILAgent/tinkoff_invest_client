@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
 
 class GroupEditableTitle extends StatelessWidget {
   final ItemsGroup _group;
-  final PortfolioStore _store;
+  final AppStore _store;
+  final PortfolioState _state;
 
-  GroupEditableTitle(this._group, this._store) : super(key: ValueKey(_group));
+  GroupEditableTitle(this._group, this._store, this._state)
+      : super(key: ValueKey(_group));
 
   @override
   Widget build(BuildContext context) {
     Widget textWidget;
-    if (_store.state.groupEditing == _group) {
+    if (_state.groupEditing == _group) {
       final controller = TextEditingController(
         text: _group.title,
       );

@@ -5,7 +5,7 @@ import 'package:tinkoff_invest/redux/store_extension.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 class TinkoffAccountTileWidget extends StatelessWidget {
-  final PortfolioStore _store;
+  final AppStore _store;
 
   TinkoffAccountTileWidget(this._store);
 

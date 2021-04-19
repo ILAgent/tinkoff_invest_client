@@ -1,6 +1,6 @@
 import 'package:redux_epics/redux_epics.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
-import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
+import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/services/total_money_calculator.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
@@ -11,7 +11,7 @@ class TotalAmountEpic {
 
   Stream<dynamic> act(
     Stream<dynamic> actions,
-    EpicStore<PortfolioState> store,
+    EpicStore<AppState> store,
   ) {
     return actions.where((action) => action is TogglePortfolioCurrency || action is InitAction).asyncMap(
       (action) async {

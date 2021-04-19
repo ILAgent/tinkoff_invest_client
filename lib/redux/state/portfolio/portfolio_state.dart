@@ -1,44 +1,46 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
-import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
-import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
+import 'package:tinkoff_invest/redux/state/screen_state.dart';
 
 part 'portfolio_state.g.dart';
 
-abstract class PortfolioState implements Built<PortfolioState, PortfolioStateBuilder> {
-  MoneyAmount get amount;
-
-  BuiltList<PortfolioItem> get items;
-
-  BuiltList<ItemsGroup> get groups;
-
+abstract class PortfolioState
+    implements Built<PortfolioState, PortfolioStateBuilder>, ScreenState {
   ItemsGroup? get groupEditing;
 
   PortfolioState._();
 
-  factory PortfolioState([void Function(PortfolioStateBuilder) updates]) = _$PortfolioState;
+  factory PortfolioState([void Function(PortfolioStateBuilder) updates]) =
+      _$PortfolioState;
 
-  factory PortfolioState.defaultSate() {
-    return PortfolioState(
+  static Serializer<PortfolioState> get serializer =>
+      _$portfolioStateSerializer;
+
+  @override
+  ScreenState reduce(dynamic action) {
+    return rebuild(
       (b) => b
-        ..amount = MoneyAmount(
-          (b) => b
-            ..currency = Currency.RUB
-            ..value = 0,
-        ).toBuilder()
-        ..items = BuiltList<PortfolioItem>().toBuilder()
-        ..groups = BuiltList<ItemsGroup>().toBuilder(),
+        ..groupEditing = _reduceGroupEditing(groupEditing, action)?.toBuilder(),
     );
   }
 
-  static Serializer<PortfolioState> get serializer => _$portfolioStateSerializer;
-
+  @override
+  T acceptVisitor<T>(ScreenStateVisitor<T> visitor) {
+    return visitor.visitPortfolio(this);
+  }
 }
 
-extension PortfolioStateExtension on PortfolioState {
-  ItemsGroup groupById(String/*!*/ id) {
-    return groups.firstWhere((g) => g.id == id);
+ItemsGroup? _reduceGroupEditing(ItemsGroup? groupEditing, dynamic action) {
+  if (action is EditGroup) {
+    return action.group;
   }
+  if (action is AddGroup) {
+    return action.group;
+  }
+  if (action is UpdateGroupTitle) {
+    return null;
+  }
+  return groupEditing;
 }

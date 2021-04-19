@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/portfolio_store.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
 import 'package:tinkoff_invest/utils/currency_utils.dart';
 import 'package:tinkoff_invest/view/portfolio/children/group/group_editable_title.dart';
 
 class PortfolioGroupWidget extends StatelessWidget {
   final ItemsGroup _group;
-  final PortfolioStore _store;
+  final AppStore _store;
+  final PortfolioState _state;
 
-  PortfolioGroupWidget(this._group, this._store) : super(key: ValueKey(_group));
+  PortfolioGroupWidget(this._group, this._store, this._state) : super(key: ValueKey(_group));
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class PortfolioGroupWidget extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: GroupEditableTitle(_group, _store),
+            child: GroupEditableTitle(_group, _store, _state),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
