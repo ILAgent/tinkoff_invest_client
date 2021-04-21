@@ -15,6 +15,7 @@ Serializers _$stateSerializers = (new Serializers().toBuilder()
       ..add(PortfolioItem.serializer)
       ..add(PortfolioPosition.serializer)
       ..add(PortfolioState.serializer)
+      ..add(SettingsState.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(PortfolioItem)]),
           () => new ListBuilder<PortfolioItem>())

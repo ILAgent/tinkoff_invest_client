@@ -6,12 +6,13 @@ import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/state/screen_state.dart';
+import 'package:tinkoff_invest/redux/state/setting/settings_state.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 part 'state_serializers.g.dart';
 
 @SerializersFor([
-  AppState, PortfolioState
+  AppState, PortfolioState, SettingsState
 ])
 final Serializers stateSerializers =
     (_$stateSerializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
