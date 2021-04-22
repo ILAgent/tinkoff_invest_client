@@ -5,6 +5,7 @@ import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/screen_state.dart';
+import 'package:tinkoff_invest/redux/state/setting/settings_state.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 AppState reduceAppState(AppState state, dynamic action) {
@@ -20,6 +21,13 @@ AppState reduceAppState(AppState state, dynamic action) {
 
 BuiltList<ScreenState> _reduceBackstack(
     BuiltList<ScreenState> backStack, dynamic action) {
+  if (action is GoBack) {
+    if (backStack.length <= 1) return backStack;
+    return BuiltList.from(backStack.take(backStack.length - 1));
+  }
+  if (action is ShowSettings) {
+    return BuiltList.from([...backStack, SettingsState()]);
+  }
   return BuiltList.from(backStack.map((screen) => screen.reduce(action)));
 }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
-import 'package:tinkoff_invest/redux/portfolio_store.dart';
+import 'package:tinkoff_invest/redux/app_store.dart';
 
 class SettingsWidget extends StatelessWidget {
   final AppStore _store;
@@ -22,8 +22,8 @@ class SettingsWidget extends StatelessWidget {
                 leading: Icon(Icons.add),
                 title: Text('Добавить группу'),
                 onTap: () {
+                  _store.dispatch(GoBack());
                   _store.dispatch(AddGroup());
-                  Navigator.of(context).pop();
                 }),
           ],
         ),

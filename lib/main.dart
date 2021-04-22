@@ -1,6 +1,10 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:tinkoff_invest/redux/portfolio_store.dart';
+import 'package:tinkoff_invest/redux/actions.dart';
+import 'package:tinkoff_invest/redux/app_store.dart';
+import 'package:tinkoff_invest/redux/state/screen_state.dart';
 import 'package:tinkoff_invest/redux/state/screen_state_to_widget.dart';
+import 'package:tinkoff_invest/redux/store_extension.dart';
 
 import 'di/di.dart';
 
@@ -24,15 +28,20 @@ class AppWidget extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
-        body: Navigator(
-          pages: _store.state.backStack
-              .map((screen) => screen.acceptVisitor(_statesMapper))
-              .map((widget) => MaterialPage(child: widget))
-              .toList(),
-          onPopPage: (route, result) {
-            return false;
-          },
-        ),
+        body: StreamBuilder<BuiltList<ScreenState>>(
+            stream: _store.states.map((it) => it.backStack).distinct(),
+            builder: (context, snapshot) {
+              return Navigator(
+                pages: (snapshot.data?.toList() ?? List.empty())
+                    .map((screen) => screen.acceptVisitor(_statesMapper))
+                    .map((widget) => MaterialPage(child: widget))
+                    .toList(),
+                onPopPage: (route, result) {
+                  _store.dispatch(GoBack());
+                  return false;
+                },
+              );
+            }),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
-import 'package:tinkoff_invest/redux/portfolio_store.dart';
+import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 

@@ -5,7 +5,7 @@ import 'package:tinkoff_invest/redux/epics/calculate_groups_epic.dart';
 import 'package:tinkoff_invest/redux/epics/portfolio_item_epic.dart';
 import 'package:tinkoff_invest/redux/epics/save_state_epic.dart';
 import 'package:tinkoff_invest/redux/epics/total_money_epic.dart';
-import 'package:tinkoff_invest/redux/portfolio_store.dart';
+import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/state/screen_state_to_widget.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/currencies_converter.dart';

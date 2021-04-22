@@ -5,7 +5,11 @@ import 'package:uuid/uuid.dart';
 
 class InitAction {}
 
+class GoBack{}
+
 class TogglePortfolioCurrency {}
+
+class ShowSettings {}
 
 class ChangeTotalAmount {
   final MoneyAmount amount;

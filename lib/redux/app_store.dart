@@ -3,7 +3,7 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/dispatcher.dart';
 import 'package:tinkoff_invest/redux/epics/save_state_epic.dart';
-import 'package:tinkoff_invest/redux/protfolio_state_reducer.dart';
+import 'package:tinkoff_invest/redux/app_state_reducer.dart';
 import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/services/storage/storage.dart';
 import 'epics/calculate_groups_epic.dart';

@@ -5,7 +5,7 @@ import 'package:tinkoff_invest/redux/state/setting/settings_state.dart';
 import 'package:tinkoff_invest/view/portfolio/portfolio_widget.dart';
 import 'package:tinkoff_invest/view/settings/settings_widget.dart';
 
-import '../portfolio_store.dart';
+import '../app_store.dart';
 
 class ScreenStateToWidget implements ScreenStateVisitor<Widget> {
   final AppStore _store;

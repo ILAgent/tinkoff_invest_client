@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tinkoff_invest/redux/portfolio_store.dart';
+import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
 import 'package:tinkoff_invest/view/portfolio/children/portfolio_items_list.dart';
 import 'package:tinkoff_invest/view/portfolio/children/setting_button.dart';

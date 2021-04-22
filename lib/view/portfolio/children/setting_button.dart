@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
-import 'package:tinkoff_invest/redux/portfolio_store.dart';
+import 'package:tinkoff_invest/redux/app_store.dart';
 
 class SettingsButtonWidget extends StatelessWidget {
   final AppStore _store;
@@ -15,24 +15,7 @@ class SettingsButtonWidget extends StatelessWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return Container(
-                  padding: EdgeInsets.only(bottom: 96),
-                  child: Wrap(
-                    children: <Widget>[
-                      ListTile(
-                          leading: Icon(Icons.add),
-                          title: Text('Добавить группу'),
-                          onTap: () {
-                            _store.dispatch(AddGroup());
-                            Navigator.of(context).pop();
-                          }),
-                    ],
-                  ),
-                );
-              });
+          _store.dispatch(ShowSettings());
         },
         child: Padding(
           padding: const EdgeInsets.all(4.0),
