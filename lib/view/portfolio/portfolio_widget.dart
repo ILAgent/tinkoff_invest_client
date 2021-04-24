@@ -14,43 +14,25 @@ class PortfolioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Material(
-            color: Colors.white,
-            elevation: 4,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 40, bottom: 8, left: 20, right: 20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TinkoffAccountTileWidget(_store),
-                        TinkoffAccountAmountWidget(_store),
-                      ],
-                    ),
-                  ),
-                  SettingsButtonWidget(_store),
-                ],
-              ),
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        actions: [SettingsButtonWidget(_store)],
+        backgroundColor: Colors.white,
+        title: Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(bottom: 8, left: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TinkoffAccountTileWidget(_store),
+              TinkoffAccountAmountWidget(_store),
+            ],
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: PortfolioItemsList(_store, _state),
-            ),
-          )
-        ],
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        child: PortfolioItemsList(_store, _state),
       ),
     );
   }

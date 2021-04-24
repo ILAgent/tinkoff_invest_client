@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
-import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 import 'package:tinkoff_invest/utils/currency_utils.dart';
+import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 class TinkoffAccountAmountWidget extends StatelessWidget {
   final AppStore _store;
@@ -27,7 +27,11 @@ class TinkoffAccountAmountWidget extends StatelessWidget {
                   TextSpan(text: state?.currency.currencySymbol()),
                 ],
               ),
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
             );
           }),
     );

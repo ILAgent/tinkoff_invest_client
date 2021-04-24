@@ -19,7 +19,7 @@ class SettingsButtonWidget extends StatelessWidget {
         },
         child: Padding(
           padding: const EdgeInsets.all(4.0),
-          child: Icon(Icons.settings),
+          child: Icon(Icons.settings,color: Colors.black),
         ),
       ),
     );
