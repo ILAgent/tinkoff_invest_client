@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/app_store.dart';
-import 'package:tinkoff_invest/view/portfolio/children/setting_button.dart';
 
 class SettingsWidget extends StatelessWidget {
   final AppStore _store;
