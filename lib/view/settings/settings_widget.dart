@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/state/app_state.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/view/settings/settings_group_item.dart';
 
 class SettingsWidget extends StatelessWidget {
@@ -32,16 +33,21 @@ class SettingsWidget extends StatelessWidget {
                   _store.dispatch(AddGroup());
                 }),
             Padding(
-              padding: const EdgeInsets.only(left: 16,bottom: 8),
+              padding: const EdgeInsets.only(left: 16, bottom: 8),
               child: Text(
                 "Группы",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            ..._state.groups.map((g) => SettingsGroupItemWidget(g))
+            ..._state.groups
+                .map((g) => SettingsGroupItemWidget(g, _groupItemsAmount(g)))
           ],
         ),
       ),
     );
+  }
+
+  int _groupItemsAmount(ItemsGroup group) {
+    return _state.items.where((p) => p.groupId == group.id).length;
   }
 }
