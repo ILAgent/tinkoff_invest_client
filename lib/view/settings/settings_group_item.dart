@@ -20,7 +20,33 @@ class SettingsGroupItemWidget extends StatelessWidget {
       ),
       trailing: Icon(Icons.more_horiz, color: Colors.black),
       onTap: () {},
-      onLongPress: () {},
+      onLongPress: () {
+        showDialog(
+          context: context,
+          builder: (context) => _deleteDialog(_itemsAmount > 0, context),
+        );
+      },
+    );
+  }
+
+  AlertDialog _deleteDialog(bool hasItems, BuildContext context) {
+    return AlertDialog(
+      title: Text("Удалить группу?"),
+      content: hasItems ? Text("Группа содержит некоторые позиции") : null,
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text("Нет"),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text("Да"),
+        ),
+      ],
     );
   }
 }
