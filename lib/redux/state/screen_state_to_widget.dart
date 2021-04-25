@@ -19,6 +19,6 @@ class ScreenStateToWidget implements ScreenStateVisitor<Widget> {
 
   @override
   Widget visitSettings(SettingsState state) {
-    return SettingsWidget(_store);
+    return SettingsWidget(_store, _store.state);
   }
 }

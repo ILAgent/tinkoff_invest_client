@@ -26,6 +26,9 @@ class AppWidget extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: Theme.of(context).textTheme.apply(
+          bodyColor: Colors.black,
+        )
       ),
       home: Scaffold(
         body: StreamBuilder<BuiltList<ScreenState>>(
