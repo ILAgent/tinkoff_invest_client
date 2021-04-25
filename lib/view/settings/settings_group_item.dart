@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 
@@ -21,32 +24,37 @@ class SettingsGroupItemWidget extends StatelessWidget {
       trailing: Icon(Icons.more_horiz, color: Colors.black),
       onTap: () {},
       onLongPress: () {
-        showDialog(
-          context: context,
-          builder: (context) => _deleteDialog(_itemsAmount > 0, context),
-        );
+        final builder =
+            (BuildContext context) => _deleteDialog(_itemsAmount > 0, context);
+        if (Platform.isIOS) {
+          showCupertinoDialog(context: context, builder: builder);
+        } else {
+          showDialog(context: context, builder: builder);
+        }
       },
     );
   }
 
-  AlertDialog _deleteDialog(bool hasItems, BuildContext context) {
-    return AlertDialog(
-      title: Text("Удалить группу?"),
-      content: hasItems ? Text("Группа содержит некоторые позиции") : null,
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text("Нет"),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text("Да"),
-        ),
-      ],
-    );
+  Widget _deleteDialog(bool hasItems, BuildContext context) {
+    final title = Text("Удалить группу?");
+    final content = hasItems ? Text("Группа содержит некоторые позиции") : null;
+    final actions = [
+      TextButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: Text("Нет"),
+      ),
+      TextButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: Text("Да"),
+      ),
+    ];
+
+    return Platform.isIOS
+        ? CupertinoAlertDialog(title: title, content: content, actions: actions)
+        : AlertDialog(title: title, content: content, actions: actions);
   }
 }
