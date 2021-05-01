@@ -2,13 +2,17 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tinkoff_invest/redux/actions.dart';
+import 'package:tinkoff_invest/redux/dispatcher.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 
 class SettingsGroupItemWidget extends StatelessWidget {
   final ItemsGroup _group;
   final int _itemsAmount;
+  final Dispatcher _dispatcher;
 
-  const SettingsGroupItemWidget(this._group, this._itemsAmount);
+  const SettingsGroupItemWidget(
+      this._group, this._itemsAmount, this._dispatcher);
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +52,7 @@ class SettingsGroupItemWidget extends StatelessWidget {
       TextButton(
         onPressed: () {
           Navigator.of(context).pop();
+          _dispatcher.dispatch(DeleteGroup(_group.id));
         },
         child: Text("Да"),
       ),

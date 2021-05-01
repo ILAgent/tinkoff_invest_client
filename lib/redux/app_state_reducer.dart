@@ -63,16 +63,19 @@ PortfolioItem _reduceItem(PortfolioItem item, dynamic action) {
   if (action is UpdatePortfolioItemGroup && action.figi == item.figi()) {
     return item.rebuild((b) => b..groupId = action.groupId);
   }
+  if (action is DeleteGroup) {
+    return item.rebuild((b) => b..groupId = null);
+  }
   return item;
 }
 
 BuiltList<ItemsGroup> _reduceGroups(
     BuiltList<ItemsGroup> groups, dynamic action) {
   if (action is AddGroup) {
-    return BuiltList.from([
-      ...groups,
-      action.group,
-    ]);
+    return BuiltList.from([...groups, action.group]);
+  }
+  if (action is DeleteGroup) {
+    return BuiltList.from(groups.where((g) => g.id != action.groupId));
   }
   return BuiltList.from(groups.map((e) => _reduceGroup(e, action)));
 }

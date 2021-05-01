@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
-import 'package:tinkoff_invest/redux/app_store.dart';
+import 'package:tinkoff_invest/redux/dispatcher.dart';
 import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/view/settings/settings_group_item.dart';
 
 class SettingsWidget extends StatelessWidget {
-  final AppStore _store;
+  final Dispatcher _dispatcher;
   final AppState _state;
 
-  const SettingsWidget(this._store, this._state);
+  SettingsWidget(this._dispatcher, this._state);
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +29,8 @@ class SettingsWidget extends StatelessWidget {
                 leading: Icon(Icons.add, color: Colors.black),
                 title: Text('Добавить группу'),
                 onTap: () {
-                  _store.dispatch(GoBack());
-                  _store.dispatch(AddGroup());
+                  _dispatcher.dispatch(GoBack());
+                  _dispatcher.dispatch(AddGroup());
                 }),
             Padding(
               padding: const EdgeInsets.only(left: 16, bottom: 8),
@@ -39,8 +39,8 @@ class SettingsWidget extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            ..._state.groups
-                .map((g) => SettingsGroupItemWidget(g, _groupItemsAmount(g)))
+            ..._state.groups.map((g) =>
+                SettingsGroupItemWidget(g, _groupItemsAmount(g), _dispatcher))
           ],
         ),
       ),

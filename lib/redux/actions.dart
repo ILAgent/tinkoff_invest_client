@@ -5,7 +5,7 @@ import 'package:uuid/uuid.dart';
 
 class InitAction {}
 
-class GoBack{}
+class GoBack {}
 
 class TogglePortfolioCurrency {}
 
@@ -38,7 +38,6 @@ class UpdatePortfolioItemGroup {
   UpdatePortfolioItemGroup(this.figi, this.groupId);
 }
 
-
 class AddGroup {
   final ItemsGroup group;
 
@@ -46,6 +45,12 @@ class AddGroup {
       : group = ItemsGroup((b) => b
           ..title = 'Новая группа'
           ..id = Uuid().v1());
+}
+
+class DeleteGroup {
+  final String groupId;
+
+  DeleteGroup(this.groupId);
 }
 
 class EditGroup {
