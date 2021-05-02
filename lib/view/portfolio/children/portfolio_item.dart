@@ -26,6 +26,7 @@ class PortfolioItemWidget extends StatelessWidget {
             ? Colors.green
             : Colors.red;
     return Container(
+      padding: const EdgeInsets.only(left: 20, right: 20),
       decoration: BoxDecoration(color: Colors.transparent),
       height: 50,
       child: Row(

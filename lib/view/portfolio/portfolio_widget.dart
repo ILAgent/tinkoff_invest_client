@@ -28,10 +28,7 @@ class PortfolioWidget extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        child: PortfolioItemsList(_store),
-      ),
+      body: PortfolioItemsList(_store),
     );
   }
 }

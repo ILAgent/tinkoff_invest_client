@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/utils/currency_utils.dart';
-import 'package:tinkoff_invest/view/portfolio/children/group/group_title.dart';
 
 class PortfolioGroupWidget extends StatelessWidget {
   final ItemsGroup _group;
@@ -25,14 +25,19 @@ class PortfolioGroupWidget extends StatelessWidget {
         income == null ? "" : income.toStringAsFixed(2) + currency;
     final incomeColor =
         income == null || income > 0 ? Colors.green : Colors.red;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: GroupTitleWidget(_group, _store),
-          ),
-          Column(
+
+    return ListTile(
+      title: Padding(
+        padding: EdgeInsets.only(left: 4),
+        child: Text(
+          _group.title,
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+        ),
+      ),
+      trailing: IntrinsicHeight(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 4),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
@@ -48,8 +53,14 @@ class PortfolioGroupWidget extends StatelessWidget {
               ),
             ],
           ),
-        ],
+        ),
       ),
+      onTap: () {
+        _store.dispatch(EditGroup(_group));
+      },
+      onLongPress: () {
+        /* prevent drag */
+      },
     );
   }
 }
