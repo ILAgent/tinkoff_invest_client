@@ -24,15 +24,14 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       title: 'Tinkoff investor',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: Theme.of(context).textTheme.apply(
-          bodyColor: Colors.black,
-        )
-      ),
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          textTheme: Theme.of(context).textTheme.apply(
+                bodyColor: Colors.black,
+              )),
       home: Scaffold(
         body: StreamBuilder<BuiltList<ScreenState>>(
-            stream: _store.states.map((it) => it.backStack).distinct(),
+            stream: _store.states.map((it) => it.backStack),
             builder: (context, snapshot) {
               return Navigator(
                 pages: (snapshot.data?.toList() ?? List.empty())
