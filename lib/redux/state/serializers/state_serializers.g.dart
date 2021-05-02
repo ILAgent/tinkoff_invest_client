@@ -9,6 +9,7 @@ part of 'state_serializers.dart';
 Serializers _$stateSerializers = (new Serializers().toBuilder()
       ..add(AppState.serializer)
       ..add(Currency.serializer)
+      ..add(GroupSettingsState.serializer)
       ..add(InstrumentType.serializer)
       ..add(ItemsGroup.serializer)
       ..add(MoneyAmount.serializer)

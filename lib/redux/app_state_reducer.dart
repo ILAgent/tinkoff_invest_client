@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/state/app_state.dart';
+import 'package:tinkoff_invest/redux/state/group_settings/group_settings_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/screen_state.dart';
@@ -27,6 +28,12 @@ BuiltList<ScreenState> _reduceBackstack(
   }
   if (action is ShowSettings) {
     return BuiltList.from([...backStack, SettingsState()]);
+  }
+  if (action is EditGroup) {
+    return BuiltList.from([
+      ...backStack,
+      GroupSettingsState((b) => b.group = action.group.toBuilder()),
+    ]);
   }
   return BuiltList.from(backStack.map((screen) => screen.reduce(action)));
 }

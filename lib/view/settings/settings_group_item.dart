@@ -26,7 +26,9 @@ class SettingsGroupItemWidget extends StatelessWidget {
             : null,
       ),
       trailing: Icon(Icons.more_horiz, color: Colors.black),
-      onTap: () {},
+      onTap: () {
+        _dispatcher.dispatch(EditGroup(_group));
+      },
       onLongPress: () {
         final builder =
             (BuildContext context) => _deleteDialog(_itemsAmount > 0, context);
