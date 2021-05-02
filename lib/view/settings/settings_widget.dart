@@ -4,6 +4,7 @@ import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:tinkoff_invest/redux/dispatcher.dart';
 import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
+import 'package:tinkoff_invest/view/white_app_bar.dart';
 import 'package:tinkoff_invest/view/settings/settings_add_group_item.dart';
 import 'package:tinkoff_invest/view/settings/settings_group_item.dart';
 
@@ -16,10 +17,8 @@ class SettingsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: WhiteAppBar(
         title: const Text('Настройки', style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Container(
         width: double.infinity,
