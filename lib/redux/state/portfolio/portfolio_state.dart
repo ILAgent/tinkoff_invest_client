@@ -36,9 +36,6 @@ ItemsGroup? _reduceGroupEditing(ItemsGroup? groupEditing, dynamic action) {
   if (action is EditGroup) {
     return action.group;
   }
-  if (action is AddGroup) {
-    return action.group;
-  }
   if (action is UpdateGroupTitle) {
     return null;
   }

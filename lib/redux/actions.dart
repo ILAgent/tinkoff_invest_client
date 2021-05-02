@@ -41,9 +41,9 @@ class UpdatePortfolioItemGroup {
 class AddGroup {
   final ItemsGroup group;
 
-  AddGroup()
+  AddGroup(String title)
       : group = ItemsGroup((b) => b
-          ..title = 'Новая группа'
+          ..title = title
           ..id = Uuid().v1());
 }
 

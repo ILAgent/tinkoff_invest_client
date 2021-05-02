@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
-import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/dispatcher.dart';
 import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
+import 'package:tinkoff_invest/view/settings/settings_add_group_item.dart';
 import 'package:tinkoff_invest/view/settings/settings_group_item.dart';
 
 class SettingsWidget extends StatelessWidget {
@@ -27,13 +27,7 @@ class SettingsWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ListTile(
-                leading: Icon(Icons.add, color: Colors.black),
-                title: Text('Добавить группу'),
-                onTap: () {
-                  _dispatcher.dispatch(GoBack());
-                  _dispatcher.dispatch(AddGroup());
-                }),
+            SettingsAddGroupWidget(_dispatcher),
             Padding(
               padding: const EdgeInsets.only(left: 16, bottom: 8),
               child: Text(
