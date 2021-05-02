@@ -1,33 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
-import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
 import 'package:tinkoff_invest/utils/currency_utils.dart';
-import 'package:tinkoff_invest/view/portfolio/children/group/group_editable_title.dart';
+import 'package:tinkoff_invest/view/portfolio/children/group/group_title.dart';
 
 class PortfolioGroupWidget extends StatelessWidget {
   final ItemsGroup _group;
   final AppStore _store;
-  final PortfolioState _state;
 
-  PortfolioGroupWidget(this._group, this._store, this._state) : super(key: ValueKey(_group));
+  PortfolioGroupWidget(this._group, this._store) : super(key: ValueKey(_group));
 
   @override
   Widget build(BuildContext context) {
     final String currency = _store.state.amount.currency.currencySymbol();
     final double? amount = _group.actualPrice;
     final double? income = _group.income;
-    final String incomePercent = income != null && amount != null ? " (" + (income / (amount - income) * 100).toStringAsFixed(2) + "%)" : "";
+    final String incomePercent = income != null && amount != null
+        ? " (" + (income / (amount - income) * 100).toStringAsFixed(2) + "%)"
+        : "";
 
-    final amountStr = amount == null ? "" : amount.toStringAsFixed(2) + currency;
-    final incomeStr = income == null ? "" : income.toStringAsFixed(2) + currency;
-    final incomeColor = income == null || income > 0 ? Colors.green : Colors.red;
+    final amountStr =
+        amount == null ? "" : amount.toStringAsFixed(2) + currency;
+    final incomeStr =
+        income == null ? "" : income.toStringAsFixed(2) + currency;
+    final incomeColor =
+        income == null || income > 0 ? Colors.green : Colors.red;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: Row(
         children: [
           Expanded(
-            child: GroupEditableTitle(_group, _store, _state),
+            child: GroupTitleWidget(_group, _store),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -38,7 +41,10 @@ class PortfolioGroupWidget extends StatelessWidget {
               ),
               Text(
                 incomeStr + incomePercent,
-                style: TextStyle(fontSize: 12, color: incomeColor, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 12,
+                    color: incomeColor,
+                    fontWeight: FontWeight.bold),
               ),
             ],
           ),

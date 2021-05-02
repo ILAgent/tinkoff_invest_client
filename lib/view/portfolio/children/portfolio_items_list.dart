@@ -5,17 +5,14 @@ import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
-import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
 import 'package:tinkoff_invest/view/portfolio/children/group/protfolio_group.dart';
 import 'package:tinkoff_invest/view/portfolio/children/portfolio_item.dart';
 
 class PortfolioItemsList extends StatelessWidget {
   final AppStore _store;
-  final PortfolioState _state;
 
-
-  PortfolioItemsList(this._store, this._state);
+  PortfolioItemsList(this._store);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class PortfolioItemsList extends StatelessWidget {
           },
           children: items.map((e) {
             if (e is PortfolioItem) return PortfolioItemWidget(e);
-            if (e is ItemsGroup) return PortfolioGroupWidget(e, _store, _state);
+            if (e is ItemsGroup) return PortfolioGroupWidget(e, _store);
             throw ArgumentError(e);
           }).toList(),
         );

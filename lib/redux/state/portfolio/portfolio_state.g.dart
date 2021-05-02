@@ -19,49 +19,22 @@ class _$PortfolioStateSerializer
   @override
   Iterable<Object?> serialize(Serializers serializers, PortfolioState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[];
-    Object? value;
-    value = object.groupEditing;
-    if (value != null) {
-      result
-        ..add('groupEditing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(ItemsGroup)));
-    }
-    return result;
+    return <Object?>[];
   }
 
   @override
   PortfolioState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PortfolioStateBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final Object? value = iterator.current;
-      switch (key) {
-        case 'groupEditing':
-          result.groupEditing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ItemsGroup))! as ItemsGroup);
-          break;
-      }
-    }
-
-    return result.build();
+    return new PortfolioStateBuilder().build();
   }
 }
 
 class _$PortfolioState extends PortfolioState {
-  @override
-  final ItemsGroup? groupEditing;
-
   factory _$PortfolioState([void Function(PortfolioStateBuilder)? updates]) =>
       (new PortfolioStateBuilder()..update(updates)).build();
 
-  _$PortfolioState._({this.groupEditing}) : super._();
+  _$PortfolioState._() : super._();
 
   @override
   PortfolioState rebuild(void Function(PortfolioStateBuilder) updates) =>
@@ -74,19 +47,17 @@ class _$PortfolioState extends PortfolioState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is PortfolioState && groupEditing == other.groupEditing;
+    return other is PortfolioState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, groupEditing.hashCode));
+    return 16129972;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PortfolioState')
-          ..add('groupEditing', groupEditing))
-        .toString();
+    return newBuiltValueToStringHelper('PortfolioState').toString();
   }
 }
 
@@ -94,22 +65,7 @@ class PortfolioStateBuilder
     implements Builder<PortfolioState, PortfolioStateBuilder> {
   _$PortfolioState? _$v;
 
-  ItemsGroupBuilder? _groupEditing;
-  ItemsGroupBuilder get groupEditing =>
-      _$this._groupEditing ??= new ItemsGroupBuilder();
-  set groupEditing(ItemsGroupBuilder? groupEditing) =>
-      _$this._groupEditing = groupEditing;
-
   PortfolioStateBuilder();
-
-  PortfolioStateBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _groupEditing = $v.groupEditing?.toBuilder();
-      _$v = null;
-    }
-    return this;
-  }
 
   @override
   void replace(PortfolioState other) {
@@ -124,21 +80,7 @@ class PortfolioStateBuilder
 
   @override
   _$PortfolioState build() {
-    _$PortfolioState _$result;
-    try {
-      _$result =
-          _$v ?? new _$PortfolioState._(groupEditing: _groupEditing?.build());
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'groupEditing';
-        _groupEditing?.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'PortfolioState', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ?? new _$PortfolioState._();
     replace(_$result);
     return _$result;
   }

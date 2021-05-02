@@ -14,7 +14,7 @@ class ScreenStateToWidget implements ScreenStateVisitor<Widget> {
 
   @override
   Widget visitPortfolio(PortfolioState state) {
-    return PortfolioWidget(_store, state);
+    return PortfolioWidget(_store);
   }
 
   @override
