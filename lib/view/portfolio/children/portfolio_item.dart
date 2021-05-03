@@ -6,19 +6,32 @@ import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 class PortfolioItemWidget extends StatelessWidget {
   final PortfolioItem _item;
+  final double _leftPadding;
 
-  PortfolioItemWidget(this._item) : super(key: ValueKey(_item));
+  PortfolioItemWidget(this._item, {double? leftPadding})
+      : _leftPadding = leftPadding ?? 20,
+        super(key: ValueKey(_item));
 
   @override
   Widget build(BuildContext context) {
-    final balance = _item.portfolioPosition.instrumentType == InstrumentType.currency
-        ? _item.portfolioPosition.balance.toStringAsFixed(2)
-        : "${_item.portfolioPosition.lots} шт.";
+    final balance =
+        _item.portfolioPosition.instrumentType == InstrumentType.currency
+            ? _item.portfolioPosition.balance.toStringAsFixed(2)
+            : "${_item.portfolioPosition.lots} шт.";
 
-    final amount = _item.actualPrice == null ? null : _item.actualPrice! * _item.portfolioPosition.balance;
-    final amountStr = amount == null ? null : amount.toStringAsFixed(2) + _item.currency().currencySymbol();
-    final incomePercent = amount == null || _item.income == null ? null : (_item.income! / (amount - _item.income!) * 100).toStringAsFixed(2) + "%";
-    final income = _item.income == null ? null : _item.income!.toStringAsFixed(2) + _item.currency().currencySymbol();
+    final amount = _item.actualPrice == null
+        ? null
+        : _item.actualPrice! * _item.portfolioPosition.balance;
+    final amountStr = amount == null
+        ? null
+        : amount.toStringAsFixed(2) + _item.currency().currencySymbol();
+    final incomePercent = amount == null || _item.income == null
+        ? null
+        : (_item.income! / (amount - _item.income!) * 100).toStringAsFixed(2) +
+            "%";
+    final income = _item.income == null
+        ? null
+        : _item.income!.toStringAsFixed(2) + _item.currency().currencySymbol();
 
     final incomeColor = _item.income == null || _item.income == 0
         ? Colors.black
@@ -26,7 +39,7 @@ class PortfolioItemWidget extends StatelessWidget {
             ? Colors.green
             : Colors.red;
     return Container(
-      padding: const EdgeInsets.only(left: 20, right: 20),
+      padding: EdgeInsets.only(left: _leftPadding, right: 20),
       decoration: BoxDecoration(color: Colors.transparent),
       height: 50,
       child: Row(
@@ -62,7 +75,8 @@ class PortfolioItemWidget extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.fade,
                         softWrap: false,
-                        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 16),
                       ),
                     ),
                     SizedBox(width: 8),
@@ -79,7 +93,8 @@ class PortfolioItemWidget extends StatelessWidget {
                     Flexible(
                       child: Text(
                         balance,
-                        style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300, fontSize: 12),
                       ),
                     ),
                     Text(

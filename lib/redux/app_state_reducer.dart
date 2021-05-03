@@ -32,7 +32,11 @@ BuiltList<ScreenState> _reduceBackstack(
   if (action is OpenGroupSettings) {
     return BuiltList.from([
       ...backStack,
-      GroupSettingsState((b) => b.group = action.group.toBuilder()),
+      GroupSettingsState(
+        (b) => b
+          ..group = action.group.toBuilder()
+          ..isEditMode = false,
+      ),
     ]);
   }
   return BuiltList.from(backStack.map((screen) => screen.reduce(action)));

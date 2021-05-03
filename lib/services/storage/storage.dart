@@ -38,7 +38,11 @@ class _StateAdapter extends TypeAdapter<AppState> {
 
   @override
   AppState read(BinaryReader reader) {
-    return stateSerializers.deserialize(reader.read()) as AppState;
+    try {
+      return stateSerializers.deserialize(reader.read()) as AppState;
+    } catch (DeserializationError) {
+      return AppState.defaultSate();
+    }
   }
 
   @override
