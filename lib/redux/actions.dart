@@ -53,11 +53,13 @@ class DeleteGroup {
   DeleteGroup(this.groupId);
 }
 
-class EditGroup {
+class OpenGroupSettings {
   final ItemsGroup group;
 
-  EditGroup(this.group);
+  OpenGroupSettings(this.group);
 }
+
+class EditGroup {}
 
 class UpdateGroupTitle {
   final String title;

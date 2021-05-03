@@ -29,7 +29,7 @@ BuiltList<ScreenState> _reduceBackstack(
   if (action is ShowSettings) {
     return BuiltList.from([...backStack, SettingsState()]);
   }
-  if (action is EditGroup) {
+  if (action is OpenGroupSettings) {
     return BuiltList.from([
       ...backStack,
       GroupSettingsState((b) => b.group = action.group.toBuilder()),

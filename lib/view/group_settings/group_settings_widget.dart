@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/state/group_settings/group_settings_state.dart';
+import 'package:tinkoff_invest/view/app_bar_button.dart';
 import 'package:tinkoff_invest/view/white_app_bar.dart';
 
 class GroupSettingsWidget extends StatelessWidget {
@@ -14,6 +16,7 @@ class GroupSettingsWidget extends StatelessWidget {
     return Scaffold(
       appBar: WhiteAppBar(
         title: Text(_state.group.title, style: TextStyle(color: Colors.black)),
+        actions: [AppBarButton(_store, EditGroup(), Icons.edit)],
       ),
     );
   }

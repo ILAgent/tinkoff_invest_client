@@ -27,7 +27,7 @@ class SettingsGroupItemWidget extends StatelessWidget {
       ),
       trailing: Icon(Icons.more_horiz, color: Colors.black),
       onTap: () {
-        _dispatcher.dispatch(EditGroup(_group));
+        _dispatcher.dispatch(OpenGroupSettings(_group));
       },
       onLongPress: () {
         final builder =

@@ -56,7 +56,7 @@ class PortfolioGroupWidget extends StatelessWidget {
         ),
       ),
       onTap: () {
-        _store.dispatch(EditGroup(_group));
+        _store.dispatch(OpenGroupSettings(_group));
       },
       onLongPress: () {
         /* prevent drag */
