@@ -21,17 +21,24 @@ class _GroupSettingsPortfolioItemState
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Stack(
       children: [
-        if (widget._isEditMode)
-          Checkbox(
+        AnimatedOpacity(
+          duration: const Duration(milliseconds: 200),
+          opacity: widget._isEditMode ? 1 : 0,
+          child: Checkbox(
               value: _selected,
               onChanged: (selected) {
                 setState(() {
                   _selected = !_selected;
                 });
               }),
-        Expanded(child: PortfolioItemWidget(widget._item, leftPadding: 0)),
+        ),
+        AnimatedPadding(
+          duration: const Duration(milliseconds: 200),
+          padding: EdgeInsets.only(left: widget._isEditMode ? 50 : 20),
+          child: PortfolioItemWidget(widget._item, leftPadding: 0),
+        ),
       ],
     );
   }
