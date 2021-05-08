@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
-import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:tinkoff_invest/redux/dispatcher.dart';
 import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
-import 'package:tinkoff_invest/view/white_app_bar.dart';
+import 'package:tinkoff_invest/view/list_item_transition.dart';
 import 'package:tinkoff_invest/view/settings/settings_add_group_item.dart';
 import 'package:tinkoff_invest/view/settings/settings_group_item.dart';
+import 'package:tinkoff_invest/view/white_app_bar.dart';
 
 class SettingsWidget extends StatelessWidget {
   final Dispatcher _dispatcher;
@@ -39,12 +39,13 @@ class SettingsWidget extends StatelessWidget {
               items: _state.groups.toList(),
               itemBuilder: (BuildContext context, Animation<double> animation,
                   ItemsGroup item, int i) {
-                return SizeFadeTransition(
-                  sizeFraction: 0.7,
-                  curve: Curves.easeInOut,
-                  animation: animation,
+                return ListItemTransition(
+                  animation,
                   child: SettingsGroupItemWidget(
-                      item, _groupItemsAmount(item), _dispatcher),
+                    item,
+                    _groupItemsAmount(item),
+                    _dispatcher,
+                  ),
                 );
               },
               areItemsTheSame: (ItemsGroup oldItem, ItemsGroup newItem) {
