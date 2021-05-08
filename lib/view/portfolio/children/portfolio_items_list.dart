@@ -5,18 +5,20 @@ import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/portfolio_list_element.dart';
 import 'package:tinkoff_invest/redux/store_extension.dart';
 import 'package:tinkoff_invest/view/portfolio/children/group/protfolio_group.dart';
 import 'package:tinkoff_invest/view/portfolio/children/portfolio_item.dart';
 
-class PortfolioItemsList extends StatelessWidget {
+class PortfolioItemsList extends StatelessWidget
+    implements PortfolioListElementVisitor<Widget> {
   final AppStore _store;
 
   PortfolioItemsList(this._store);
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<dynamic>>(
+    return StreamBuilder<List<PortfolioListElement>>(
       stream: _store.states.map(_stateToList),
       builder: (context, snapshot) {
         final items = snapshot.data ?? [];
@@ -24,11 +26,7 @@ class PortfolioItemsList extends StatelessWidget {
           onReorder: (int oldIndex, int newIndex) {
             _onReorder(oldIndex, newIndex, items);
           },
-          children: items.map((e) {
-            if (e is PortfolioItem) return PortfolioItemWidget(e);
-            if (e is ItemsGroup) return PortfolioGroupWidget(e, _store);
-            throw ArgumentError(e);
-          }).toList(),
+          children: items.map((e) => e.acceptVisitor(this)).toList(),
         );
       },
     );
@@ -54,7 +52,7 @@ class PortfolioItemsList extends StatelessWidget {
     }
   }
 
-  List<dynamic> _stateToList(AppState state) {
+  List<PortfolioListElement> _stateToList(AppState state) {
     final groups = groupBy(state.items, (PortfolioItem item) => item.groupId)
         .entries
         .toList();
@@ -83,4 +81,11 @@ class PortfolioItemsList extends StatelessWidget {
 
     return items;
   }
+
+  @override
+  Widget visitItem(PortfolioItem item) => PortfolioItemWidget(item);
+
+  @override
+  Widget visitGroup(ItemsGroup itemsGroup) =>
+      PortfolioGroupWidget(itemsGroup, _store);
 }

@@ -4,7 +4,8 @@ import 'package:tinkoff_invest/redux/state/portfolio/portfolio_list_element.dart
 
 part 'items_group.g.dart';
 
-abstract class ItemsGroup implements Built<ItemsGroup, ItemsGroupBuilder>, PortfolioListElement {
+abstract class ItemsGroup
+    implements Built<ItemsGroup, ItemsGroupBuilder>, PortfolioListElement {
   String get id;
 
   String get title;
@@ -19,4 +20,7 @@ abstract class ItemsGroup implements Built<ItemsGroup, ItemsGroupBuilder>, Portf
 
   static Serializer<ItemsGroup> get serializer => _$itemsGroupSerializer;
 
+  @override
+  T acceptVisitor<T>(PortfolioListElementVisitor<T> visitor) =>
+      visitor.visitGroup(this);
 }

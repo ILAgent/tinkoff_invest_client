@@ -5,7 +5,10 @@ import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 part 'portfolio_item.g.dart';
 
-abstract class PortfolioItem implements Built<PortfolioItem, PortfolioItemBuilder>, PortfolioListElement {
+abstract class PortfolioItem
+    implements
+        Built<PortfolioItem, PortfolioItemBuilder>,
+        PortfolioListElement {
   PortfolioPosition get portfolioPosition;
 
   double? get actualPrice;
@@ -20,7 +23,12 @@ abstract class PortfolioItem implements Built<PortfolioItem, PortfolioItemBuilde
 
   PortfolioItem._();
 
-  factory PortfolioItem([Function(PortfolioItemBuilder b) updates]) = _$PortfolioItem;
+  factory PortfolioItem([Function(PortfolioItemBuilder b) updates]) =
+      _$PortfolioItem;
 
   static Serializer<PortfolioItem> get serializer => _$portfolioItemSerializer;
+
+  @override
+  T acceptVisitor<T>(PortfolioListElementVisitor<T> visitor) =>
+      visitor.visitItem(this);
 }
