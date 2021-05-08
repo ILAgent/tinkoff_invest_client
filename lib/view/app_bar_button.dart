@@ -6,8 +6,10 @@ class AppBarButton extends StatelessWidget {
   final AppStore _store;
   final dynamic _action;
   final IconData _icon;
+  final Color _color;
 
-  AppBarButton(this._store, this._action, this._icon);
+  AppBarButton(this._store, this._action, this._icon, {Color? color})
+      : _color = color ?? Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class AppBarButton extends StatelessWidget {
         },
         child: Padding(
           padding: const EdgeInsets.all(4.0),
-          child: Icon(_icon, color: Colors.black),
+          child: Icon(_icon, color: _color),
         ),
       ),
     );

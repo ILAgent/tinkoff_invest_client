@@ -10,6 +10,7 @@ class WhiteAppBar extends AppBar {
           title: title,
           actions: actions,
           backgroundColor: Colors.white,
+          centerTitle: false,
           iconTheme: IconThemeData(color: Colors.black),
         );
 }

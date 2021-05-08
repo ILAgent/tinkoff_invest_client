@@ -22,7 +22,14 @@ class GroupSettingsWidget extends StatelessWidget {
     return Scaffold(
       appBar: WhiteAppBar(
         title: Text(_state.group.title, style: TextStyle(color: Colors.black)),
-        actions: [AppBarButton(_store, EditGroup(), Icons.edit)],
+        actions: _state.isEditMode
+            ? [
+                AppBarButton(_store, EditGroup(), Icons.clear,
+                    color: Colors.red),
+                AppBarButton(_store, EditGroup(), Icons.check,
+                    color: Colors.green),
+              ]
+            : [AppBarButton(_store, EditGroup(), Icons.edit)],
       ),
       body: ImplicitlyAnimatedList(
         shrinkWrap: true,
