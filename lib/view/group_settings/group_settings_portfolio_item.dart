@@ -22,6 +22,7 @@ class _GroupSettingsPortfolioItemState
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.centerLeft,
       children: [
         AnimatedOpacity(
           duration: const Duration(milliseconds: 200),
