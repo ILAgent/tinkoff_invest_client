@@ -23,6 +23,7 @@ class PortfolioItemsList extends StatelessWidget
       builder: (context, snapshot) {
         final items = snapshot.data ?? [];
         return ReorderableListView(
+          header: Container(height: 6),
           buildDefaultDragHandles: false,
           onReorder: (int oldIndex, int newIndex) {
             _onReorder(oldIndex, newIndex, items);
