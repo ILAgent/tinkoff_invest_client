@@ -23,10 +23,18 @@ class PortfolioItemsList extends StatelessWidget
       builder: (context, snapshot) {
         final items = snapshot.data ?? [];
         return ReorderableListView(
+          buildDefaultDragHandles: false,
           onReorder: (int oldIndex, int newIndex) {
             _onReorder(oldIndex, newIndex, items);
           },
-          children: items.map((e) => e.acceptVisitor(this)).toList(),
+          children: items.mapIndexed((i, e) {
+            final itemWidget = e.acceptVisitor(this);
+            return ReorderableDelayedDragStartListener(
+              index: i,
+              key: itemWidget.key,
+              child: itemWidget,
+            );
+          }).toList(),
         );
       },
     );
