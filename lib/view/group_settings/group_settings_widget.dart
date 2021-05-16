@@ -4,9 +4,9 @@ import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/state/group_settings/group_settings_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
-import 'package:tinkoff_invest/view/list_item_transition.dart';
 import 'package:tinkoff_invest/view/app_bar_button.dart';
 import 'package:tinkoff_invest/view/group_settings/group_settings_portfolio_item.dart';
+import 'package:tinkoff_invest/view/list_item_transition.dart';
 import 'package:tinkoff_invest/view/white_app_bar.dart';
 
 class GroupSettingsWidget extends StatelessWidget {
@@ -25,10 +25,19 @@ class GroupSettingsWidget extends StatelessWidget {
         title: Text(_state.group.title, style: TextStyle(color: Colors.black)),
         actions: _state.isEditMode
             ? [
-                AppBarButton(_store, EditGroup(), Icons.clear,
-                    color: Colors.red),
-                AppBarButton(_store, EditGroup(), Icons.check,
-                    color: Colors.green),
+                AppBarButton(
+                  _store,
+                  CancelGroupChanges(),
+                  Icons.clear,
+                  color: Colors.red,
+                ),
+                AppBarButton(
+                  _store,
+                  ApplyGroupChanges(_state.group.id, _state.group.title,
+                      _state.selectedItems),
+                  Icons.check,
+                  color: Colors.green,
+                ),
               ]
             : [AppBarButton(_store, EditGroup(), Icons.edit)],
       ),

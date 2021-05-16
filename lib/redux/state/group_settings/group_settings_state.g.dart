@@ -27,6 +27,10 @@ class _$GroupSettingsStateSerializer
       'isEditMode',
       serializers.serialize(object.isEditMode,
           specifiedType: const FullType(bool)),
+      'selectedItems',
+      serializers.serialize(object.selectedItems,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
     ];
 
     return result;
@@ -52,6 +56,12 @@ class _$GroupSettingsStateSerializer
           result.isEditMode = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'selectedItems':
+          result.selectedItems.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object>);
+          break;
       }
     }
 
@@ -64,16 +74,23 @@ class _$GroupSettingsState extends GroupSettingsState {
   final ItemsGroup group;
   @override
   final bool isEditMode;
+  @override
+  final BuiltList<String> selectedItems;
 
   factory _$GroupSettingsState(
           [void Function(GroupSettingsStateBuilder)? updates]) =>
       (new GroupSettingsStateBuilder()..update(updates)).build();
 
-  _$GroupSettingsState._({required this.group, required this.isEditMode})
+  _$GroupSettingsState._(
+      {required this.group,
+      required this.isEditMode,
+      required this.selectedItems})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(group, 'GroupSettingsState', 'group');
     BuiltValueNullFieldError.checkNotNull(
         isEditMode, 'GroupSettingsState', 'isEditMode');
+    BuiltValueNullFieldError.checkNotNull(
+        selectedItems, 'GroupSettingsState', 'selectedItems');
   }
 
   @override
@@ -90,19 +107,22 @@ class _$GroupSettingsState extends GroupSettingsState {
     if (identical(other, this)) return true;
     return other is GroupSettingsState &&
         group == other.group &&
-        isEditMode == other.isEditMode;
+        isEditMode == other.isEditMode &&
+        selectedItems == other.selectedItems;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, group.hashCode), isEditMode.hashCode));
+    return $jf($jc($jc($jc(0, group.hashCode), isEditMode.hashCode),
+        selectedItems.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('GroupSettingsState')
           ..add('group', group)
-          ..add('isEditMode', isEditMode))
+          ..add('isEditMode', isEditMode)
+          ..add('selectedItems', selectedItems))
         .toString();
   }
 }
@@ -119,6 +139,12 @@ class GroupSettingsStateBuilder
   bool? get isEditMode => _$this._isEditMode;
   set isEditMode(bool? isEditMode) => _$this._isEditMode = isEditMode;
 
+  ListBuilder<String>? _selectedItems;
+  ListBuilder<String> get selectedItems =>
+      _$this._selectedItems ??= new ListBuilder<String>();
+  set selectedItems(ListBuilder<String>? selectedItems) =>
+      _$this._selectedItems = selectedItems;
+
   GroupSettingsStateBuilder();
 
   GroupSettingsStateBuilder get _$this {
@@ -126,6 +152,7 @@ class GroupSettingsStateBuilder
     if ($v != null) {
       _group = $v.group.toBuilder();
       _isEditMode = $v.isEditMode;
+      _selectedItems = $v.selectedItems.toBuilder();
       _$v = null;
     }
     return this;
@@ -150,12 +177,16 @@ class GroupSettingsStateBuilder
           new _$GroupSettingsState._(
               group: group.build(),
               isEditMode: BuiltValueNullFieldError.checkNotNull(
-                  isEditMode, 'GroupSettingsState', 'isEditMode'));
+                  isEditMode, 'GroupSettingsState', 'isEditMode'),
+              selectedItems: selectedItems.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'group';
         group.build();
+
+        _$failedField = 'selectedItems';
+        selectedItems.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'GroupSettingsState', _$failedField, e.toString());

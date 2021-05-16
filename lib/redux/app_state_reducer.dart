@@ -14,32 +14,32 @@ AppState reduceAppState(AppState state, dynamic action) {
     ..amount = _reduceAmount(state.amount, action).toBuilder()
     ..items = _reduceItems(state.items, action).toBuilder()
     ..groups = _reduceGroups(state.groups, action).toBuilder()
-    ..backStack = _reduceBackstack(state.backStack, action).toBuilder());
+    ..backStack = _reduceBackstack(state, action).toBuilder());
   print("$action\n");
   print("$reducedState\n");
   return reducedState;
 }
 
-BuiltList<ScreenState> _reduceBackstack(
-    BuiltList<ScreenState> backStack, dynamic action) {
+BuiltList<ScreenState> _reduceBackstack(AppState appState, dynamic action) {
   if (action is GoBack) {
-    if (backStack.length <= 1) return backStack;
-    return BuiltList.from(backStack.take(backStack.length - 1));
+    if (appState.backStack.length <= 1) return appState.backStack;
+    return BuiltList.from(
+        appState.backStack.take(appState.backStack.length - 1));
   }
   if (action is ShowSettings) {
-    return BuiltList.from([...backStack, SettingsState()]);
+    return BuiltList.from([...appState.backStack, SettingsState()]);
   }
   if (action is OpenGroupSettings) {
     return BuiltList.from([
-      ...backStack,
-      GroupSettingsState(
-        (b) => b
-          ..group = action.group.toBuilder()
-          ..isEditMode = false,
-      ),
+      ...appState.backStack,
+      GroupSettingsState((b) => b
+        ..group = action.group.toBuilder()
+        ..isEditMode = false
+        ..selectedItems = BuiltList<String>().toBuilder()),
     ]);
   }
-  return BuiltList.from(backStack.map((screen) => screen.reduce(action)));
+  return BuiltList.from(
+      appState.backStack.map((screen) => screen.reduce(action, appState)));
 }
 
 MoneyAmount _reduceAmount(MoneyAmount amount, dynamic action) {
@@ -74,8 +74,18 @@ PortfolioItem _reduceItem(PortfolioItem item, dynamic action) {
   if (action is UpdatePortfolioItemGroup && action.figi == item.figi()) {
     return item.rebuild((b) => b..groupId = action.groupId);
   }
-  if (action is DeleteGroup) {
+  if (action is DeleteGroup && item.groupId == action.groupId) {
     return item.rebuild((b) => b..groupId = null);
+  }
+  if (action is ApplyGroupChanges) {
+    return item.rebuild((b) {
+      if (item.groupId == action.id && !action.figis.contains(item.figi())) {
+        b.groupId = null;
+      }
+      if (action.figis.contains(item.figi())) {
+        b.groupId = action.id;
+      }
+    });
   }
   return item;
 }
@@ -99,6 +109,9 @@ ItemsGroup _reduceGroup(ItemsGroup group, dynamic action) {
     return group.rebuild((b) => b
       ..actualPrice = action.amount
       ..income = action.income);
+  }
+  if (action is ApplyGroupChanges && action.id == group.id) {
+    return group.rebuild((b) => b..title = action.title);
   }
   return group;
 }

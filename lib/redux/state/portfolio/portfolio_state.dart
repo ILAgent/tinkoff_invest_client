@@ -1,5 +1,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/screen_state.dart';
 
 part 'portfolio_state.g.dart';
@@ -16,7 +17,7 @@ abstract class PortfolioState
       _$portfolioStateSerializer;
 
   @override
-  ScreenState reduce(dynamic action) => this;
+  ScreenState reduce(dynamic action, AppState appState) => this;
 
   @override
   T acceptVisitor<T>(ScreenStateVisitor<T> visitor) {

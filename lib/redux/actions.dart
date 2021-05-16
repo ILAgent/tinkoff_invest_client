@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
@@ -60,6 +61,16 @@ class OpenGroupSettings {
 }
 
 class EditGroup {}
+
+class CancelGroupChanges {}
+
+class ApplyGroupChanges {
+  String id;
+  String title;
+  BuiltList<String> figis;
+
+  ApplyGroupChanges(this.id, this.title, this.figis);
+}
 
 class UpdateGroupTitle {
   final String title;
