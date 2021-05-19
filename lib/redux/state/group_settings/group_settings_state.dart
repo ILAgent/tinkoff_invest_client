@@ -43,6 +43,20 @@ abstract class GroupSettingsState
     if (action is ApplyGroupChanges || action is CancelGroupChanges) {
       return rebuild((b) => b.isEditMode = false);
     }
+    if (action is ToggleItemInGroupSettings) {
+      return rebuild((b) {
+        if (action.isSelected) {
+          b.selectedItems =
+              BuiltList<String>.from([...selectedItems, action.figi])
+                  .toBuilder();
+        } else {
+          b.selectedItems = selectedItems
+              .where((it) => it != action.figi)
+              .toBuiltList()
+              .toBuilder();
+        }
+      });
+    }
     return this;
   }
 

@@ -86,3 +86,10 @@ class UpdateGroupAmounts {
 
   UpdateGroupAmounts({this.amount, this.income, required this.id});
 }
+
+class ToggleItemInGroupSettings {
+  final String figi;
+  final bool isSelected;
+
+  ToggleItemInGroupSettings(this.figi, this.isSelected);
+}

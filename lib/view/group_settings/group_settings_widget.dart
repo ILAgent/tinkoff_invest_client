@@ -50,7 +50,7 @@ class GroupSettingsWidget extends StatelessWidget {
             PortfolioItem item, int i) {
           return ListItemTransition(
             animation,
-            child: GroupSettingsPortfolioItem(items[i], _state.isEditMode),
+            child: GroupSettingsPortfolioItem(items[i], _state, _store),
           );
         },
       ),
