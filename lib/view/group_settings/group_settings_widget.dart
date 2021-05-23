@@ -21,11 +21,8 @@ class GroupSettingsWidget extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    final List<PortfolioListElement> items = !_state.isEditMode
-        ? _store.state.items
-            .where((it) => it.groupId == _state.group.id)
-            .toList()
-        : _sort(appStateToItemsList(_store.state));
+    final List<PortfolioListElement> items =
+        !_state.isEditMode ? _itemsInGroup() : _allItems();
     return Scaffold(
       appBar: WhiteAppBar(
         title: Text(_state.group.title, style: TextStyle(color: Colors.black)),
@@ -64,16 +61,25 @@ class GroupSettingsWidget extends StatelessWidget
     );
   }
 
-  List<PortfolioListElement> _sort(List<PortfolioListElement> list) {
+  List<PortfolioListElement> _allItems() {
+    final list = appStateToItemsList(_store.state)
+        .where((e) => !(e is ItemsGroup) || e.id != _state.group.id)
+        .toList();
+    final itemsInGroup = _itemsInGroup().map((e) => e.figi()).toList();
     list.sort((a, b) {
-      return _sortOrder(a).compareTo(_sortOrder(b));
+      return _sortOrder(a, itemsInGroup).compareTo(_sortOrder(b, itemsInGroup));
     });
     return list;
   }
 
-  int _sortOrder(PortfolioListElement element) {
-    if (element is PortfolioItem &&
-        _state.selectedItems.contains(element.figi())) {
+  List<PortfolioItem> _itemsInGroup() =>
+      _store.state.items.where((it) => it.groupId == _state.group.id).toList();
+
+  int _sortOrder(
+    PortfolioListElement element,
+    List<String> itemsInGroup,
+  ) {
+    if (element is PortfolioItem && itemsInGroup.contains(element.figi())) {
       return -1;
     }
     return 0;
