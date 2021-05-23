@@ -19,7 +19,7 @@ class PortfolioItemsList extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<PortfolioListElement>>(
-      stream: _store.states.map(_stateToList),
+      stream: _store.states.map(appStateToItemsList),
       builder: (context, snapshot) {
         final items = snapshot.data ?? [];
         return ReorderableListView(
@@ -61,35 +61,6 @@ class PortfolioItemsList extends StatelessWidget
     }
   }
 
-  List<PortfolioListElement> _stateToList(AppState state) {
-    final groups = groupBy(state.items, (PortfolioItem item) => item.groupId)
-        .entries
-        .toList();
-    groups.sort(
-      (a, b) => a.key == null
-          ? -1
-          : b.key == null
-              ? 1
-              : state
-                  .groupById(a.key!)
-                  .title
-                  .compareTo(state.groupById(b.key!).title),
-    );
-    final items = groups
-        .expand((e) => [
-              if (e.key != null) state.groupById(e.key!),
-              ...e.value,
-            ])
-        .toList();
-
-    state.groups.forEach((g) {
-      if (!items.contains(g)) {
-        items.add(g);
-      }
-    });
-
-    return items;
-  }
 
   @override
   Widget visitItem(PortfolioItem item) => PortfolioItemWidget(item);
@@ -97,4 +68,35 @@ class PortfolioItemsList extends StatelessWidget
   @override
   Widget visitGroup(ItemsGroup itemsGroup) =>
       PortfolioGroupWidget(itemsGroup, _store);
+}
+
+
+List<PortfolioListElement> appStateToItemsList(AppState state) {
+  final groups = groupBy(state.items, (PortfolioItem item) => item.groupId)
+      .entries
+      .toList();
+  groups.sort(
+        (a, b) => a.key == null
+        ? -1
+        : b.key == null
+        ? 1
+        : state
+        .groupById(a.key!)
+        .title
+        .compareTo(state.groupById(b.key!).title),
+  );
+  final items = groups
+      .expand((e) => [
+    if (e.key != null) state.groupById(e.key!),
+    ...e.value,
+  ])
+      .toList();
+
+  state.groups.forEach((g) {
+    if (!items.contains(g)) {
+      items.add(g);
+    }
+  });
+
+  return items;
 }

@@ -3,13 +3,17 @@ import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorder
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/state/group_settings/group_settings_state.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/portfolio_list_element.dart';
 import 'package:tinkoff_invest/view/app_bar_button.dart';
 import 'package:tinkoff_invest/view/group_settings/group_settings_portfolio_item.dart';
 import 'package:tinkoff_invest/view/list_item_transition.dart';
+import 'package:tinkoff_invest/view/portfolio/children/portfolio_items_list.dart';
 import 'package:tinkoff_invest/view/white_app_bar.dart';
 
-class GroupSettingsWidget extends StatelessWidget {
+class GroupSettingsWidget extends StatelessWidget
+    implements PortfolioListElementVisitor<Widget> {
   final AppStore _store;
   final GroupSettingsState _state;
 
@@ -17,9 +21,11 @@ class GroupSettingsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = _store.state.items
-        .where((it) => it.groupId == _state.group.id)
-        .toList();
+    final List<PortfolioListElement> items = !_state.isEditMode
+        ? _store.state.items
+            .where((it) => it.groupId == _state.group.id)
+            .toList()
+        : _sort(appStateToItemsList(_store.state));
     return Scaffold(
       appBar: WhiteAppBar(
         title: Text(_state.group.title, style: TextStyle(color: Colors.black)),
@@ -43,17 +49,43 @@ class GroupSettingsWidget extends StatelessWidget {
       ),
       body: ImplicitlyAnimatedList(
         shrinkWrap: true,
-        areItemsTheSame: (PortfolioItem oldItem, PortfolioItem newItem) =>
-            oldItem == newItem,
+        areItemsTheSame:
+            (PortfolioListElement oldItem, PortfolioListElement newItem) =>
+                oldItem == newItem,
         items: items,
         itemBuilder: (BuildContext context, Animation<double> animation,
-            PortfolioItem item, int i) {
+            PortfolioListElement item, int i) {
           return ListItemTransition(
             animation,
-            child: GroupSettingsPortfolioItem(item, _state, _store),
+            child: item.acceptVisitor(this),
           );
         },
       ),
     );
+  }
+
+  List<PortfolioListElement> _sort(List<PortfolioListElement> list) {
+    list.sort((a, b) {
+      return _sortOrder(a).compareTo(_sortOrder(b));
+    });
+    return list;
+  }
+
+  int _sortOrder(PortfolioListElement element) {
+    if (element is PortfolioItem &&
+        _state.selectedItems.contains(element.figi())) {
+      return -1;
+    }
+    return 0;
+  }
+
+  @override
+  Widget visitGroup(ItemsGroup itemsGroup) {
+    return Text(itemsGroup.title);
+  }
+
+  @override
+  Widget visitItem(PortfolioItem item) {
+    return GroupSettingsPortfolioItem(item, _state, _store);
   }
 }
