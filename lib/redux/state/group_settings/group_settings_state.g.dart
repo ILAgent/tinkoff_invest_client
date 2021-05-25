@@ -21,9 +21,9 @@ class _$GroupSettingsStateSerializer
       Serializers serializers, GroupSettingsState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'group',
-      serializers.serialize(object.group,
-          specifiedType: const FullType(ItemsGroup)),
+      'groupId',
+      serializers.serialize(object.groupId,
+          specifiedType: const FullType(String)),
       'isEditMode',
       serializers.serialize(object.isEditMode,
           specifiedType: const FullType(bool)),
@@ -48,9 +48,9 @@ class _$GroupSettingsStateSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'group':
-          result.group.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ItemsGroup))! as ItemsGroup);
+        case 'groupId':
+          result.groupId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'isEditMode':
           result.isEditMode = serializers.deserialize(value,
@@ -71,7 +71,7 @@ class _$GroupSettingsStateSerializer
 
 class _$GroupSettingsState extends GroupSettingsState {
   @override
-  final ItemsGroup group;
+  final String groupId;
   @override
   final bool isEditMode;
   @override
@@ -82,11 +82,12 @@ class _$GroupSettingsState extends GroupSettingsState {
       (new GroupSettingsStateBuilder()..update(updates)).build();
 
   _$GroupSettingsState._(
-      {required this.group,
+      {required this.groupId,
       required this.isEditMode,
       required this.selectedItems})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(group, 'GroupSettingsState', 'group');
+    BuiltValueNullFieldError.checkNotNull(
+        groupId, 'GroupSettingsState', 'groupId');
     BuiltValueNullFieldError.checkNotNull(
         isEditMode, 'GroupSettingsState', 'isEditMode');
     BuiltValueNullFieldError.checkNotNull(
@@ -106,21 +107,21 @@ class _$GroupSettingsState extends GroupSettingsState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is GroupSettingsState &&
-        group == other.group &&
+        groupId == other.groupId &&
         isEditMode == other.isEditMode &&
         selectedItems == other.selectedItems;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, group.hashCode), isEditMode.hashCode),
+    return $jf($jc($jc($jc(0, groupId.hashCode), isEditMode.hashCode),
         selectedItems.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('GroupSettingsState')
-          ..add('group', group)
+          ..add('groupId', groupId)
           ..add('isEditMode', isEditMode)
           ..add('selectedItems', selectedItems))
         .toString();
@@ -131,9 +132,9 @@ class GroupSettingsStateBuilder
     implements Builder<GroupSettingsState, GroupSettingsStateBuilder> {
   _$GroupSettingsState? _$v;
 
-  ItemsGroupBuilder? _group;
-  ItemsGroupBuilder get group => _$this._group ??= new ItemsGroupBuilder();
-  set group(ItemsGroupBuilder? group) => _$this._group = group;
+  String? _groupId;
+  String? get groupId => _$this._groupId;
+  set groupId(String? groupId) => _$this._groupId = groupId;
 
   bool? _isEditMode;
   bool? get isEditMode => _$this._isEditMode;
@@ -150,7 +151,7 @@ class GroupSettingsStateBuilder
   GroupSettingsStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _group = $v.group.toBuilder();
+      _groupId = $v.groupId;
       _isEditMode = $v.isEditMode;
       _selectedItems = $v.selectedItems.toBuilder();
       _$v = null;
@@ -175,16 +176,14 @@ class GroupSettingsStateBuilder
     try {
       _$result = _$v ??
           new _$GroupSettingsState._(
-              group: group.build(),
+              groupId: BuiltValueNullFieldError.checkNotNull(
+                  groupId, 'GroupSettingsState', 'groupId'),
               isEditMode: BuiltValueNullFieldError.checkNotNull(
                   isEditMode, 'GroupSettingsState', 'isEditMode'),
               selectedItems: selectedItems.build());
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'group';
-        group.build();
-
         _$failedField = 'selectedItems';
         selectedItems.build();
       } catch (e) {

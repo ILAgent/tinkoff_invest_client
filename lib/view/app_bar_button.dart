@@ -7,9 +7,13 @@ class AppBarButton extends StatelessWidget {
   final dynamic _action;
   final IconData _icon;
   final Color _color;
+  final GestureTapCallback? _onTap;
 
-  AppBarButton(this._store, this._action, this._icon, {Color? color})
-      : _color = color ?? Colors.black;
+  AppBarButton(this._store, this._icon,
+      {Color? color, GestureTapCallback? onTap, dynamic action})
+      : _color = color ?? Colors.black,
+        _onTap = onTap,
+        _action = action;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +22,7 @@ class AppBarButton extends StatelessWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
+          _onTap?.call();
           _store.dispatch(_action);
         },
         child: Padding(

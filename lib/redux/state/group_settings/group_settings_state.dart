@@ -3,7 +3,6 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/state/app_state.dart';
-import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/screen_state.dart';
 
 part 'group_settings_state.g.dart';
@@ -12,7 +11,7 @@ abstract class GroupSettingsState
     implements
         Built<GroupSettingsState, GroupSettingsStateBuilder>,
         ScreenState {
-  ItemsGroup get group;
+  String get groupId;
 
   bool get isEditMode;
 
@@ -35,7 +34,7 @@ abstract class GroupSettingsState
           ..isEditMode = true
           ..selectedItems = BuiltList<String>.from(
             appState.items
-                .where((it) => it.groupId == group.id)
+                .where((it) => it.groupId == groupId)
                 .map((it) => it.figi()),
           ).toBuilder(),
       );

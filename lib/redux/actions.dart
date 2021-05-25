@@ -55,9 +55,9 @@ class DeleteGroup {
 }
 
 class OpenGroupSettings {
-  final ItemsGroup group;
+  final String groupId;
 
-  OpenGroupSettings(this.group);
+  OpenGroupSettings(this.groupId);
 }
 
 class EditGroup {}
@@ -70,6 +70,11 @@ class ApplyGroupChanges {
   BuiltList<String> figis;
 
   ApplyGroupChanges(this.id, this.title, this.figis);
+
+  @override
+  String toString() {
+    return "ApplyGroupChanges $title";
+  }
 }
 
 class UpdateGroupTitle {

@@ -33,7 +33,7 @@ BuiltList<ScreenState> _reduceBackstack(AppState appState, dynamic action) {
     return BuiltList.from([
       ...appState.backStack,
       GroupSettingsState((b) => b
-        ..group = action.group.toBuilder()
+        ..groupId = action.groupId
         ..isEditMode = false
         ..selectedItems = BuiltList<String>().toBuilder()),
     ]);

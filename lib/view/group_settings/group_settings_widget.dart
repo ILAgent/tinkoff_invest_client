@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
@@ -19,30 +22,43 @@ class GroupSettingsWidget extends StatelessWidget
 
   const GroupSettingsWidget(this._store, this._state);
 
+  ItemsGroup get _group =>
+      _store.state.groups.firstWhere((g) => g.id == _state.groupId);
+
   @override
   Widget build(BuildContext context) {
     final List<PortfolioListElement> items =
         !_state.isEditMode ? _itemsInGroup() : _allItems();
+    final controller = TextEditingController(text: _group.title);
     return Scaffold(
       appBar: WhiteAppBar(
-        title: Text(_state.group.title, style: TextStyle(color: Colors.black)),
+        title: _state.isEditMode
+            ? _titleEdit(controller)
+            : Text(_group.title, style: TextStyle(color: Colors.black)),
         actions: _state.isEditMode
             ? [
                 AppBarButton(
                   _store,
-                  CancelGroupChanges(),
                   Icons.clear,
                   color: Colors.red,
+                  action: CancelGroupChanges(),
                 ),
                 AppBarButton(
                   _store,
-                  ApplyGroupChanges(_state.group.id, _state.group.title,
-                      _state.selectedItems),
                   Icons.check,
                   color: Colors.green,
+                  onTap: () {
+                    _store.dispatch(
+                      ApplyGroupChanges(
+                        _group.id,
+                        controller.text,
+                        _state.selectedItems,
+                      ),
+                    );
+                  },
                 ),
               ]
-            : [AppBarButton(_store, EditGroup(), Icons.edit)],
+            : [AppBarButton(_store, Icons.edit, action: EditGroup())],
       ),
       body: ImplicitlyAnimatedList(
         shrinkWrap: true,
@@ -63,7 +79,7 @@ class GroupSettingsWidget extends StatelessWidget
 
   List<PortfolioListElement> _allItems() {
     final list = appStateToItemsList(_store.state)
-        .where((e) => !(e is ItemsGroup) || e.id != _state.group.id)
+        .where((e) => !(e is ItemsGroup) || e.id != _group.id)
         .toList();
     final itemsInGroup = _itemsInGroup().map((e) => e.figi()).toList();
     list.sort((a, b) {
@@ -73,7 +89,7 @@ class GroupSettingsWidget extends StatelessWidget
   }
 
   List<PortfolioItem> _itemsInGroup() =>
-      _store.state.items.where((it) => it.groupId == _state.group.id).toList();
+      _store.state.items.where((it) => it.groupId == _group.id).toList();
 
   int _sortOrder(
     PortfolioListElement element,
@@ -83,6 +99,14 @@ class GroupSettingsWidget extends StatelessWidget
       return -1;
     }
     return 0;
+  }
+
+  Widget _titleEdit(TextEditingController controller) {
+    controller.selection =
+        TextSelection(baseOffset: 0, extentOffset: controller.text.length);
+    return Platform.isIOS
+        ? CupertinoTextField(controller: controller, autofocus: true)
+        : TextField(controller: controller, autofocus: true);
   }
 
   @override
