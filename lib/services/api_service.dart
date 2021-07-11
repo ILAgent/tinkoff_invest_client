@@ -11,6 +11,8 @@ class ApiService {
   int _lastCall = 0;
   int _totalCalls = 0;
 
+  Portfolio? _portfolio;
+
   ApiService._initApi(TinkoffInvestApi api) : _api = api;
 
   factory ApiService._create(String url, String token) {
@@ -44,9 +46,17 @@ class ApiService {
   }
 
   Future<Portfolio> portfolio() async {
-    return (await _delayed(() => _api.getPortfolioApi().portfolioGet()))
-        .data!
-        .payload;
+    return _portfolio ??
+        (_portfolio = (await _delayed(
+          () => _api.getPortfolioApi().portfolioGet(),
+          description: "portfolio",
+        ))
+            .data!
+            .payload);
+  }
+
+  void invalidatePortfolio() {
+    _portfolio = null;
   }
 
   Future<Operations> operations({
@@ -54,11 +64,13 @@ class ApiService {
     DateTime? from,
     DateTime? to,
   }) async {
-    final response = await _delayed(() => _api.getOperationsApi().operationsGet(
-          from: from ?? DateTime(2010, 6, 1).toUtc(),
-          to: to ?? DateTime.now().toUtc(),
-          figi: figi,
-        ));
+    final response = await _delayed(
+        () => _api.getOperationsApi().operationsGet(
+              from: from ?? DateTime(2010, 6, 1).toUtc(),
+              to: to ?? DateTime.now().toUtc(),
+              figi: figi,
+            ),
+        description: "operations figi = $figi");
     return response.data!.payload;
   }
 
@@ -75,25 +87,31 @@ class ApiService {
             to: to,
             interval: interval,
           ),
+      description: "candles figi = $figi",
     );
     return response.data!.payload;
   }
 
   Future<MarketInstrumentList> currencies() async {
-    final response =
-        await _delayed(() => _api.getMarketApi().marketCurrenciesGet());
+    final response = await _delayed(
+      () => _api.getMarketApi().marketCurrenciesGet(),
+      description: "currencies",
+    );
     return response.data!.payload;
   }
 
   Future<SearchMarketInstrument> instrumentByFigi(String figi) async {
     final response = await _delayed(
-        () => _api.getMarketApi().marketSearchByFigiGet(figi: figi));
+      () => _api.getMarketApi().marketSearchByFigiGet(figi: figi),
+      description: "marketSearchByFigiGet figi = $figi",
+    );
     return response.data!.payload;
   }
 
   Future<T> _delayed<T>(
     Future<T> Function() computation, {
     int minInterval = 500,
+    String description = "",
   }) {
     final elapsed = DateTime.now().millisecondsSinceEpoch - _lastCall;
     final delay = max(minInterval - elapsed, 0);
@@ -101,7 +119,7 @@ class ApiService {
     return Future.delayed(
       Duration(milliseconds: delay),
       () {
-        print("API CALL # ${++_totalCalls}");
+        print("API CALL # ${++_totalCalls} $description");
         return computation();
       },
     );
