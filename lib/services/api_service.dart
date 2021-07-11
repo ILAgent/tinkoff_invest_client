@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
@@ -5,6 +7,9 @@ import 'private_data.dart' as Private;
 
 class ApiService {
   final TinkoffInvestApi _api;
+
+  int _lastCall = 0;
+  int _totalCalls = 0;
 
   ApiService._initApi(TinkoffInvestApi api) : _api = api;
 
@@ -20,22 +25,28 @@ class ApiService {
   }
 
   static Future<ApiService> sandbox() async {
-    final service = ApiService._create("https://api-invest.tinkoff.ru/openapi/sandbox", Private.sandboxToken);
+    final service = ApiService._create(
+        "https://api-invest.tinkoff.ru/openapi/sandbox", Private.sandboxToken);
     await service._initSandbox();
     return service;
   }
 
   factory ApiService() {
-    final service = ApiService._create("https://api-invest.tinkoff.ru/openapi", Private.token);
+    final service = ApiService._create(
+        "https://api-invest.tinkoff.ru/openapi", Private.token);
     return service;
   }
 
   Future<void> _initSandbox() async {
-    await _api.getSandboxApi().sandboxRegisterPost(sandboxRegisterRequest: SandboxRegisterRequest());
+    await _api
+        .getSandboxApi()
+        .sandboxRegisterPost(sandboxRegisterRequest: SandboxRegisterRequest());
   }
 
   Future<Portfolio> portfolio() async {
-    return (await _api.getPortfolioApi().portfolioGet()).data!.payload;
+    return (await _delayed(() => _api.getPortfolioApi().portfolioGet()))
+        .data!
+        .payload;
   }
 
   Future<Operations> operations({
@@ -43,11 +54,11 @@ class ApiService {
     DateTime? from,
     DateTime? to,
   }) async {
-    final response = await _api.getOperationsApi().operationsGet(
+    final response = await _delayed(() => _api.getOperationsApi().operationsGet(
           from: from ?? DateTime(2010, 6, 1).toUtc(),
           to: to ?? DateTime.now().toUtc(),
           figi: figi,
-        );
+        ));
     return response.data!.payload;
   }
 
@@ -57,22 +68,42 @@ class ApiService {
     DateTime to,
     CandleResolution interval,
   ) async {
-    final response = await _api.getMarketApi().marketCandlesGet(
-          figi: figi,
-          from: from,
-          to: to,
-          interval: interval,
-        );
+    final response = await _delayed(
+      () => _api.getMarketApi().marketCandlesGet(
+            figi: figi,
+            from: from,
+            to: to,
+            interval: interval,
+          ),
+    );
     return response.data!.payload;
   }
 
   Future<MarketInstrumentList> currencies() async {
-    final response = await _api.getMarketApi().marketCurrenciesGet();
+    final response =
+        await _delayed(() => _api.getMarketApi().marketCurrenciesGet());
     return response.data!.payload;
   }
 
   Future<SearchMarketInstrument> instrumentByFigi(String figi) async {
-    final response = await _api.getMarketApi().marketSearchByFigiGet(figi: figi);
+    final response = await _delayed(
+        () => _api.getMarketApi().marketSearchByFigiGet(figi: figi));
     return response.data!.payload;
+  }
+
+  Future<T> _delayed<T>(
+    Future<T> Function() computation, {
+    int minInterval = 500,
+  }) {
+    final elapsed = DateTime.now().millisecondsSinceEpoch - _lastCall;
+    final delay = max(minInterval - elapsed, 0);
+    _lastCall = DateTime.now().millisecondsSinceEpoch + delay;
+    return Future.delayed(
+      Duration(milliseconds: delay),
+      () {
+        print("API CALL # ${++_totalCalls}");
+        return computation();
+      },
+    );
   }
 }
