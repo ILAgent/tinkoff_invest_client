@@ -16,7 +16,7 @@ void main() async {
   final portfolioProvider = PortfolioProvider(apiService);
   final amountCalc = TotalMoneyCalculator(
       apiService, curConverter, portfolioProvider);
-  final incomeCalc = IncomeCalculator(apiService, portfolioProvider)
+  final incomeCalc = IncomeCalculator(apiService, portfolioProvider);
 
   test("Portfolio test", () async {
     final res = await apiService.portfolio();
