@@ -14,10 +14,9 @@ class TotalMoneyCalculator {
   TotalMoneyCalculator(
       this._apiService, this._currenciesConverter, this._portfolioProvider);
 
-  Future<MoneyAmount> sumPositionsAmount(Currency currency,
-      {Iterable<PortfolioPosition>? positions}) async {
+  Future<MoneyAmount> sumPositionsAmount(Currency currency) async {
     final Iterable<PortfolioPosition> portfolioPositions =
-        positions ?? (await _portfolioProvider.portfolio()).positions;
+        (await _portfolioProvider.portfolio()).positions;
     final List<MoneyAmount> amounts =
         await Stream.fromIterable(portfolioPositions) //
             .asyncMap((p) async {
