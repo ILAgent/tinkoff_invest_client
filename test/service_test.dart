@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/api_service_extension.dart';
 import 'package:tinkoff_invest/services/currencies_converter.dart';
+import 'package:tinkoff_invest/services/income_calculator.dart';
 import 'package:tinkoff_invest/services/portfolio_provider.dart';
 import 'package:tinkoff_invest/services/total_money_calculator.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
@@ -12,8 +13,10 @@ import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 void main() async {
   final apiService = ApiService(); //await ApiService.sandbox();
   final curConverter = CurrenciesConverter(apiService);
+  final portfolioProvider = PortfolioProvider(apiService);
   final amountCalc = TotalMoneyCalculator(
-      apiService, curConverter, PortfolioProvider(apiService));
+      apiService, curConverter, portfolioProvider);
+  final incomeCalc = IncomeCalculator(apiService, portfolioProvider)
 
   test("Portfolio test", () async {
     final res = await apiService.portfolio();
@@ -38,7 +41,7 @@ void main() async {
     final portfolio = await apiService.portfolio();
     final teur = portfolio.positions.firstWhere((it) => it.figi == figi);
 
-    expect(await apiService.income(figi), equals(teur.expectedYield!.value));
+    expect(await incomeCalc.income(figi), equals(teur.expectedYield!.value));
   });
 
   test("Max requests test", () async {
