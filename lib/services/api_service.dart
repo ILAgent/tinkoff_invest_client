@@ -11,8 +11,6 @@ class ApiService {
   int _lastCall = 0;
   int _totalCalls = 0;
 
-  Portfolio? _portfolio;
-
   ApiService._initApi(TinkoffInvestApi api) : _api = api;
 
   factory ApiService._create(String url, String token) {
@@ -46,17 +44,12 @@ class ApiService {
   }
 
   Future<Portfolio> portfolio() async {
-    return _portfolio ??
-        (_portfolio = (await _delayed(
-          () => _api.getPortfolioApi().portfolioGet(),
-          description: "portfolio",
-        ))
-            .data!
-            .payload);
-  }
-
-  void invalidatePortfolio() {
-    _portfolio = null;
+    return (await _delayed(
+      () => _api.getPortfolioApi().portfolioGet(),
+      description: "portfolio",
+    ))
+        .data!
+        .payload;
   }
 
   Future<Operations> operations({

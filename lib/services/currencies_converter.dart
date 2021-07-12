@@ -7,7 +7,7 @@ class CurrenciesConverter {
   final ApiService _apiService;
   List<MapEntry<Currency, double>>? _curToRub;
   DateTime _lastUpdate = DateTime.now();
-  BuiltList<MarketInstrument>? _currencies = null;
+  BuiltList<MarketInstrument>? _currencies;
 
   CurrenciesConverter(this._apiService);
 

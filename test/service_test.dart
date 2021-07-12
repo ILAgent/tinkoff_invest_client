@@ -5,13 +5,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/api_service_extension.dart';
 import 'package:tinkoff_invest/services/currencies_converter.dart';
+import 'package:tinkoff_invest/services/portfolio_provider.dart';
 import 'package:tinkoff_invest/services/total_money_calculator.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 void main() async {
   final apiService = ApiService(); //await ApiService.sandbox();
   final curConverter = CurrenciesConverter(apiService);
-  final amountCalc = TotalMoneyCalculator(apiService, curConverter);
+  final amountCalc = TotalMoneyCalculator(
+      apiService, curConverter, PortfolioProvider(apiService));
 
   test("Portfolio test", () async {
     final res = await apiService.portfolio();
@@ -24,7 +26,9 @@ void main() async {
   });
 
   test("Operations test", () async {
-    final res = await apiService.operations().then((ops) => ops.operations.where((op) => op.figi == "BBG009J3VGJ3"));
+    final res = await apiService
+        .operations()
+        .then((ops) => ops.operations.where((op) => op.figi == "BBG009J3VGJ3"));
     print(IterableBase.iterableToFullString(res));
   });
 
@@ -73,7 +77,8 @@ void main() async {
     final Iterable<Operation> opers = await apiService
         .operations() //
         .then((value) => value.operations.where((op) => op.figi != null));
-    final Map<String, List<Operation>> byFigi = groupBy(opers, (Operation op) => op.figi!);
+    final Map<String, List<Operation>> byFigi =
+        groupBy(opers, (Operation op) => op.figi!);
     final tickers = await Stream.fromIterable(byFigi.keys) //
         .asyncMap((figi) => apiService.instrumentByFigi(figi))
         .map((event) => event.ticker)
@@ -82,22 +87,26 @@ void main() async {
   });
 
   test("tickers balances", () async {
-    final Iterable<Operation> opers = await apiService.operations().then((value) => value.operations.where((op) =>
-        op.operationType == OperationTypeWithCommission.buy ||
-        op.operationType == OperationTypeWithCommission.sell ||
-        op.operationType == OperationTypeWithCommission.buyCard));
-    final Map<String, List<Operation>> byFigi = groupBy(opers, (Operation op) => op.figi!);
+    final Iterable<Operation> opers = await apiService.operations().then(
+        (value) => value.operations.where((op) =>
+            op.operationType == OperationTypeWithCommission.buy ||
+            op.operationType == OperationTypeWithCommission.sell ||
+            op.operationType == OperationTypeWithCommission.buyCard));
+    final Map<String, List<Operation>> byFigi =
+        groupBy(opers, (Operation op) => op.figi!);
 
     final figiBalances = byFigi.map((key, value) {
       return MapEntry(
           key,
           value.fold<int>(0, (previousValue, op) {
-            final sign = op.operationType == OperationTypeWithCommission.sell ? -1 : 1;
+            final sign =
+                op.operationType == OperationTypeWithCommission.sell ? -1 : 1;
             return previousValue + op.quantityExecuted! * sign;
           }));
     });
 
-    final result = await Stream.fromIterable(figiBalances.entries).asyncMap((e) async {
+    final result =
+        await Stream.fromIterable(figiBalances.entries).asyncMap((e) async {
       final ticker = await apiService.instrumentByFigi(e.key);
       return MapEntry(ticker.ticker, e.value);
     }).toList();
@@ -105,13 +114,17 @@ void main() async {
   });
 
   test("previous tickers income", () async {
-    final Iterable<Operation> opers = await apiService.operations().then((value) => value.operations.where((op) => op.figi != null));
+    final Iterable<Operation> opers = await apiService
+        .operations()
+        .then((value) => value.operations.where((op) => op.figi != null));
 
-    final Map<String, List<Operation>> byFigi = groupBy(opers, (Operation op) => op.figi!);
+    final Map<String, List<Operation>> byFigi =
+        groupBy(opers, (Operation op) => op.figi!);
 
     final figiIncomes = byFigi.entries.map((e) {
       final balance = e.value.fold<int>(0, (previousValue, op) {
-        final sign = op.operationType == OperationTypeWithCommission.sell ? -1 : 1;
+        final sign =
+            op.operationType == OperationTypeWithCommission.sell ? -1 : 1;
         return previousValue + (op.quantityExecuted ?? 0) * sign;
       });
       final income = e.value.fold<double>(0.0, (previousValue, op) {
