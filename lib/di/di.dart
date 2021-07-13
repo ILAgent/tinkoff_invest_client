@@ -7,6 +7,7 @@ import 'package:tinkoff_invest/redux/epics/portfolio_item_epic.dart';
 import 'package:tinkoff_invest/redux/epics/save_state_epic.dart';
 import 'package:tinkoff_invest/redux/epics/total_money_epic.dart';
 import 'package:tinkoff_invest/redux/state/screen_state_to_widget.dart';
+import 'package:tinkoff_invest/services/actual_price_provider.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/currencies_converter.dart';
 import 'package:tinkoff_invest/services/income_calculator.dart';
@@ -32,11 +33,11 @@ Future<void> initDI() async {
   di.registerLazySingleton(() => PortfolioItemsEpic(p(), p(), p()));
   di.registerLazySingleton(() => CalculateGroupsEpic(p()));
   di.registerLazySingleton(() => SaveSateEpic(p()));
-  di.registerLazySingleton(() => CurrenciesConverter(p()));
+  di.registerLazySingleton(() => CurrenciesConverter(p(), p()));
   di.registerLazySingleton(() => TotalMoneyCalculator(p(), p(), p()));
   di.registerLazySingleton(() => ScreenStateToWidget(p()));
   di.registerLazySingleton(() => PortfolioProvider(p()));
-  di.registerLazySingleton(() => IncomeCalculator(p(), p()));
-
+  di.registerLazySingleton(() => IncomeCalculator(p(), p(), p()));
+  di.registerLazySingleton(() => ActualPriceProvider(p()));
   di.registerLazySingleton(() => AppWidget(p(), p()));
 }

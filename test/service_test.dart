@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:collection/collection.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tinkoff_invest/services/actual_price_provider.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/api_service_extension.dart';
 import 'package:tinkoff_invest/services/currencies_converter.dart';
@@ -12,11 +13,13 @@ import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 void main() async {
   final apiService = ApiService(); //await ApiService.sandbox();
-  final curConverter = CurrenciesConverter(apiService);
+  final priceProvider = ActualPriceProvider(apiService);
+  final curConverter = CurrenciesConverter(apiService, priceProvider);
   final portfolioProvider = PortfolioProvider(apiService);
-  final amountCalc = TotalMoneyCalculator(
-      apiService, curConverter, portfolioProvider);
-  final incomeCalc = IncomeCalculator(apiService, portfolioProvider);
+  final amountCalc =
+      TotalMoneyCalculator(curConverter, portfolioProvider, priceProvider);
+  final incomeCalc =
+      IncomeCalculator(apiService, portfolioProvider, priceProvider);
 
   test("Portfolio test", () async {
     final res = await apiService.portfolio();

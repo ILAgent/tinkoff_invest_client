@@ -3,18 +3,20 @@ import 'package:rxdart/rxdart.dart';
 import 'package:tinkoff_invest/redux/actions.dart';
 import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
-import 'package:tinkoff_invest/services/api_service.dart';
-import 'package:tinkoff_invest/services/api_service_extension.dart';
+import 'package:tinkoff_invest/services/actual_price_provider.dart';
 import 'package:tinkoff_invest/services/income_calculator.dart';
 import 'package:tinkoff_invest/services/portfolio_provider.dart';
 
 class PortfolioItemsEpic {
-  final ApiService _apiService;
   final PortfolioProvider _portfolioProvider;
   final IncomeCalculator _incomeCalculator;
+  final ActualPriceProvider _actualPriceProvider;
 
   PortfolioItemsEpic(
-      this._apiService, this._portfolioProvider, this._incomeCalculator);
+    this._portfolioProvider,
+    this._incomeCalculator,
+    this._actualPriceProvider,
+  );
 
   Stream<dynamic> act(
     Stream<dynamic> actions,
@@ -31,7 +33,7 @@ class PortfolioItemsEpic {
           .toList();
       final updateItemStream =
           Stream.fromIterable(items).asyncMap((item) async {
-        final actualPrice = await _apiService.actualPrice(item.figi());
+        final actualPrice = await _actualPriceProvider.actualPrice(item.figi());
         final income = await _incomeCalculator.income(item.figi());
         return UpdatePortfolioItemValues(item.figi(), actualPrice, income)
             as dynamic;

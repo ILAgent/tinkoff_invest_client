@@ -1,15 +1,18 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
-import 'package:tinkoff_invest/services/api_service_extension.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
+
+import 'actual_price_provider.dart';
 
 class CurrenciesConverter {
   final ApiService _apiService;
+  final ActualPriceProvider _actualPriceProvider;
+
   List<MapEntry<Currency, double>>? _curToRub;
   DateTime _lastUpdate = DateTime.now();
   BuiltList<MarketInstrument>? _currencies;
 
-  CurrenciesConverter(this._apiService);
+  CurrenciesConverter(this._apiService, this._actualPriceProvider);
 
   Future<MoneyAmount> convert(MoneyAmount from, Currency to) async {
     if (from.currency == to) return from;
@@ -22,8 +25,8 @@ class CurrenciesConverter {
     if (_curToRub == null || _isCacheOutdated()) {
       curToRub = await Stream.fromIterable(curToFigi)
           .asyncMap(
-            (entry) async =>
-                MapEntry(entry.key, await _apiService.actualPrice(entry.value)),
+            (entry) async => MapEntry(
+                entry.key, await _actualPriceProvider.actualPrice(entry.value)),
           )
           .toList();
       curToRub.add(MapEntry(Currency.RUB, 1));

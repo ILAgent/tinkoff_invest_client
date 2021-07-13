@@ -1,18 +1,21 @@
 import 'package:collection/collection.dart';
-import 'package:tinkoff_invest/services/api_service.dart';
-import 'package:tinkoff_invest/services/api_service_extension.dart';
 import 'package:tinkoff_invest/services/currencies_converter.dart';
 import 'package:tinkoff_invest/services/portfolio_provider.dart';
 import 'package:tinkoff_invest/utils/iterable_etensions.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
+import 'actual_price_provider.dart';
+
 class TotalMoneyCalculator {
-  final ApiService _apiService;
   final CurrenciesConverter _currenciesConverter;
   final PortfolioProvider _portfolioProvider;
+  final ActualPriceProvider _actualPriceProvider;
 
   TotalMoneyCalculator(
-      this._apiService, this._currenciesConverter, this._portfolioProvider);
+    this._currenciesConverter,
+    this._portfolioProvider,
+    this._actualPriceProvider,
+  );
 
   Future<MoneyAmount> sumPositionsAmount(Currency currency) async {
     final Iterable<PortfolioPosition> portfolioPositions =
@@ -20,7 +23,7 @@ class TotalMoneyCalculator {
     final List<MoneyAmount> amounts =
         await Stream.fromIterable(portfolioPositions) //
             .asyncMap((p) async {
-      final value = p.balance * await _apiService.actualPrice(p.figi);
+      final value = p.balance * await _actualPriceProvider.actualPrice(p.figi);
       return MoneyAmount((b) => b
         ..value = value
         ..currency = p.averagePositionPrice!.currency);
