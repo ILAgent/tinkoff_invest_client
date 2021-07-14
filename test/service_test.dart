@@ -4,9 +4,9 @@ import 'package:collection/collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tinkoff_invest/services/actual_price_provider.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
-import 'package:tinkoff_invest/services/api_service_extension.dart';
 import 'package:tinkoff_invest/services/currencies_converter.dart';
 import 'package:tinkoff_invest/services/income_calculator.dart';
+import 'package:tinkoff_invest/services/operations_provider.dart';
 import 'package:tinkoff_invest/services/portfolio_provider.dart';
 import 'package:tinkoff_invest/services/total_money_calculator.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
@@ -14,12 +14,13 @@ import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 void main() async {
   final apiService = ApiService(); //await ApiService.sandbox();
   final priceProvider = ActualPriceProvider(apiService);
+  final opersProvider = OperationsProvider(apiService);
   final curConverter = CurrenciesConverter(apiService, priceProvider);
   final portfolioProvider = PortfolioProvider(apiService);
   final amountCalc =
       TotalMoneyCalculator(curConverter, portfolioProvider, priceProvider);
   final incomeCalc =
-      IncomeCalculator(apiService, portfolioProvider, priceProvider);
+      IncomeCalculator(portfolioProvider, priceProvider, opersProvider);
 
   test("Portfolio test", () async {
     final res = await apiService.portfolio();
@@ -76,7 +77,14 @@ void main() async {
   });
 
   test("ops grouped by type", () async {
-    await apiService.operationsGroupedByType();
+    Future<void> operationsGroupedByType() async {
+      final Operations opers = await apiService.operations();
+      final Map<OperationTypeWithCommission, List<Operation>> byType =
+          groupBy(opers.operations, (Operation op) => op.operationType!);
+      print(byType.toString());
+    }
+
+    await operationsGroupedByType();
   });
 
   test("tickers list", () async {

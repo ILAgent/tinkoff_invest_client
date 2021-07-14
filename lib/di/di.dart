@@ -11,6 +11,7 @@ import 'package:tinkoff_invest/services/actual_price_provider.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest/services/currencies_converter.dart';
 import 'package:tinkoff_invest/services/income_calculator.dart';
+import 'package:tinkoff_invest/services/operations_provider.dart';
 import 'package:tinkoff_invest/services/portfolio_provider.dart';
 import 'package:tinkoff_invest/services/storage/storage.dart';
 import 'package:tinkoff_invest/services/total_money_calculator.dart';
@@ -39,5 +40,7 @@ Future<void> initDI() async {
   di.registerLazySingleton(() => PortfolioProvider(p()));
   di.registerLazySingleton(() => IncomeCalculator(p(), p(), p()));
   di.registerLazySingleton(() => ActualPriceProvider(p()));
+  di.registerLazySingleton(() => OperationsProvider(p()));
+
   di.registerLazySingleton(() => AppWidget(p(), p()));
 }
