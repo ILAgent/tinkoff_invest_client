@@ -3,13 +3,12 @@ import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 class ActualPriceProvider {
   final ApiService _apiService;
-  final Map<String, double> _pricesCache = {};
+  final Map<String, Future<double>> _pricesCache = {};
 
   ActualPriceProvider(this._apiService);
 
-  Future<double> actualPrice(String figi) async {
-    return _pricesCache[figi] ??
-        (_pricesCache[figi] = await _calcActualPrice(figi));
+  Future<double> actualPrice(String figi) {
+    return _pricesCache[figi] ?? (_pricesCache[figi] = _calcActualPrice(figi));
   }
 
   Future<double> _calcActualPrice(String figi) async {

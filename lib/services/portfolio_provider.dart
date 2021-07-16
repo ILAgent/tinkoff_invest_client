@@ -4,15 +4,15 @@ import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 class PortfolioProvider {
   final ApiService _apiService;
 
-  Portfolio? _portfolio;
+  Future<Portfolio>? _portfolioFuture;
 
   PortfolioProvider(this._apiService);
 
-  Future<Portfolio> portfolio() async {
-    return _portfolio ?? (_portfolio = await _apiService.portfolio());
+  Future<Portfolio> portfolio() {
+    return _portfolioFuture ?? (_portfolioFuture = _apiService.portfolio());
   }
 
   void invalidatePortfolio() {
-    _portfolio = null;
+    _portfolioFuture = null;
   }
 }

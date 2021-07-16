@@ -103,7 +103,7 @@ class ApiService {
 
   Future<T> _delayed<T>(
     Future<T> Function() computation, {
-    int minInterval = 500,
+    int minInterval = 0,
     String description = "",
   }) {
     final elapsed = DateTime.now().millisecondsSinceEpoch - _lastCall;

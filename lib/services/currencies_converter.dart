@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
@@ -10,15 +9,15 @@ class CurrenciesConverter {
 
   List<MapEntry<Currency, double>>? _curToRub;
   DateTime _lastUpdate = DateTime.now();
-  BuiltList<MarketInstrument>? _currencies;
+  Future<MarketInstrumentList>? _currenciesFuture;
 
   CurrenciesConverter(this._apiService, this._actualPriceProvider);
 
   Future<MoneyAmount> convert(MoneyAmount from, Currency to) async {
     if (from.currency == to) return from;
-
-    final currencies = _currencies ??
-        (_currencies = (await _apiService.currencies()).instruments);
+    final currenciesFuture =
+        _currenciesFuture ?? (_currenciesFuture = _apiService.currencies());
+    final currencies = (await currenciesFuture).instruments;
     final curToFigi =
         currencies.map((cur) => MapEntry(_curFromTicker(cur.ticker), cur.figi));
     List<MapEntry<Currency, double>> curToRub;
