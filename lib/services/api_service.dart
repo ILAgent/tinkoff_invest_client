@@ -4,41 +4,51 @@ import 'package:dio/dio.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 class ApiService {
-  final TinkoffInvestApi _api;
+  late final TinkoffInvestApi _api;
 
   int _lastCall = 0;
   int _totalCalls = 0;
 
-  ApiService._initApi(TinkoffInvestApi api) : _api = api;
+  // ApiService._initApipi(TinkoffInvestApi api) : _api = api;
 
-  factory ApiService._create(String url, String token) {
+  // factory ApiService._create(String url, String token) {
+  //   final options = BaseOptions(
+  //     baseUrl: url,
+  //     connectTimeout: 5000,
+  //     receiveTimeout: 3000,
+  //     headers: {"Authorization": "Bearer $token"},
+  //   );
+  //   final api = TinkoffInvestApi(dio: Dio(options));
+  //   return ApiService._initApi(api);
+  // }
+
+  // static Future<ApiService> sandbox(String token) async {
+  //   final service = ApiService._create(
+  //       "https://api-invest.tinkoff.ru/openapi/sandbox", token);
+  //   await service._initSandbox();
+  //   return service;
+  // }
+
+  // factory ApiService(String token) {
+  //   final service =
+  //       ApiService._create("https://api-invest.tinkoff.ru/openapi", token);
+  //   return service;
+  // }
+
+  // Future<void> _initSandbox() async {
+  //   await _api
+  //       .getSandboxApi()
+  //       .sandboxRegisterPost(sandboxRegisterRequest: SandboxRegisterRequest());
+  // }
+
+  void setToken(String token) {
     final options = BaseOptions(
-      baseUrl: url,
+      baseUrl: "https://api-invest.tinkoff.ru/openapi",
       connectTimeout: 5000,
       receiveTimeout: 3000,
       headers: {"Authorization": "Bearer $token"},
     );
-    final api = TinkoffInvestApi(dio: Dio(options));
-    return ApiService._initApi(api);
-  }
-
-  static Future<ApiService> sandbox(String token) async {
-    final service = ApiService._create(
-        "https://api-invest.tinkoff.ru/openapi/sandbox", token);
-    await service._initSandbox();
-    return service;
-  }
-
-  factory ApiService(String token) {
-    final service =
-        ApiService._create("https://api-invest.tinkoff.ru/openapi", token);
-    return service;
-  }
-
-  Future<void> _initSandbox() async {
-    await _api
-        .getSandboxApi()
-        .sandboxRegisterPost(sandboxRegisterRequest: SandboxRegisterRequest());
+    _api = TinkoffInvestApi(dio: Dio(options));
   }
 
   Future<Portfolio> portfolio() async {

@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:get_it/get_it.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:tinkoff_invest/redux/app_store.dart';
@@ -6,6 +5,7 @@ import 'package:tinkoff_invest/redux/dispatcher.dart';
 import 'package:tinkoff_invest/redux/epics/calculate_groups_epic.dart';
 import 'package:tinkoff_invest/redux/epics/invalidate_epic.dart';
 import 'package:tinkoff_invest/redux/epics/portfolio_item_epic.dart';
+import 'package:tinkoff_invest/redux/epics/register_token_epic.dart';
 import 'package:tinkoff_invest/redux/epics/save_state_epic.dart';
 import 'package:tinkoff_invest/redux/epics/total_money_epic.dart';
 import 'package:tinkoff_invest/redux/state/screen_state_to_widget.dart';
@@ -28,10 +28,8 @@ T p<T extends Object>() {
 
 Future<void> initDI() async {
   di.registerSingleton(await Storage.create());
-  di.registerSingleton(await () async {
-    return ApiService(await rootBundle.loadString("assets/token"));
-  }());
-  di.registerLazySingleton(() => AppStore(p(), p(), p(), p(), p(), p()));
+  di.registerLazySingleton(() => ApiService());
+  di.registerLazySingleton(() => AppStore(p(), p(), p(), p(), p(), p(), p()));
   di.registerFactory<Dispatcher>(() => p<AppStore>());
   di.registerLazySingleton(() => EpicStore(p<AppStore>()));
   di.registerLazySingleton(() => TotalAmountEpic(p()));
@@ -39,6 +37,7 @@ Future<void> initDI() async {
   di.registerLazySingleton(() => CalculateGroupsEpic(p()));
   di.registerLazySingleton(() => SaveSateEpic(p()));
   di.registerLazySingleton(() => InvalidateEpic(p(), p(), p(), p()));
+  di.registerLazySingleton(() => RegisterTokenEpic(p()));
   di.registerLazySingleton(() => CurrenciesConverter(p(), p()));
   di.registerLazySingleton(() => TotalMoneyCalculator(p(), p(), p()));
   di.registerLazySingleton(() => ScreenStateToWidget(p()));

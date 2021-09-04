@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:collection/collection.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tinkoff_invest/services/actual_price_provider.dart';
 import 'package:tinkoff_invest/services/api_service.dart';
@@ -12,7 +13,9 @@ import 'package:tinkoff_invest/services/total_money_calculator.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 void main() async {
-  final apiService = ApiService("");//todo //await ApiService.sandbox();
+  final apiService = ApiService();//await ApiService.sandbox();
+  final token = await rootBundle.loadString("assets/token");
+  apiService.setToken(token);
   final priceProvider = ActualPriceProvider(apiService);
   final opersProvider = OperationsProvider(apiService);
   final curConverter = CurrenciesConverter(apiService, priceProvider);

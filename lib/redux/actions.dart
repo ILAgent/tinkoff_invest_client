@@ -10,6 +10,12 @@ class Invalidate {}
 
 class GoBack {}
 
+class RegisterToken {
+  final String token;
+
+  RegisterToken(this.token);
+}
+
 class TogglePortfolioCurrency {}
 
 class ShowSettings {}
