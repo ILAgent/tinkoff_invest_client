@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
-import 'private_data.dart' as Private;
-
 class ApiService {
   final TinkoffInvestApi _api;
 
@@ -24,16 +22,16 @@ class ApiService {
     return ApiService._initApi(api);
   }
 
-  static Future<ApiService> sandbox() async {
+  static Future<ApiService> sandbox(String token) async {
     final service = ApiService._create(
-        "https://api-invest.tinkoff.ru/openapi/sandbox", Private.sandboxToken);
+        "https://api-invest.tinkoff.ru/openapi/sandbox", token);
     await service._initSandbox();
     return service;
   }
 
-  factory ApiService() {
-    final service = ApiService._create(
-        "https://api-invest.tinkoff.ru/openapi", Private.token);
+  factory ApiService(String token) {
+    final service =
+        ApiService._create("https://api-invest.tinkoff.ru/openapi", token);
     return service;
   }
 

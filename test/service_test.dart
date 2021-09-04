@@ -12,7 +12,7 @@ import 'package:tinkoff_invest/services/total_money_calculator.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
 void main() async {
-  final apiService = ApiService(); //await ApiService.sandbox();
+  final apiService = ApiService("");//todo //await ApiService.sandbox();
   final priceProvider = ActualPriceProvider(apiService);
   final opersProvider = OperationsProvider(apiService);
   final curConverter = CurrenciesConverter(apiService, priceProvider);

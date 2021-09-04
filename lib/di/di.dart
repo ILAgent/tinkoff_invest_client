@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:get_it/get_it.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:tinkoff_invest/redux/app_store.dart';
@@ -27,10 +28,12 @@ T p<T extends Object>() {
 
 Future<void> initDI() async {
   di.registerSingleton(await Storage.create());
+  di.registerSingleton(await () async {
+    return ApiService(await rootBundle.loadString("assets/token"));
+  }());
   di.registerLazySingleton(() => AppStore(p(), p(), p(), p(), p(), p()));
   di.registerFactory<Dispatcher>(() => p<AppStore>());
   di.registerLazySingleton(() => EpicStore(p<AppStore>()));
-  di.registerLazySingleton(() => ApiService());
   di.registerLazySingleton(() => TotalAmountEpic(p()));
   di.registerLazySingleton(() => PortfolioItemsEpic(p(), p(), p()));
   di.registerLazySingleton(() => CalculateGroupsEpic(p()));
