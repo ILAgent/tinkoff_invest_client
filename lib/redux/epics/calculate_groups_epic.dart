@@ -15,10 +15,7 @@ class CalculateGroupsEpic {
 
   CalculateGroupsEpic(this._converter);
 
-  Stream<dynamic> act(
-    Stream<dynamic> actions,
-    EpicStore<AppState> store,
-  ) {
+  Stream<dynamic> act(Stream<dynamic> actions, EpicStore<AppState> store) {
     final Stream<BuiltList<PortfolioItem>> itemsStream = store //
         .states
         .map((event) => event.items)
@@ -35,12 +32,12 @@ class CalculateGroupsEpic {
     );
 
     return stream.switchMap<dynamic>((BuiltList<PortfolioItem> items) {
-
       final List<MapEntry<String, List<PortfolioItem>>> groups = store //
           .state
           .groups
           .map((group) {
-        final itemsInGroup = items.where((item) => item.groupId == group.id).toList();
+        final itemsInGroup =
+            items.where((item) => item.groupId == group.id).toList();
         return MapEntry(group.id, itemsInGroup);
       }).toList();
 
@@ -49,11 +46,13 @@ class CalculateGroupsEpic {
         final convertedAmount = entry.value.isEmpty
             ? null
             : await entry.value.sumAsync((portfolioItem) async {
-                final amount = (portfolioItem.actualPrice ?? 0.0) * portfolioItem.portfolioPosition.balance;
+                final amount = (portfolioItem.actualPrice ?? 0.0) *
+                    portfolioItem.portfolioPosition.balance;
                 final moneyAmount = MoneyAmount((b) => b
                   ..currency = portfolioItem.currency()
                   ..value = amount);
-                return (await _converter.convert(moneyAmount, targetCurrency)).value;
+                return (await _converter.convert(moneyAmount, targetCurrency))
+                    .value;
               });
 
         final convertedIncome = entry.value.isEmpty
@@ -63,10 +62,13 @@ class CalculateGroupsEpic {
                 final moneyAmountIncome = MoneyAmount((b) => b
                   ..currency = portfolioItem.currency()
                   ..value = income);
-                return (await _converter.convert(moneyAmountIncome, targetCurrency)).value;
+                return (await _converter.convert(
+                        moneyAmountIncome, targetCurrency))
+                    .value;
               });
 
-        return UpdateGroupAmounts(amount: convertedAmount, income: convertedIncome, id: entry.key);
+        return UpdateGroupAmounts(
+            amount: convertedAmount, income: convertedIncome, id: entry.key);
       });
 
       return actions;

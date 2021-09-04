@@ -16,7 +16,10 @@ class PortfolioWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: WhiteAppBar(
-        actions: [AppBarButton(_store, Icons.settings, action: ShowSettings())],
+        actions: [
+          AppBarButton(_store, Icons.refresh, action: Invalidate()),
+          AppBarButton(_store, Icons.settings, action: ShowSettings()),
+        ],
         title: Container(
           alignment: Alignment.centerLeft,
           margin: EdgeInsets.only(bottom: 8, left: 20),

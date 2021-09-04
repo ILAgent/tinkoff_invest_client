@@ -47,6 +47,11 @@ class CurrenciesConverter {
       ..value = resultAmount);
   }
 
+  void invalidate() {
+    _curToRub = null;
+    _currenciesFuture = null;
+  }
+
   bool _isCacheOutdated() =>
       DateTime.now().subtract(Duration(minutes: 30)).isAfter(_lastUpdate);
 

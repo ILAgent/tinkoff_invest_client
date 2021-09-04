@@ -12,7 +12,7 @@ class PortfolioProvider {
     return _portfolioFuture ?? (_portfolioFuture = _apiService.portfolio());
   }
 
-  void invalidatePortfolio() {
+  void invalidate() {
     _portfolioFuture = null;
   }
 }

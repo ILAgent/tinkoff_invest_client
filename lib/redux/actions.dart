@@ -6,6 +6,8 @@ import 'package:uuid/uuid.dart';
 
 class InitAction {}
 
+class Invalidate {}
+
 class GoBack {}
 
 class TogglePortfolioCurrency {}

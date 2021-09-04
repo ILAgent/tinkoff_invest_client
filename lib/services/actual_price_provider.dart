@@ -21,4 +21,8 @@ class ActualPriceProvider {
     );
     return candles.candles.last.c;
   }
+
+  void invalidate() {
+    _pricesCache.clear();
+  }
 }

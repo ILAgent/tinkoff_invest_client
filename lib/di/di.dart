@@ -3,6 +3,7 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:tinkoff_invest/redux/app_store.dart';
 import 'package:tinkoff_invest/redux/dispatcher.dart';
 import 'package:tinkoff_invest/redux/epics/calculate_groups_epic.dart';
+import 'package:tinkoff_invest/redux/epics/invalidate_epic.dart';
 import 'package:tinkoff_invest/redux/epics/portfolio_item_epic.dart';
 import 'package:tinkoff_invest/redux/epics/save_state_epic.dart';
 import 'package:tinkoff_invest/redux/epics/total_money_epic.dart';
@@ -26,7 +27,7 @@ T p<T extends Object>() {
 
 Future<void> initDI() async {
   di.registerSingleton(await Storage.create());
-  di.registerLazySingleton(() => AppStore(p(), p(), p(), p(), p()));
+  di.registerLazySingleton(() => AppStore(p(), p(), p(), p(), p(), p()));
   di.registerFactory<Dispatcher>(() => p<AppStore>());
   di.registerLazySingleton(() => EpicStore(p<AppStore>()));
   di.registerLazySingleton(() => ApiService());
@@ -34,6 +35,7 @@ Future<void> initDI() async {
   di.registerLazySingleton(() => PortfolioItemsEpic(p(), p(), p()));
   di.registerLazySingleton(() => CalculateGroupsEpic(p()));
   di.registerLazySingleton(() => SaveSateEpic(p()));
+  di.registerLazySingleton(() => InvalidateEpic(p(), p(), p(), p()));
   di.registerLazySingleton(() => CurrenciesConverter(p(), p()));
   di.registerLazySingleton(() => TotalMoneyCalculator(p(), p(), p()));
   di.registerLazySingleton(() => ScreenStateToWidget(p()));

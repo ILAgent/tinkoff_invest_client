@@ -14,6 +14,10 @@ class OperationsProvider {
     return all.operations.where((it) => it.figi == figi).toBuiltList();
   }
 
+  void invalidate(){
+    _allOperations = null;
+  }
+
   Future<Operations> _getOperations() {
     return _allOperations ?? (_allOperations = _apiService.operations());
   }
