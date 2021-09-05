@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:tinkoff_invest/redux/state/login/login_page_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
@@ -31,7 +32,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         ..items = BuiltList<PortfolioItem>().toBuilder()
         ..groups = BuiltList<ItemsGroup>().toBuilder()
         ..backStack =
-            BuiltList<ScreenState>.from([PortfolioState()]).toBuilder(),
+            BuiltList<ScreenState>.from([LoginPageState()]).toBuilder(),
     );
   }
 
