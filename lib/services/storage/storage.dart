@@ -17,7 +17,7 @@ abstract class Storage {
 }
 
 class _StorageImpl implements Storage {
-  final Box<AppState> _openedBox;
+  final Box<AppState> _openedBox; // ignore: unused_field
 
   _StorageImpl(this._openedBox);
 
