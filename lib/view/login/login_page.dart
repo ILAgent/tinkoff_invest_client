@@ -41,6 +41,7 @@ class LoginPage extends StatelessWidget {
         ),
         Expanded(
           child: Container(
+            alignment: Alignment.center,
             padding: const EdgeInsets.all(16.0),
             child: TextButton(
                 onPressed: () {
