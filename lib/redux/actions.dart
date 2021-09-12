@@ -10,6 +10,8 @@ class Invalidate {}
 
 class GoBack {}
 
+class OpenPortfolio {}
+
 class RegisterToken {
   final String token;
 

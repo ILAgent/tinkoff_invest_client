@@ -23,12 +23,13 @@ class _StorageImpl implements Storage {
 
   @override
   set state(AppState state) {
-    _openedBox.put("0", state);
+    //_openedBox.put("0", state);
   }
 
   @override
   AppState get state {
-    return _openedBox.get("0", defaultValue: AppState.defaultSate())!;
+    //return _openedBox.get("0", defaultValue: AppState.defaultSate())!;
+    return AppState.defaultSate();
   }
 }
 

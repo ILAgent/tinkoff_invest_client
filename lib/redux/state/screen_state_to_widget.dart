@@ -33,6 +33,6 @@ class ScreenStateToWidget implements ScreenStateVisitor<Widget> {
 
   @override
   Widget visitLoginPage(LoginPageState state) {
-    return LoginPage();
+    return LoginPage(_store);
   }
 }

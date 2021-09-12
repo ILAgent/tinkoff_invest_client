@@ -12,8 +12,8 @@ import 'di/di.dart';
 
 Future<void> main() async {
   await initDI();
-  final token = await rootBundle.loadString("assets/token");
-  di.get<Dispatcher>().dispatch(RegisterToken(token));
+  // final token = await rootBundle.loadString("assets/token");
+  // di.get<Dispatcher>().dispatch(RegisterToken(token));
   runApp(di.get<AppWidget>());
 }
 

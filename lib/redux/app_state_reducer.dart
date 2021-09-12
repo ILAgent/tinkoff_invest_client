@@ -5,6 +5,7 @@ import 'package:tinkoff_invest/redux/state/app_state.dart';
 import 'package:tinkoff_invest/redux/state/group_settings/group_settings_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
+import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/state/screen_state.dart';
 import 'package:tinkoff_invest/redux/state/setting/settings_state.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
@@ -37,6 +38,9 @@ BuiltList<ScreenState> _reduceBackstack(AppState appState, dynamic action) {
         ..isEditMode = false
         ..selectedItems = BuiltList<String>().toBuilder()),
     ]);
+  }
+  if (action is OpenPortfolio) {
+    return BuiltList.from([PortfolioState()]);
   }
   return BuiltList.from(
       appState.backStack.map((screen) => screen.reduce(action, appState)));

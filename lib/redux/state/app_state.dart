@@ -4,7 +4,6 @@ import 'package:built_value/serializer.dart';
 import 'package:tinkoff_invest/redux/state/login/login_page_state.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/items_group.dart';
 import 'package:tinkoff_invest/redux/state/portfolio/portfolio_item.dart';
-import 'package:tinkoff_invest/redux/state/portfolio/portfolio_state.dart';
 import 'package:tinkoff_invest/redux/state/screen_state.dart';
 import 'package:tinkoff_invest_api/tinkoff_invest_api.dart';
 
