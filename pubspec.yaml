@@ -44,7 +44,6 @@ dependencies:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
-  pedantic: ^1.11.0
 #  openapi_generator:
 #    git:
 #      url: https://github.com/ILAgent/openapi-generator-dart
@@ -53,6 +52,7 @@ dev_dependencies:
   built_value_generator: ^8.0.4
   flutter_test:
     sdk: flutter
+  flutter_lints: ^1.0.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
